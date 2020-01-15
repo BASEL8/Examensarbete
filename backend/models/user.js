@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
   resetPassword: {
     data: String,
     default: ''
+  },
+  published: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true })
 

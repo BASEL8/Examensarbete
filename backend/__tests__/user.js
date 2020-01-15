@@ -1,25 +1,46 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const user = require('../models/user');
+const User = require('../models/user');
 require('dotenv').config();
+let userData = { username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000), name: 'basel munawwar', email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000), profile: '/basel_munawwar', hashed_password: 'hashed_password' };
 
-const uri = process.env.DATABASE;
-const url = process.env.API_URL;
+describe('User Model Test', () => {
+  let connection;
+  // It's just so easy to connect to the MongoDB Memory Server 
+  // By using mongoose.connect
+  beforeAll(async () => {
+    connection = await mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+    });
+  });
+  afterAll(async () => {
+    await User.remove({ _id: userData._id })
+  })
+  it('create & save user successfully', async () => {
+    const validUser = new User(userData);
+    const savedUser = await validUser.save();
+    // Object Id should be defined when successfully saved to MongoDB.
+    userData = savedUser
+    expect(savedUser._id).toBeDefined();
+    expect(savedUser.username).toBe(userData.username);
+  });
+  //all users
+  it('get /users', () => { })
+  ///user
+  it('get /user/:username', () => { });
+  // //publish
+  it('post /user/publish', () => { });
+  // //update user
+  it('put /user/update', () => { });
+  // //delete user
+  it('delete /delete-my-account', () => { });
+  // //delete user by admin
+  it('delete /remove-user/:userId', () => { });
 
-//create database test sample
-beforeAll((done) => { });
-//delete test sample from database
-afterAll((done) => { });
-//all users
-describe('get /users', () => { })
-//user
-describe('get /user/:username', () => { });
-//publish
-describe('post /user/publish', () => { });
-//update user
-describe('put /user/update', () => { });
-//delete user
-describe('delete /delete-my-account', () => { });
-//delete user by admin
-describe('delete /remove-user/:userId', () => { });
+
+
+})
 
