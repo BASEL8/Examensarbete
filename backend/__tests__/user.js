@@ -5,16 +5,24 @@ require('dotenv').config();
 const url = process.env.API_URL
 let data = [
   {
-    username: 'basel' + Math.floor(Math.random() * 1000),
+    username: 'basel' + Math.floor(Math.random() * 10000),
     name: 'basel munawwar',
-    email: 'basel8sd4mn@gmail.com' + Math.floor(Math.random() * 1000),
+    email: 'basel8sd4mn@gmail.com' + Math.floor(Math.random() * 10000),
     profile: '/basel_munawwar',
-    password: 'hashed_password'
+    password: 'password'
   },
   {
-    username: 'basel' + Math.floor(Math.random() * 1000),
+    username: 'basel' + Math.floor(Math.random() * 10000),
     name: 'basel munawwar',
-    email: 'basel@gmail.com' + Math.floor(Math.random() * 1000),
+    email: 'basel@gmail.com' + Math.floor(Math.random() * 10000),
+    profile: '/basel_munawwar',
+    password: 'password',
+    published: true
+  },
+  {
+    username: 'basel' + Math.floor(Math.random() * 10000),
+    name: 'basel munawwar',
+    email: 'basel@gmail.com' + Math.floor(Math.random() * 10000),
     profile: '/basel_munawwar',
     password: 'password',
     published: true
@@ -39,9 +47,10 @@ describe('User Model Test', () => {
     for (let index = 0; index < data.length; index++) {
       const user_1 = new User(data[index]);
       const savedUser = await user_1.save();
-      data[index] = savedUser
+      data[index] = {};
+      data[index]._id = savedUser._id
       expect(savedUser._id).toBeDefined();
-      expect(savedUser.username).toBe(data[index].username);
+      expect(savedUser._id).toBe(data[index]._id);
     }
     return done()
   });
@@ -56,16 +65,16 @@ describe('User Model Test', () => {
       expect(data.map(u => u.username).indexOf(user.username))
         .not
         .toBe(-1)
+      expect(user.published).toBeTruthy()
       expect(user.email).toBeUndefined()
       expect(user.hashed_password).toBeUndefined()
     });
     return done()
   })
   ///user
-  it('get /user/:username', async (done) => {
+  it('get /user/:_id', async (done) => {
     const response = await request(url)
-      .get(`/user/${data[0].username}`)
-    console.log(response.body)
+      .get(`/user/${data[0]._id}`)
     expect(response.statusCode).toEqual(200);
     expect(typeof response.body).toBe('object');
     expect(response.body.username).toEqual(data[0].username)
@@ -74,7 +83,21 @@ describe('User Model Test', () => {
     return done()
   });
   // //publish
-  it('post /user/publish', () => { });
+  it('put /user/publish', async (done) => {
+    const response = await request(url)
+      .put(`/user/publish`)
+      .send({
+        _id: data[0]._id,
+      })
+    console.log(response.body._id.toString() === data[0]._id.toString())
+    expect(response.statusCode).toEqual(200);
+    expect(typeof response.body).toBe('object');
+    expect(response.body._id.toString()).toEqual(data[0]._id.toString())
+    expect(response.body.email).toBeUndefined()
+    expect(response.body.hashed_password).toBeUndefined()
+    expect(response.body.published).toBeTruthy()
+    return done()
+  });
   // //update user
   it('put /user/update', () => { });
   // //delete user
