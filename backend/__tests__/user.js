@@ -2,7 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 require('dotenv').config();
-let userData = { username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000), name: 'basel munawwar', email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000), profile: '/basel_munawwar', hashed_password: 'hashed_password' };
+let userData = { username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000), name: 'basel munawwar', email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000), profile: '/basel_munawwar', password: 'hashed_password' };
 
 describe('User Model Test', () => {
   let connection;
@@ -22,7 +22,6 @@ describe('User Model Test', () => {
   it('create & save user successfully', async () => {
     const validUser = new User(userData);
     const savedUser = await validUser.save();
-    // Object Id should be defined when successfully saved to MongoDB.
     userData = savedUser
     expect(savedUser._id).toBeDefined();
     expect(savedUser.username).toBe(userData.username);
@@ -39,8 +38,5 @@ describe('User Model Test', () => {
   it('delete /delete-my-account', () => { });
   // //delete user by admin
   it('delete /remove-user/:userId', () => { });
-
-
-
 })
 
