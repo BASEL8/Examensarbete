@@ -5,16 +5,16 @@ require('dotenv').config();
 
 let data = [
   {
-    username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000),
+    username: 'basel' + Math.floor(Math.random() * 1000),
     name: 'basel munawwar',
-    email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000),
+    email: 'basel8sd4mn@gmail.com' + Math.floor(Math.random() * 1000),
     profile: '/basel_munawwar',
     password: 'hashed_password'
   },
   {
-    username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000),
+    username: 'basel' + Math.floor(Math.random() * 1000),
     name: 'basel munawwar',
-    email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000),
+    email: 'basel@gmail.com' + Math.floor(Math.random() * 1000),
     profile: '/basel_munawwar',
     password: 'password',
     published: true
