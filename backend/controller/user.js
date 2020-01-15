@@ -16,3 +16,6 @@ exports.updateUser = (req, res) => {
 exports.deleteMyProfile = (req, res) => {
   return res.json('created')
 }
+exports.AdminRemoveUser = (req, res) => {
+  return res.json('created')
+}
