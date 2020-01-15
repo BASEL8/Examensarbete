@@ -8,6 +8,7 @@ require('dotenv').config()
 
 //bring routes
 const usersRoutes = require('./router/user')
+const authRoutes = require('./router/auth')
 const app = express();
 
 //db 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 //routes middleware 
 app.use('/api', usersRoutes)
+app.use('/api', authRoutes)
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {

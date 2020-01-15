@@ -89,7 +89,6 @@ describe('User Model Test', () => {
       .send({
         _id: data[0]._id,
       })
-    console.log(response.body._id.toString() === data[0]._id.toString())
     expect(response.statusCode).toEqual(200);
     expect(typeof response.body).toBe('object');
     expect(response.body._id.toString()).toEqual(data[0]._id.toString())
