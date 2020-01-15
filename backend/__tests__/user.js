@@ -2,14 +2,26 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 require('dotenv').config();
-let userData = { username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000), name: 'basel munawwar', email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000), profile: '/basel_munawwar', password: 'hashed_password' };
 
+let data = [
+  {
+    username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000),
+    name: 'basel munawwar',
+    email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000),
+    profile: '/basel_munawwar',
+    password: 'hashed_password'
+  },
+  {
+    username: 'baseasdlmsdm' + Math.floor(Math.random() * 1000),
+    name: 'basel munawwar',
+    email: 'basel8sd4msdasdn@gmail.com' + Math.floor(Math.random() * 1000),
+    profile: '/basel_munawwar',
+    password: 'password',
+    published: true
+  }]
 describe('User Model Test', () => {
-  let connection;
-  // It's just so easy to connect to the MongoDB Memory Server 
-  // By using mongoose.connect
   beforeAll(async () => {
-    connection = await mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+    await mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
       if (err) {
         console.error(err);
         process.exit(1);
@@ -17,14 +29,18 @@ describe('User Model Test', () => {
     });
   });
   afterAll(async () => {
-    await User.remove({ _id: userData._id })
+    for (let index = 0; index < data.length; index++) {
+      await User.remove({ _id: data[index]._id })
+    }
   })
   it('create & save user successfully', async () => {
-    const validUser = new User(userData);
-    const savedUser = await validUser.save();
-    userData = savedUser
-    expect(savedUser._id).toBeDefined();
-    expect(savedUser.username).toBe(userData.username);
+    for (let index = 0; index < data.length; index++) {
+      const user_1 = new User(data[index]);
+      const savedUser = await user_1.save();
+      data[index] = savedUser
+      expect(savedUser._id).toBeDefined();
+      expect(savedUser.username).toBe(data[index].username);
+    }
   });
   //all users
   it('get /users', () => { })
