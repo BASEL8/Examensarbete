@@ -6,7 +6,8 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-
+//bring routes
+const usersRoutes = require('./router/user')
 const app = express();
 
 //db 
@@ -20,7 +21,8 @@ app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
-
+//routes middleware 
+app.use('/api', usersRoutes)
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
