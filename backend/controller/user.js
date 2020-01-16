@@ -36,7 +36,24 @@ exports.publish = (req, res) => {
   })
 }
 exports.updateUser = (req, res) => {
-  return res.json('created')
+  const { _id, ...data } = req.body
+  console.log(data)
+  User.findOne({ _id }, { "hashed_password": 0, 'name': 0, username: 0 }).exec((err, user) => {
+    if (err) {
+      return res.json({ err })
+    }
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        user[key] = data[key]
+      }
+    }
+    user.save((err, response) => {
+      if (err) {
+        return res.json(err)
+      }
+      return res.json(user)
+    });
+  })
 }
 exports.deleteMyProfile = (req, res) => {
   return res.json('created')

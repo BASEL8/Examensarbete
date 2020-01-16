@@ -119,12 +119,27 @@ describe('User Model Test', () => {
   // //update user
   it('put /user/update', async (done) => {
     const response = await request(url)
-      .put('user/update')
+      .put('/user/update')
+      .send({
+        _id: data[0]._id,
+        cities: ['Stockholm', 'Helsingborg'],
+        kindOfEmployment: 'employment',
+        salary: 3000,
+        languages: ['arabic', 'swedish', 'english']
+      })
       .set({
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       })
+    //console.log(response.body)
+    User.findOne({ _id: data[0]._id }).exec((err, user) => {
+      expect(user._id).toEqual(data[0]._id)
+      expect(user.languages.length).toEqual(3)
+      expect(user.languages[0]).toEqual('arabic')
+      expect(user.cities.length).toEqual(2)
+      expect(user.cities[1]).toEqual('Helsingborg')
+    })
     done()
   });
   // //delete user
