@@ -47,6 +47,39 @@ const userSchema = new mongoose.Schema({
   published: {
     type: Boolean,
     default: false
+  },
+  wantToWorkAs: {
+    type: String
+  },
+  cities: {
+    type: [],
+    default: undefined
+  },
+  kindOfEmployment: {
+    type: String
+  },
+  salary: {
+    type: String
+  },
+  languages: {
+    type: [],
+    default: undefined
+  },
+  lookingForJob: {
+    type: String
+  },
+  available: {
+    type: String
+  },
+  reasonToNewJob: {
+    type: String
+  },
+  workingRemotely: {
+    type: String
+  },
+  priorityBenefits: {
+    type: [],
+    default: undefined
   }
 }, { timestamps: true })
 
