@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-
 const url = process.env.API_URL
 let data = [
   {

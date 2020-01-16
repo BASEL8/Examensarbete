@@ -4,7 +4,6 @@ const SubProfession = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
     index: true
   },
   years: {
@@ -23,14 +22,11 @@ const professionSchema = new mongoose.Schema({
     lowercase: true
   },
   salt: String,
-  about: {
-    type: String
-  },
   years: {
     type: Number,
     default: '0'
   },
-  SubProfession: {
+  subProfessions: {
     type: [SubProfession],
     default: undefined
   }
