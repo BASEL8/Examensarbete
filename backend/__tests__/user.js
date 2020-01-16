@@ -107,6 +107,7 @@ describe('User Model Test', () => {
       })
       .send({
         _id: data[0]._id,
+        published: true
       })
     expect(response.statusCode).toEqual(200);
     expect(typeof response.body).toBe('object');
@@ -114,6 +115,27 @@ describe('User Model Test', () => {
     expect(response.body.email).toBeUndefined()
     expect(response.body.hashed_password).toBeUndefined()
     expect(response.body.published).toBeTruthy()
+    return done()
+  });
+  // //hide
+  it('put /user/publish', async (done) => {
+    const response = await request(url)
+      .put(`/user/publish`)
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+      .send({
+        _id: data[0]._id,
+        published: false
+      })
+    expect(response.statusCode).toEqual(200);
+    expect(typeof response.body).toBe('object');
+    expect(response.body._id.toString()).toEqual(data[0]._id.toString())
+    expect(response.body.email).toBeUndefined()
+    expect(response.body.hashed_password).toBeUndefined()
+    expect(response.body.published).toBeFalsy()
     return done()
   });
   // //update user
@@ -125,7 +147,7 @@ describe('User Model Test', () => {
         cities: ['Stockholm', 'Helsingborg'],
         kindOfEmployment: 'employment',
         salary: 3000,
-        languages: ['arabic', 'swedish', 'english']
+        languages: ['arabic', 'swedish', 'english'],
       })
       .set({
         Accept: 'application/json',

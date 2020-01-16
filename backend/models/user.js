@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+const { ObjectId } = mongoose.Schema
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -80,7 +81,8 @@ const userSchema = new mongoose.Schema({
   priorityBenefits: {
     type: [],
     default: undefined
-  }
+  },
+  profession: [{ type: ObjectId, ref: 'Profession', require: true }],
 }, { timestamps: true })
 
 

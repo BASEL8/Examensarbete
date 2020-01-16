@@ -18,7 +18,7 @@ exports.user = (req, res) => {
   })
 }
 exports.publish = (req, res) => {
-  const { _id } = req.body;
+  const { _id, published } = req.body;
   User.findOne({ _id }, { "hashed_password": 0, "email": 0, "name": 0, username: 0 }).exec((err, user) => {
     if (err) {
       return res.status(300).json({ err: 'error' })
@@ -26,7 +26,7 @@ exports.publish = (req, res) => {
     if (!user) {
       return res.status(300).json({ err: 'no user with this name' })
     }
-    user.published = true;
+    user.published = published;
     user.save((saveErr, saveRes) => {
       if (saveErr) {
         return res.status(300).json({ err: saveErr })
