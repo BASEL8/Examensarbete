@@ -2,6 +2,8 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
+
 const url = process.env.API_URL
 let data = [
   {
@@ -28,6 +30,7 @@ let data = [
     published: true
   }]
 describe('User Model Test', () => {
+  let token;
   beforeAll(async (done) => {
     await mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
       if (err) {
@@ -52,12 +55,18 @@ describe('User Model Test', () => {
       expect(savedUser._id).toBeDefined();
       expect(savedUser._id).toBe(data[index]._id);
     }
+    token = jwt.sign({ _id: data[0]._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     return done()
   });
   //all users
   it('get /users', async (done) => {
     const response = await request(url)
       .get(`/users`)
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
     expect(response.statusCode).toEqual(200);
     expect(typeof response.body).toBe('object');
     expect(response.body.users).toBeDefined();
@@ -75,6 +84,11 @@ describe('User Model Test', () => {
   it('get /user/:_id', async (done) => {
     const response = await request(url)
       .get(`/user/${data[0]._id}`)
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
     expect(response.statusCode).toEqual(200);
     expect(typeof response.body).toBe('object');
     expect(response.body.username).toEqual(data[0].username)
@@ -86,6 +100,11 @@ describe('User Model Test', () => {
   it('put /user/publish', async (done) => {
     const response = await request(url)
       .put(`/user/publish`)
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
       .send({
         _id: data[0]._id,
       })
@@ -98,7 +117,16 @@ describe('User Model Test', () => {
     return done()
   });
   // //update user
-  it('put /user/update', () => { });
+  it('put /user/update', async (done) => {
+    const response = await request(url)
+      .put('user/update')
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    done()
+  });
   // //delete user
   it('delete /delete-my-account', () => { });
   // //delete user by admin

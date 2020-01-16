@@ -2,7 +2,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const { extractCookies, shapeFlags } = require("../helpers/extract-cookies");
+//const { extractCookies, shapeFlags } = require("../helpers/extract-cookies");
 require('dotenv').config();
 const url = process.env.API_URL
 
