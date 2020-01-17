@@ -33,15 +33,6 @@ describe('Profession Model Test', () => {
     token = jwt.sign({ _id: testUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     return done()
   });
-  /*
-  router.post('/profession', requiresignin, adminMiddleware, create)
-  router.get('/profession', requiresignin, adminMiddleware, list)
-  router.delete('/profession/adminRemoveProfession', requiresignin, adminMiddleware, adminRemoveProfession)
-  //router.delete('/blog/userRemoveProfession/:slug', requiresignin, userRemoveProfession)
-  router.put('/profession/:_id', requiresignin, update)
-  router.get('/profession/search', listSearch);
-  router.post('/profession/related', listRelated);
-  */
   it('post /profession', async (done) => {
     for (let index = 0; index < professions.length; index++) {
       const response = await request(url)
@@ -52,7 +43,6 @@ describe('Profession Model Test', () => {
           Authorization: `Bearer ${token}`
         })
         .send({ ...professions[index] })
-      console.log(response.body)
       expect(response.status).toEqual(200);
       expect(response.body._id).toBeDefined()
       if (response.status === 200) {
@@ -61,6 +51,35 @@ describe('Profession Model Test', () => {
     }
     done()
     return
+  })
+  it('get /professions', async (done) => {
+    const response = await request(url)
+      .get('/professions')
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    expect(response.status).toEqual(200)
+    expect(response.body.professions.length).toBeGreaterThan(0)
+    done()
+  })
+  it('edit profession', async (done) => {
+    const response = await request(url)
+      .put('/profession')
+      .send({
+        _id: professions[0]._id,
+        name: 'ui',
+        subProfessions: [{ name: 'test' }]
+      })
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    expect(response.body.name).toBe('ui')
+    expect(response.body.subProfessions).toHaveLength(1)
+    done()
   })
   it('delete /profession/adminRemoveProfession', async (done) => {
     for (let index = 0; index < professions.length; index++) {

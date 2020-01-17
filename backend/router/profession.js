@@ -4,11 +4,11 @@ const { create, list, update, adminRemoveProfession, listRelated, listSearch } =
 const { requiresignin, adminMiddleware } = require('../controller/auth')
 
 router.post('/profession', requiresignin, adminMiddleware, create)
-router.get('/profession', requiresignin, adminMiddleware, list)
+router.get('/professions', requiresignin, list)
 router.delete('/profession/adminRemoveProfession', requiresignin, adminMiddleware, adminRemoveProfession)
-//router.delete('/blog/userRemoveProfession/:slug', requiresignin, userRemoveProfession)
-router.put('/profession/:_id', requiresignin, update)
-router.get('/profession/search', listSearch);
-router.post('/profession/related', listRelated);
+//router.delete('/blog/userRemoveProfession/:slug', requiresignin, userRemoveProfession) //create a special profession key to the user so he can write what he want
+router.put('/profession', requiresignin, adminMiddleware, update)
+//router.get('/profession/search', listSearch);
+//router.post('/profession/related', listRelated);
 
 module.exports = router;
