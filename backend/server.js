@@ -10,6 +10,7 @@ require('dotenv').config()
 const usersRoutes = require('./router/user')
 const authRoutes = require('./router/auth')
 const professionRoutes = require('./router/profession')
+const CompanyRoutes = require('./router/company')
 const app = express();
 
 //db 
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', usersRoutes)
 app.use('/api', authRoutes)
 app.use('/api', professionRoutes)
+app.use('/api', CompanyRoutes)
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {

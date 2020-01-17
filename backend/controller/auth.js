@@ -97,6 +97,15 @@ exports.signin = (req, res) => {
     })
   })
 }
+exports.preSignupCompany = (req, res) => {
+  return res.json({ created: 'done' })
+}
+exports.signupCompany = (req, res) => {
+  return res.json({ created: 'done' })
+}
+exports.signinCompany = (req, res) => {
+  return res.json({ created: 'done' })
+}
 exports.signOut = (req, res) => {
   res.clearCookie('token');
   res.json({
