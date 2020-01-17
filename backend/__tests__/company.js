@@ -1,13 +1,13 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const User = require('../models/user');
+const Company = require('../models/company');
 const jwt = require('jsonwebtoken');
 //const { extractCookies, shapeFlags } = require("../helpers/extract-cookies");
 require('dotenv').config();
 const url = process.env.API_URL
 
-let testUser = { email: 'basel84mn@gmail.com', password: '123123123', name: '123123123' }
-describe('User Model Test', () => {
+let testUser = { email: 'basel84mn@gmail.com', password: '123123123', companyName: 'company hbg', organisationNumber: '111111' }
+describe('Company Model Test', () => {
   let token;
   let resetPasswordToken;
   beforeAll(async (done) => {
@@ -20,14 +20,13 @@ describe('User Model Test', () => {
     });
   });
   afterAll(async (done) => {
-    await User.remove({ email: testUser.email })
+    await Company.remove({ email: testUser.email })
     return done()
   })
-  it('post /pre-signup', async (done) => {
+  it('post /company/pre-signup', async (done) => {
     const response = await request(url)
-      .post(`/pre-signup`)
+      .post(`/company/pre-signup`)
       .send(testUser)
-    console.log(response.body)
     expect(response.status).toEqual(200);
     expect(response.body.success).toBe(`activation link has been sent to ${testUser.email}`)
     if (response.status === 200) {
@@ -35,28 +34,30 @@ describe('User Model Test', () => {
     }
     return done()
   })
-  it('post /signup', async (done) => {
+  it('post /company/signup', async (done) => {
     const response = await request(url)
-      .post('/signup')
+      .post('/company/signup')
       .send({ activationToken: token })
+    console.log(response.body)
     expect(response.status).toEqual(200)
     expect(response.body.success).toBe('Signup success! please login')
     expect(response.body.name).toEqual(testUser.name)
     expect(response.body.email).toEqual(testUser.email)
     return done()
   });
-  it('post /signin', async (done) => {
+  it('post /company/signin', async (done) => {
     const response = await request(url)
-      .post(`/signin`)
+      .post(`/company/signin`)
       .send({ email: testUser.email, password: testUser.password })
     //const cookies = extractCookies(response.headers);
     //need more tests
+    console.log(response.body)
     expect(response.status).toEqual(200)
     expect(response.body.token).toBeDefined()
-    expect(response.body.user._id).toBeDefined()
-    expect(response.body.user.name).toEqual(testUser.name)
-    expect(response.body.user.email).toEqual(testUser.email)
-    testUser._id = response.body.user._id
+    expect(response.body.company._id).toBeDefined()
+    expect(response.body.company.name).toEqual(testUser.name)
+    expect(response.body.company.email).toEqual(testUser.email)
+    testUser._id = response.body.company._id
     return done()
   });
   it('put /signout', async (done) => {
@@ -66,9 +67,9 @@ describe('User Model Test', () => {
     expect(response.body.message).toBe('signout success')
     done()
   });
-  it('put /forget-password', async (done) => {
+  it('put /company/forget-password', async (done) => {
     const response = await request(url)
-      .put('/forget-password')
+      .put('/company/forget-password')
       .send({ email: testUser.email })
     expect(response.status).toEqual(200)
     expect(response.body.message).toBe(`Email has been sent to ${testUser.email}, follow the instruction to reset your password, the link expire in 10 min`)
@@ -77,9 +78,9 @@ describe('User Model Test', () => {
     }
     done()
   });
-  it('put /reset-password', async (done) => {
+  it('put  /company/reset-password', async (done) => {
     const response = await request(url)
-      .put('/reset-password')
+      .put('/company/reset-password')
       .send({ resetPasswordLink: resetPasswordToken, newPassword: '5555555' })
     expect(response.status).toEqual(200)
     expect(response.body.email).toBe(testUser.email)

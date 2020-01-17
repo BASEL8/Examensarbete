@@ -16,6 +16,14 @@ const companySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  confirmed: {
+    type: Boolean,
+    default: false
+  },
+  profileComplete: {
+    type: Boolean,
+    default: false
+  },
   email: {
     type: String,
     trim: true,
@@ -23,9 +31,12 @@ const companySchema = new mongoose.Schema({
     lowercase: true,
     unique: true,
   },
-  website: {
+  profile: {
     type: String,
     required: true
+  },
+  website: {
+    type: String,
   },
   hashed_password: {
     type: String,
