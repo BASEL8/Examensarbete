@@ -1,14 +1,20 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const Company = require('../models/company');
+const Profession = require('../models/profession')
 const jwt = require('jsonwebtoken');
+
 //const { extractCookies, shapeFlags } = require("../helpers/extract-cookies");
 require('dotenv').config();
 const url = process.env.API_URL
 
 let testUser = { email: 'basel84mn@gmail.com', password: '123123123', companyName: 'company hbg', organisationNumber: '111111' }
+
+
 describe('Company Model Test', () => {
+  let profession;
   let token;
+  let signinToken;
   let resetPasswordToken;
   beforeAll(async (done) => {
     await mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
@@ -22,6 +28,9 @@ describe('Company Model Test', () => {
   afterAll(async (done) => {
     await Company.remove({ email: testUser.email })
     return done()
+  })
+  it('create profession', () => {
+    profession = new Profession({ name: 'Test', subProfessions: [{ name: 'rest' }, { name: 'r' }] })
   })
   it('post /company/pre-signup', async (done) => {
     const response = await request(url)
@@ -37,8 +46,9 @@ describe('Company Model Test', () => {
   it('post /company/signup', async (done) => {
     const response = await request(url)
       .post('/company/signup')
-      .send({ activationToken: token })
-    console.log(response.body)
+      .send({
+        activationToken: token = jwt.sign(testUser, process.env.JWT_ACCOUNT_ACTIVATION_SECRET, { expiresIn: '1d' })
+      })
     expect(response.status).toEqual(200)
     expect(response.body.success).toBe('Signup success! please login')
     expect(response.body.name).toEqual(testUser.name)
@@ -51,7 +61,7 @@ describe('Company Model Test', () => {
       .send({ email: testUser.email, password: testUser.password })
     //const cookies = extractCookies(response.headers);
     //need more tests
-    console.log(response.body)
+    signinToken = response.body.token
     expect(response.status).toEqual(200)
     expect(response.body.token).toBeDefined()
     expect(response.body.company._id).toBeDefined()
@@ -87,5 +97,25 @@ describe('Company Model Test', () => {
     expect(response.body.message).toBe('now you can login with your new password')
     done()
   });
+  it('post /company/announce', async (done) => {
+    const response = await request(url)
+      .post('/company/announce')
+      .set({
+        Accept: 'application/form',
+        Authorization: `Bearer ${signinToken}`
+      })
+      .send({
+        wantToWorkAs: 'java',
+        cities: ['helsingborg'],
+        salary: '30000',
+        lookingForJob: 'yes',
+        available: '2020-12-20',
+        workingRemotely: 'yes',
+        priorityBenefits: [],
+        profession: [profession._id]
+      })
+    console.log(response.body)
+    done()
+  })
 })
 

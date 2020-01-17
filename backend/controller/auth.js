@@ -249,7 +249,6 @@ exports.signinCompany = (req, res) => {
       })
     }
     //authenticate
-    console.log(company)
     if (!company.authenticate(password)) {
       return res.status(400).json({
         error: 'Email and Password do not match'
@@ -345,6 +344,8 @@ exports.companyResetPassword = (req, res) => {
 exports.requiresignin = expressJwt({
   secret: process.env.JWT_SECRET
 })
+
+
 exports.authMiddleware = (req, res, next) => {
   const authUserId = req.user._id;
   User.findById({ _id: authUserId }).exec((err, user) => {
@@ -354,6 +355,18 @@ exports.authMiddleware = (req, res, next) => {
       })
     }
     req.profile = user;
+    next();
+  })
+}
+exports.companyAuthMiddleware = (req, res, next) => {
+  const authUserId = req.user._id;
+  Company.findById({ _id: authUserId }).exec((err, company) => {
+    if (err || !company) {
+      return res.status(400).json({
+        error: 'company not found'
+      })
+    }
+    req.profile = company;
     next();
   })
 }
