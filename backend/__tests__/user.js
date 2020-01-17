@@ -10,7 +10,9 @@ let data = [
     name: 'basel munawwar',
     email: 'basel8sd4mn@gmail.com' + Math.floor(Math.random() * 10000),
     profile: '/basel_munawwar',
-    password: 'password'
+    password: 'password',
+    role: '1',
+    published: true
   },
   {
     username: 'basel' + Math.floor(Math.random() * 10000),
@@ -18,7 +20,6 @@ let data = [
     email: 'basel@gmail.com' + Math.floor(Math.random() * 10000),
     profile: '/basel_munawwar',
     password: 'password',
-    published: true
   },
   {
     username: 'basel' + Math.floor(Math.random() * 10000),
@@ -30,6 +31,11 @@ let data = [
   }]
 describe('User Model Test', () => {
   let token;
+  let professions = [
+    { name: 'Test', subProfessions: [{ name: 'rest' }, { name: 'r' }] },
+    { name: 'Designer', subProfessions: [{ name: 'UI/UX' }, { name: 'Graphic design' }] },
+    { name: 'Developer', subProfessions: [{ name: 'FrontEnd' }, { name: 'Backend' }] }
+  ];
   beforeAll(async (done) => {
     await mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
       if (err) {
@@ -58,6 +64,25 @@ describe('User Model Test', () => {
     return done()
   });
   //all users
+  it('post /profession', async (done) => {
+    for (let index = 0; index < professions.length; index++) {
+      const response = await request(url)
+        .post(`/profession`)
+        .set({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        })
+        .send({ ...professions[index] })
+      expect(response.status).toEqual(200);
+      expect(response.body._id).toBeDefined()
+      if (response.status === 200) {
+        professions[index] = { ...response.body }
+      }
+    }
+    done()
+    return
+  })
   it('get /users', async (done) => {
     const response = await request(url)
       .get(`/users`)
@@ -117,29 +142,22 @@ describe('User Model Test', () => {
     return done()
   });
   // //hide
-  it('put /user/publish', async (done) => {
-    const response = await request(url)
-      .put(`/user/publish`)
-      .set({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      })
-      .send({
-        _id: data[0]._id,
-        published: false
-      })
-    expect(response.statusCode).toEqual(200);
-    expect(typeof response.body).toBe('object');
-    expect(response.body._id.toString()).toEqual(data[0]._id.toString())
-    expect(response.body.email).toBeUndefined()
-    expect(response.body.hashed_password).toBeUndefined()
-    expect(response.body.published).toBeFalsy()
-    return done()
-  });
+
   // //update user
   it('put /user/update', async (done) => {
-    const response = await request(url)
+    const obj = {
+      name: professions[0].name,
+      relatedId: professions[0]._id,
+      years: '5',
+      subProfessions: [
+        {
+          name: professions[0].subProfessions[0].name,
+          relatedId: professions[0].subProfessions[0]._id,
+          years: '7'
+        }
+      ]
+    }
+    await request(url)
       .put('/user/update')
       .send({
         _id: data[0]._id,
@@ -147,13 +165,13 @@ describe('User Model Test', () => {
         kindOfEmployment: 'employment',
         salary: 3000,
         languages: ['arabic', 'swedish', 'english'],
+        profession: obj
       })
       .set({
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       })
-    //console.log(response.body)
     User.findOne({ _id: data[0]._id }).exec((err, user) => {
       expect(user._id).toEqual(data[0]._id)
       expect(user.languages.length).toEqual(3)
@@ -163,9 +181,78 @@ describe('User Model Test', () => {
     })
     done()
   });
-  // //delete user
+  it('put user 2 ', async (done) => {
+    const obj = {
+      name: professions[0].name,
+      relatedId: professions[0]._id,
+      years: '5',
+      subProfessions: [
+        {
+          name: professions[0].subProfessions[0].name,
+          relatedId: professions[0].subProfessions[1]._id,
+          years: '7'
+        }
+      ]
+    }
+    await request(url)
+      .put('/user/update')
+      .send({
+        _id: data[1]._id,
+        cities: ['Stockholm', 'Helsingborg'],
+        kindOfEmployment: 'employment',
+        salary: 3000,
+        languages: ['arabic', 'swedish', 'english'],
+        profession: obj
+      })
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    User.findOne({ _id: data[1]._id }).exec((err, user) => {
+      expect(user._id).toEqual(data[1]._id)
+      expect(user.languages.length).toEqual(3)
+      expect(user.languages[0]).toEqual('arabic')
+      expect(user.cities.length).toEqual(2)
+      expect(user.cities[1]).toEqual('Helsingborg')
+    })
+    done()
+  })
+  it('post /users', async (done) => {
+    const response = await request(url)
+      .post('/users')
+      .set({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+      .send({
+        _id: professions[0].subProfessions[0]._id
+      })
+    expect(response.status).toEqual(200);
+    expect(typeof response.body).toBe('object');
+    expect(response.body.users[0].hashed_password).toBeUndefined()
+    expect(response.body.published).toBeFalsy()
+    done()
+  })
   it('delete /delete-my-account', () => { });
-  // //delete user by admin
   it('delete /remove-user/:userId', () => { });
+  it('delete /profession/adminRemoveProfession', async (done) => {
+    for (let index = 0; index < professions.length; index++) {
+      const response = await request(url)
+        .delete('/profession/adminRemoveProfession')
+        .set({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        })
+        .send({
+          _id: professions[index]._id
+        })
+      expect(response.status).toEqual(200)
+      expect(response.body.message).toBe('profession deleted successfully')
+    }
+    done()
+  })
 })
 

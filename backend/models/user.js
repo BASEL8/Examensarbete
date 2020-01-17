@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { ObjectId } = mongoose.Schema
-
+const { testSchema } = require('./profession')
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -82,7 +82,9 @@ const userSchema = new mongoose.Schema({
     type: [],
     default: undefined
   },
-  profession: [{ type: ObjectId, ref: 'Profession', require: true }],
+  profession: {
+    type: { testSchema },
+  },
 }, { timestamps: true })
 
 

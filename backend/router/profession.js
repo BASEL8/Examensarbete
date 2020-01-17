@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router()
-const { create, list, update, adminRemoveProfession, listRelated, listSearch } = require('../controller/profession')
+const { create, list, update, adminRemoveProfession } = require('../controller/profession')
 const { requiresignin, adminMiddleware } = require('../controller/auth')
 
 router.post('/profession', requiresignin, adminMiddleware, create)

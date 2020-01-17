@@ -9,6 +9,9 @@ const SubProfession = new mongoose.Schema({
   years: {
     type: Number,
     default: '0'
+  },
+  relatedId: {
+    type: String
   }
 });
 const professionSchema = new mongoose.Schema({
@@ -20,6 +23,9 @@ const professionSchema = new mongoose.Schema({
     unique: true,
     index: true,
     lowercase: true
+  },
+  relatedId: {
+    type: String
   },
   salt: String,
   years: {
@@ -33,3 +39,4 @@ const professionSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 module.exports = mongoose.model('Profession', professionSchema);
+exports.testSchema = professionSchema;
