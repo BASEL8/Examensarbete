@@ -1,4 +1,3 @@
-const Company = require('../models/company')
 const Announce = require('../models/announce')
 exports.company = (req, res) => {
   return res.json({ created: 'done' })
