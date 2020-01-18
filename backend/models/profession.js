@@ -8,10 +8,10 @@ const SubProfession = new mongoose.Schema({
   },
   years: {
     type: Number,
-    default: '0'
   },
   relatedId: {
-    type: String
+    type: String,
+    required: true
   }
 });
 const professionSchema = new mongoose.Schema({
@@ -25,12 +25,12 @@ const professionSchema = new mongoose.Schema({
     lowercase: true
   },
   relatedId: {
-    type: String
+    type: String,
+    required: true
   },
   salt: String,
   years: {
     type: Number,
-    default: '0'
   },
   subProfessions: {
     type: [SubProfession],

@@ -5,6 +5,11 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+
+
 
 //bring routes
 const usersRoutes = require('./router/user')
@@ -12,7 +17,8 @@ const authRoutes = require('./router/auth')
 const professionRoutes = require('./router/profession')
 const CompanyRoutes = require('./router/company')
 const app = express();
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//app.use('/api/v1', router);
 //db 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true }).then(() => console.log('db connected'))
 //middleware
