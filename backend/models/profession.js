@@ -11,7 +11,6 @@ const SubProfession = new mongoose.Schema({
   },
   relatedId: {
     type: String,
-    required: true
   }
 });
 const professionSchema = new mongoose.Schema({
@@ -26,7 +25,6 @@ const professionSchema = new mongoose.Schema({
   },
   relatedId: {
     type: String,
-    required: true
   },
   salt: String,
   years: {
