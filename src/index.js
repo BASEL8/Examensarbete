@@ -16,7 +16,7 @@ const Main = () => {
     palette: {
       primary: {
         main: '#FF3F6B',
-        mainLight: '#fbf8f8',
+        mainLight: '#5486FF',
         second: '#AE0A06'
       },
     },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Switch,
   Route,
@@ -9,6 +9,7 @@ import Company from './company'
 
 const MainRouter = () => {
   return (
+
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/user" component={User} />

@@ -14,12 +14,15 @@ import { Link } from 'react-router-dom'
 import MainRouter from './MainRouter'
 import Links from './Links'
 import NavLinks from './NavLinks'
+import Footer from './Footer'
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    minHeight: '100%',
+    flex: 1
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -58,6 +61,9 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
+    display: 'flex',
+    minHeight: '100vh',
+    flexDirection: 'column',
     marginTop: 50,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -110,7 +116,10 @@ const App = () => {
           [classes.contentShift]: open,
         })}
       >
-        <MainRouter />
+        <div style={{ flex: 1 }}>
+          <MainRouter />
+        </div>
+        <Footer />
       </main>
       <Drawer
         className={classes.drawer}
