@@ -2,40 +2,42 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    background: '#F3CA4B',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  paper: {
-    minHeight: 140,
-    minWidth: 100,
-    display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    padding: 20,
-    paddingTop: 5,
-    background: 'none',
-    color: '#2C395A',
-    border: '1px solid #2C395A',
-    borderRadius: 4
-  },
-  title: {
-    paddingBottom: theme.spacing(2),
-    textTransform: 'uppercase',
-    fontSize: 14
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
-}));
+const useStyles = makeStyles(theme => {
+  console.log(theme.palette.primary.mainLight)
+  return ({
+    root: {
+      minHeight: 400,
+      background: theme.palette.primary.main,
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: 100
+    },
+    paper: {
+
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      padding: 20,
+      paddingTop: 5,
+      background: 'none',
+      color: 'white',
+      borderRadius: 4
+    },
+    title: {
+      paddingBottom: theme.spacing(2),
+      textTransform: 'uppercase',
+      fontSize: 14
+    },
+    control: {
+      padding: theme.spacing(2),
+    },
+  })
+});
 const Footer = () => {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.root} spacing={2}>
+    <Grid container className={classes.root}>
       <Grid item xs={12}>
         <Grid container justify="space-around" spacing={10}>
           <Grid item>
