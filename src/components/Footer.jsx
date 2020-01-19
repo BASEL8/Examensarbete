@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => {
-  console.log(theme.palette.primary.mainLight)
   return ({
     root: {
       minHeight: 400,
@@ -13,7 +12,6 @@ const useStyles = makeStyles(theme => {
       marginTop: 100
     },
     paper: {
-
       display: 'flex',
       alignItems: 'flex-start',
       justifyContent: 'center',
@@ -31,6 +29,16 @@ const useStyles = makeStyles(theme => {
     control: {
       padding: theme.spacing(2),
     },
+    grid: {
+      [theme.breakpoints.down('xs')]: {
+        flexDirection: 'column',
+      },
+      [theme.breakpoints.down('sm')]: {
+        "& > *": {
+          flexBasis: '40%'
+        }
+      }
+    }
   })
 });
 const Footer = () => {
@@ -39,7 +47,7 @@ const Footer = () => {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={12}>
-        <Grid container justify="space-around" spacing={10}>
+        <Grid container justify="space-around" className={classes.grid} >
           <Grid item>
             <div className={classes.paper}>
               <h3 className={classes.title}>
