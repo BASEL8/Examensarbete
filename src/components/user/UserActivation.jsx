@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, userEffect, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
+import { signup } from '../../actions/userAuth'
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -20,7 +21,9 @@ const UserActivation = () => {
   const handleClose = (event, reason) => {
     setOpen(false);
   };
-
+  useEffect(() => {
+    activationToken && signup(activationToken).then(res => console.log(res))
+  }, [activationToken])
   return (
     <AuthIndex>{
       <>

@@ -6,6 +6,10 @@ import { Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
+
+//actions 
+import { preSignup } from '../../actions/userAuth'
+
 const useStyles = makeStyles(theme => ({
   left: {
     height: '100%',
@@ -37,24 +41,29 @@ const useStyles = makeStyles(theme => ({
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-
 const UserRegister = () => {
   const classes = useStyles();
-  const [state, setState] = useState({ name: '', email: '', password: '', error: 'test' })
-  const { name, email, password, error } = state;
-  const [open, setOpen] = useState(true)
+  const [state, setState] = useState({ username: '', email: '', password: '', error: 'test', message: '' })
+  const { username, email, password, error, message } = state;
+  const [openError, setOpenError] = useState(true)
+  const [openSuccess, setOpenSuccess] = useState(true)
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
-  const handleClose = (event, reason) => {
-    setOpen(false);
-  };
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(state)
+    preSignup({ email, username, password }).then(res => {
+      if (res.err) {
+        setOpenError(true)
+        return setState({ ...setState, error: res.er, username: '', email: '', password: '', message: '' })
+      }
+      setOpenSuccess(true)
+      setState({ ...state, error: '', username: '', email: '', password: '', message: res.success })
+    }
+    )
   }
-
+  console.log(message)
   return (
     <AuthIndex>{
       <>
@@ -72,8 +81,8 @@ const UserRegister = () => {
           />
           <TextField
             label="Name"
-            name="name"
-            value={name}
+            name="username"
+            value={username}
             onChange={handleChange}
             variant="outlined"
             type="text"
@@ -88,8 +97,11 @@ const UserRegister = () => {
           />
           <Button variant="contained" color="primary" size="large" type="submit">Submit</Button>
         </form>
-        {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} style={{ position: 'fixed', left: 100 }}>
-          <Alert onClose={handleClose} severity="error">{error}</Alert>
+        {error && <Snackbar open={openError} autoHideDuration={10000} onClose={() => setOpenError(false)} >
+          <Alert onClose={() => setOpenError(false)} severity="error">{error}</Alert>
+        </Snackbar>}
+        {message && <Snackbar open={openSuccess} autoHideDuration={10000} onClose={() => setOpenSuccess(false)} >
+          <Alert onClose={() => setOpenSuccess(false)} severity="success">{message}</Alert>
         </Snackbar>}
       </>
     }</AuthIndex>
