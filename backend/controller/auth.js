@@ -25,7 +25,7 @@ exports.preSignup = (req, res) => {
       subject: `Activation link`,
       html: `
     <h4>please use this link to activate you account<h4> 
-    <a href="${process.env.CLIENT_URL}/auth/activate/${token}">activate-link</a>
+    <a href="${process.env.CLIENT_URL}/user/activation/${token}">activate-link</a>
     `
     }
 
@@ -198,7 +198,7 @@ exports.preSignupCompany = (req, res) => {
       subject: `Activation link`,
       html: `
     <h4>please use this link to activate you account<h4> 
-    <a href="${process.env.CLIENT_URL}/auth/activate/company/${token}">activate-link</a>
+    <a href="${process.env.CLIENT_URL}/company/activation/${token}">activate-link</a>
     `
     }
 
