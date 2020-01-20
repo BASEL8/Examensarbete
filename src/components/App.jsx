@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
   appBar: {
+    boxShadow: "none",
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -65,7 +66,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: '100vh',
     flexDirection: 'column',
     marginTop: 50,
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(1),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -99,7 +100,7 @@ const App = () => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="absolute"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}

@@ -9,7 +9,7 @@ import image_4 from '../img/4.png'
 import programer from '../img/programer.jpeg'
 const useStyles = makeStyles(theme => ({
   root: {
-
+    marginBottom: 100
   },
   header: {
     paddingTop: 100,
@@ -56,7 +56,10 @@ const useStyles = makeStyles(theme => ({
   TextHolder: {
     flex: 1,
     minWidth: 300,
-    padding: '50px 0'
+    padding: '50px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   step: {
     color: '#5386ff',
@@ -95,6 +98,9 @@ const useStyles = makeStyles(theme => ({
     height: 300,
     flex: 1,
     padding: '50px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   stepImage: {
     maxHeight: 300
@@ -146,7 +152,7 @@ const Step = ({ title, text, image, index }) => {
 const Home = () => {
   const classes = useStyles()
   return (
-    <div>
+    <div className={classes.root}>
       <div className={classes.header}>
         <div style={{ padding: 50, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
           <h2 className={classes.headerTitle}>

@@ -4,16 +4,26 @@ import {
   Route,
 } from "react-router-dom";
 import Home from './Home'
-import User from './user'
-import Company from './company'
+import UserRegister from './user/UserRegister'
+import UserLogin from './user/UserLogin'
+import UserActivation from './user/UserActivation'
+import CompanyHome from './company/companyHome'
+import CompanyRegister from './company/CompanyRegister'
+import CompanyLogin from './company/CompanyLogin'
+import CompanyActivation from './company/CompanyActivation'
 
 const MainRouter = () => {
   return (
 
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/user" component={User} />
-      <Route path="/company" component={Company} />
+      <Route exact path="/user/register" component={UserRegister} />
+      <Route exact path="/user/login" component={UserLogin} />
+      <Route exact path="/user/activation/:activationToken" component={UserActivation} />
+      <Route exact path="/company" component={CompanyHome} />
+      <Route exact path="/company/register" component={CompanyRegister} />
+      <Route exact path="/company/login" component={CompanyLogin} />
+      <Route exact path="/company/activation/:activationToken" component={CompanyActivation} />
     </Switch>
   )
 }

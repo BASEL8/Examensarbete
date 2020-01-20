@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
     color: 'white',
     fontWeight: 700,
-    margin: '0 5px'
+    margin: '0 10px'
   }
 }));
 
@@ -33,9 +33,9 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
       <div className={classes.list}>
         <Link className={classes.link} to={"/"}>Talents</Link>
         <Link className={classes.link} to={"/company"}>Companies</Link>
-        <Link className={classes.link} to={"/register"}>Register</Link>
-        <Button variant="outlined" color="inherit">
-          <Link className={classes.link} to={"/login"}>login</Link>
+        <Link className={classes.link} to={"/user/register"}>Register</Link>
+        <Button variant="outlined" color="inherit" style={{ marginLeft: 20, marginRight: 20 }}>
+          <Link className={classes.link} to={"/user/login"}>login</Link>
         </Button>
 
       </div>

@@ -9,7 +9,6 @@ const useStyles = makeStyles(theme => {
       background: theme.palette.primary.main,
       display: 'flex',
       alignItems: 'center',
-      marginTop: 100
     },
     paper: {
       display: 'flex',

@@ -16,3 +16,7 @@ box-sizing: content-box;
 min-height: 100vh;
 display: flex;
 }
+p{
+  line-height: 2;
+  word-spacing: 1.4;
+}
