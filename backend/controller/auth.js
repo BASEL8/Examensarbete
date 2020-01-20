@@ -58,7 +58,7 @@ exports.signup = (req, res) => {
           }
           const name = user.name;
           const email = user.email
-          res.json({ success: 'Signup success! please login', name, email })
+          res.json({ success: `Congratulations ${name}, you have an account and you will now be redirect to login page`, email })
         })
 
       }
