@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
+import { login } from '../../actions/userAuth'
+import { authenticate, isAuth } from '../../actions/auth'
 const useStyles = makeStyles(theme => ({
   left: {
     height: '100%',
@@ -41,9 +43,17 @@ const Alert = (props) => {
 
 const UserLogin = () => {
   const classes = useStyles();
-  const [state, setState] = useState({ name: '', email: '', password: '', error: 'test' })
+  const location = useLocation();
+  const history = useHistory();
+  const [state, setState] = useState({ email: location.state && location.state.email ? location.state.email : '', password: '', error: '' })
   const { email, password, error } = state;
   const [open, setOpen] = useState(true)
+  useEffect(() => {
+    if (isAuth()) {
+      history.push("/")
+    }
+  }, [history])
+
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
@@ -52,12 +62,18 @@ const UserLogin = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(state)
+    login({ email, password }).then(res => {
+      if (res.error) {
+        setOpen(true)
+        return setState({ ...state, email: '', password: '', error: res.error })
+      } else {
+        setState({ ...state, error: '', loading: false })
+        authenticate(res, () => history.push("/"))
+      }
+    })
   }
-
   return (
     <AuthIndex>{
-
       <>
         <h3>Login</h3>
         <form onSubmit={handleSubmit} className={classes.form}>
@@ -79,7 +95,7 @@ const UserLogin = () => {
           />
           <Button variant="contained" color="primary" size="large" type="submit">Login</Button>
         </form>
-        {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} style={{ position: 'fixed', left: 100 }}>
+        {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">{error}</Alert>
         </Snackbar>}
         <Link to="/company/login">Employer ? Login here</Link>

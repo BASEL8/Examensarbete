@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
+import { isAuth } from '../../actions/auth'
 
 //actions 
 import { preSignup } from '../../actions/userAuth'
@@ -43,27 +44,33 @@ const Alert = (props) => {
 }
 const UserRegister = () => {
   const classes = useStyles();
-  const [state, setState] = useState({ username: '', email: '', password: '', error: 'test', message: '' })
-  const { username, email, password, error, message } = state;
+  const history = useHistory()
+  const [state, setState] = useState({ name: '', email: '', password: '', error: 'test', message: '' })
+  const { name, email, password, error, message } = state;
   const [openError, setOpenError] = useState(true)
   const [openSuccess, setOpenSuccess] = useState(true)
+
+  useEffect(() => {
+    if (isAuth()) {
+      history.push("/")
+    }
+  }, [history])
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    preSignup({ email, username, password }).then(res => {
+    preSignup({ email, name, password }).then(res => {
       if (res.err) {
         setOpenError(true)
-        return setState({ ...setState, error: res.er, username: '', email: '', password: '', message: '' })
+        return setState({ ...setState, error: res.er, name: '', email: '', password: '', message: '' })
       }
       setOpenSuccess(true)
-      setState({ ...state, error: '', username: '', email: '', password: '', message: res.success })
+      setState({ ...state, error: '', name: '', email: '', password: '', message: res.success })
     }
     )
   }
-  console.log(message)
   return (
     <AuthIndex>{
       <>
@@ -81,8 +88,8 @@ const UserRegister = () => {
           />
           <TextField
             label="Name"
-            name="username"
-            value={username}
+            name="name"
+            value={name}
             onChange={handleChange}
             variant="outlined"
             type="text"

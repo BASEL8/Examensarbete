@@ -12,7 +12,6 @@ export const preSignup = (user) => {
   }).then(res => res.json()).catch(error => error)
 }
 export const signup = (activationToken) => {
-  console.log(activationToken)
   return fetch(`${API}/signup`, {
     method: 'POST',
     headers: {

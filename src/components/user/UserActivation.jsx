@@ -1,37 +1,37 @@
 import React, { useState, userEffect, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import MuiAlert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
 import { signup } from '../../actions/userAuth'
+import { useHistory } from 'react-router-dom'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 
 const UserActivation = () => {
   const { activationToken } = useParams()
-  const [state, setState] = useState({ error: 'test' })
-  const { error } = state;
-  const [open, setOpen] = useState(true)
-  const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value })
-  }
-  const handleClose = (event, reason) => {
-    setOpen(false);
-  };
+  const history = useHistory()
+  const [state, setState] = useState({ error: '', success: '' })
+  const { error, success } = state;
   useEffect(() => {
-    activationToken && signup(activationToken).then(res => console.log(res))
-  }, [activationToken])
+    activationToken && signup(activationToken).then(res => {
+      if (res.error) {
+        setState({ error: res.error, success: '' })
+      }
+      else {
+        setState({ error: '', success: res.success })
+      }
+      return setTimeout(() => { history.push('/user/login', { email: res.email }) }, 10000)
+    })
+  }, [activationToken, history])
+  console.log(state)
   return (
     <AuthIndex>{
       <>
-        <h3>{activationToken}</h3>
-        <p>waiting for user account Activation</p>
-        {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} style={{ position: 'fixed', left: 100 }}>
-          <Alert onClose={handleClose} severity="error">{error}</Alert>
-        </Snackbar>}
+        {(!error && !success) && <CircularProgress />}
+        {!success ?
+          <h4 style={{ textAlign: 'center' }}>{error}, <Link style={{ margin: '0 10px' }} to='/user/login'>Login </Link> with this emil or reset your password</h4>
+          : <h4 style={{ textAlign: 'center' }}>{success}, or click here <Link style={{ margin: '0 10px' }} to='/user/login'>Login </Link></h4>}
       </>
     }</AuthIndex>
   )

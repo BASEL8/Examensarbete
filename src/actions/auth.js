@@ -1,5 +1,6 @@
 import cookie from 'js-cookie'
 import { history } from '../index'
+import { API } from '../config'
 
 export const handleResponse = (res) => {
   if (res.status === 401) {
@@ -48,4 +49,10 @@ export const isAuth = () => {
       return false
     }
   }
+}
+export const signout = (next) => {
+  removeCookie('token');
+  removeLocalStorage('user');
+  next(false);
+  return fetch(`${API}/signout`, { method: 'GET' }).then(res => res).catch(error => console.log(error))
 }
