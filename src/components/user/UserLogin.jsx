@@ -39,8 +39,6 @@ const useStyles = makeStyles(theme => ({
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-
 const UserLogin = () => {
   const classes = useStyles();
   const location = useLocation();

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
+import { useLocation, useHistory } from 'react-router-dom';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
+import { isAuth, authenticate } from '../../actions/auth'
+import { login } from '../../actions/companyAuth'
 const useStyles = makeStyles(theme => ({
   left: {
     height: '100%',
@@ -36,13 +39,18 @@ const useStyles = makeStyles(theme => ({
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-
 const UserLogin = () => {
+  const location = useLocation();
+  const history = useHistory();
   const classes = useStyles();
-  const [state, setState] = useState({ email: '', password: '', error: 'test' })
+  const [state, setState] = useState({ email: location.state && location.state.email ? location.state.email : '', password: '', error: '' })
   const { email, password, error } = state;
   const [open, setOpen] = useState(true)
+  useEffect(() => {
+    if (isAuth()) {
+      history.push("/")
+    }
+  }, [history])
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
@@ -51,7 +59,16 @@ const UserLogin = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(state)
+    login({ email, password }).then(res => {
+      console.log(res)
+      if (res.error) {
+        setOpen(true)
+        return setState({ ...state, email: '', password: '', error: res.error })
+      } else {
+        setState({ ...state, error: '', loading: false })
+        authenticate(res, () => history.push("/"))
+      }
+    })
   }
 
   return (

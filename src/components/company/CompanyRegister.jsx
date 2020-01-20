@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
+import { useHistory } from 'react-router-dom'
+import { isAuth } from '../../actions/auth'
+import { preSignup } from '../../actions/companyAuth'
 const useStyles = makeStyles(theme => ({
   form: {
     width: '90%',
@@ -25,22 +28,34 @@ const useStyles = makeStyles(theme => ({
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-
 const CompanyRegister = () => {
   const classes = useStyles();
-  const [state, setState] = useState({ name: '', email: '', password: '', error: 'test' })
-  const { name, email, password, error } = state;
-  const [open, setOpen] = useState(true)
+  const history = useHistory()
+  const [state, setState] = useState({ companyName: '', email: '', password: '', organisationNumber: '', error: '', message: '' })
+  const { companyName, email, password, organisationNumber, error, message } = state;
+  const [openError, setOpenError] = useState(true)
+  const [openSuccess, setOpenSuccess] = useState(true)
+  useEffect(() => {
+    if (isAuth()) {
+      history.push("/")
+    }
+  }, [history])
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
-  const handleClose = (event, reason) => {
-    setOpen(false);
-  };
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(state)
+    preSignup({ email, companyName, organisationNumber, password }).then(res => {
+      console.log(res)
+      if (res.err) {
+        setOpenError(true)
+        return setState({ ...setState, error: res.er, name: '', email: '', password: '', message: '' })
+      }
+      setOpenSuccess(true)
+      setState({ ...state, error: '', name: '', email: '', password: '', message: res.success })
+    }
+    )
   }
 
   return (
@@ -57,9 +72,17 @@ const CompanyRegister = () => {
             type="email"
           />
           <TextField
-            label="Name"
-            name="name"
-            value={name}
+            label="company name"
+            name="companyName"
+            value={companyName}
+            onChange={handleChange}
+            variant="outlined"
+            type="text"
+          />
+          <TextField
+            label="Organisation number"
+            name="organisationNumber"
+            value={organisationNumber}
             onChange={handleChange}
             variant="outlined"
             type="text"
@@ -74,8 +97,11 @@ const CompanyRegister = () => {
           />
           <Button variant="contained" color="primary" size="large" type="submit">Submit</Button>
         </form>
-        {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} style={{ position: 'fixed', left: 100 }}>
-          <Alert onClose={handleClose} severity="error">{error}</Alert>
+        {error && <Snackbar open={openError} autoHideDuration={10000} onClose={() => setOpenError(false)} >
+          <Alert onClose={() => setOpenError(false)} severity="error">{error}</Alert>
+        </Snackbar>}
+        {message && <Snackbar open={openSuccess} autoHideDuration={10000} onClose={() => setOpenSuccess(false)} >
+          <Alert onClose={() => setOpenSuccess(false)} severity="success">{message}</Alert>
         </Snackbar>}
       </>
     }</AuthIndex>

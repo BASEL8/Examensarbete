@@ -1,6 +1,5 @@
-import React, { useState, userEffect, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import MuiAlert from '@material-ui/lab/Alert';
 import AuthIndex from '../AuthIndex'
 import { signup } from '../../actions/userAuth'
 import { useHistory } from 'react-router-dom'
@@ -24,7 +23,6 @@ const UserActivation = () => {
       return setTimeout(() => { history.push('/user/login', { email: res.email }) }, 10000)
     })
   }, [activationToken, history])
-  console.log(state)
   return (
     <AuthIndex>{
       <>

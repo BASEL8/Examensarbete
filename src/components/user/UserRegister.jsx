@@ -45,7 +45,7 @@ const Alert = (props) => {
 const UserRegister = () => {
   const classes = useStyles();
   const history = useHistory()
-  const [state, setState] = useState({ name: '', email: '', password: '', error: 'test', message: '' })
+  const [state, setState] = useState({ name: '', email: '', password: '', error: '', message: '' })
   const { name, email, password, error, message } = state;
   const [openError, setOpenError] = useState(true)
   const [openSuccess, setOpenSuccess] = useState(true)
