@@ -229,7 +229,7 @@ exports.signupCompany = (req, res) => {
           }
           const companyName = company.companyName;
           const email = company.email
-          res.json({ success: 'Signup success! please login', companyName, email })
+          res.json({ success: `Congratulations ${companyName}, you have an account and you will now be redirect to login page`, email })
         })
       }
     })
@@ -260,7 +260,7 @@ exports.signinCompany = (req, res) => {
     const { email, companyName, organisationNumber, profile, profileComplete, _id } = company
     res.json({
       token,
-      company: { email, companyName, organisationNumber, profile, profileComplete, _id }
+      user: { email, companyName, organisationNumber, profile, profileComplete, _id }
     })
   })
 }
