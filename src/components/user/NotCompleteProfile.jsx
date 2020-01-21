@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper';
@@ -35,16 +35,18 @@ const useStyles = makeStyles(theme => ({
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'column',
+      width: '100%'
     },
     '& > form': {
-      width: '100%',
+
       padding: 30,
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'stretch',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
       '& > * ': {
         marginTop: 30,
-        flex: 1
+        width: '100%',
       }
 
     }
@@ -58,15 +60,35 @@ function getSteps(error) {
 }
 const FirstProfile = () => {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = useState(1);
-  const [userData, setUserData] = useState({})
+  const [activeStep, setActiveStep] = useState(0);
+  const [userData, setUserData] = useState({
+    about: '',
+    wantToWorkAs: '',
+    cities: [],
+    kindOfEmployment: '',
+    salary: 0,
+    languages: [],
+    lookingForJob: '',
+    available: '',
+    reasonToNewJob: '',
+    workingRemotely: '',
+    priorityBenefits: [],
+    profession: {
+      name: 'Technology & development',
+      years: 0,
+      subProfessions: [{ name: 'System  Architect' }]
+    },
+    reasonToNewJob: '',
+    workingRemotely: '',
+    priorityBenefits: []
+  })
   const steps = getSteps();
   const getStepContent = (step) => {
     switch (step) {
       case 0:
         return <GeneralInfoForm userData={userData} setUserData={setUserData} />;
       case 1:
-        return <ProfessionForm />;
+        return <ProfessionForm userData={userData} setUserData={setUserData} />;
       case 2:
         return <p>Confirm</p>;
       case 3:
@@ -85,6 +107,12 @@ const FirstProfile = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
   const handleSend = () => { }
+  //console.log(userData)
+  const handelSubmit = () => { }
+  useEffect(() => {
+    console.log(Object.values(userData).map(value => typeof value))
+    console.log(Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value))
+  }, [userData])
   return (
     <div className={classes.root}>
       <Grid container>
@@ -106,10 +134,9 @@ const FirstProfile = () => {
         </Grid>
         <Grid item xs={12} md={9} style={{ padding: 0, margin: 0 }}>
           <div className={classes.left}>
-            <form>
+            <form onSubmit={handelSubmit}>
               {getStepContent(activeStep)}
             </form>
-
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>Back</Button>
               {activeStep !== (steps.length - 2) ?
@@ -118,6 +145,7 @@ const FirstProfile = () => {
                   color="primary"
                   onClick={handleNext}
                   className={classes.button}
+                  disabled={(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
                 >
                   Next
                   </Button>

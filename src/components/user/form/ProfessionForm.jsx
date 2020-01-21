@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3),
   },
   radioTable: {
-    textAlign: 'center',
     margin: '15px 0'
   },
   radioGroup: {
@@ -45,23 +44,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProfessionForm = () => {
+const ProfessionForm = ({ setUserData, userData }) => {
   const classes = useStyles()
-  const [userInfo, setUserInfo] = useState({
-    profession: {
-      name: 'Technology & development',
-      years: 0,
-      subProfessions: []
-    },
-    reasonToNewJob: '',
-    workingRemotely: '',
-    priorityBenefits: []
-  })
-  const { reasonToNewJob, workingRemotely, priorityBenefits, profession } = userInfo;
+
+  const { reasonToNewJob, workingRemotely, priorityBenefits, profession } = userData;
   const handleChange = (event) => {
     if (event.target.name === 'profession') {
-      setUserInfo({
-        ...userInfo,
+      setUserData({
+        ...userData,
         profession: {
           years: 0, subProfessions: [],
           name: event.target.value
@@ -70,15 +60,15 @@ const ProfessionForm = () => {
     }
     if (event.target.name === 'subProfession') {
       if (profession.subProfessions.map((ob, index) => ob.name).indexOf(event.target.value) === -1) {
-        setUserInfo({
-          ...userInfo,
+        setUserData({
+          ...userData,
           profession: {
             ...profession, subProfessions: [...profession.subProfessions, { name: event.target.value }]
           }
         })
       } else {
-        setUserInfo({
-          ...userInfo,
+        setUserData({
+          ...userData,
           profession: {
             ...profession,
             subProfessions: profession.subProfessions.filter((ob) => ob.name !== event.target.value)
@@ -87,17 +77,17 @@ const ProfessionForm = () => {
       }
     }
     if (event.target.name === 'reasonToNewJob') {
-      setUserInfo({ ...userInfo, reasonToNewJob: event.target.value })
+      setUserData({ ...userData, reasonToNewJob: event.target.value })
     }
     if (event.target.name === 'workingRemotely') {
-      setUserInfo({ ...userInfo, workingRemotely: event.target.value })
+      setUserData({ ...userData, workingRemotely: event.target.value })
     }
     if (event.target.name === 'priorityBenefits') {
       if (priorityBenefits.indexOf(event.target.value) === -1 && priorityBenefits.length <= 8) {
-        setUserInfo({ ...userInfo, priorityBenefits: [...priorityBenefits, event.target.value] })
+        setUserData({ ...userData, priorityBenefits: [...priorityBenefits, event.target.value] })
       }
       else {
-        setUserInfo({ ...userInfo, priorityBenefits: priorityBenefits.filter(b => b !== event.target.value) })
+        setUserData({ ...userData, priorityBenefits: priorityBenefits.filter(b => b !== event.target.value) })
       }
     }
   }

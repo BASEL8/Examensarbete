@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom'
 import { isAuth, getCookie } from '../../actions/auth'
 import { getUserProfile } from '../../actions/userAuth'
-import CompleteProfile from './CompleteProfile'
+import NotCompleteProfile from './NotCompleteProfile'
 
 const UserProfile = () => {
   const history = useHistory()
@@ -22,7 +22,7 @@ const UserProfile = () => {
   }, [_id])
   return (
     !user.profileComplete ?
-      <CompleteProfile user={user} />
+      <NotCompleteProfile user={user} />
       :
       <p> user main profile</p>
   )

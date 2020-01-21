@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import { useTheme } from '@material-ui/core/styles'
@@ -44,24 +44,12 @@ const names = [
   'Kelly Snyder',
 ];
 
-const GeneralInfoForm = () => {
+const GeneralInfoForm = ({ setUserData, userData }) => {
   const theme = useTheme();
-  const [UserInfo, setUSerInfo] = useState({
-    about: '',
-    wantToWorkAs: '',
-    cities: [],
-    kindOfEmployment: '',
-    salary: 0,
-    languages: [],
-    lookingForJob: '',
-    available: '',
-    reasonToNewJob: '',
-    workingRemotely: '',
-    priorityBenefits: []
-  });
-  const { about, wantToWorkAs, cities, kindOfEmployment, salary, languages, lookingForJob, available } = UserInfo;
+  const { about, wantToWorkAs, cities, kindOfEmployment, salary, languages, lookingForJob, available } = userData;
   const handleChange = event => {
-    setUSerInfo({ ...UserInfo, [event.target.name]: event.target.value });
+    //setUSerInfo({ ...UserInfo, [event.target.name]: event.target.value });
+    setUserData({ ...userData, [event.target.name]: event.target.value })
   };
   return (
     <>
