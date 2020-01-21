@@ -7,6 +7,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import GeneralInfoForm from './form/GeneralInfoForm'
 import ProfessionForm from './form/ProfessionForm'
+import Confirm from './form/Confirm'
+import SendUserData from './form/SendUserData'
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '90vh',
@@ -60,27 +62,24 @@ function getSteps(error) {
 }
 const FirstProfile = () => {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const [userData, setUserData] = useState({
-    about: '',
-    wantToWorkAs: '',
-    cities: [],
-    kindOfEmployment: '',
-    salary: 0,
-    languages: [],
-    lookingForJob: '',
-    available: '',
-    reasonToNewJob: '',
-    workingRemotely: '',
-    priorityBenefits: [],
+    about: 'about',
+    wantToWorkAs: 'want to work as',
+    cities: ['helsingborg'],
+    kindOfEmployment: 'kind of',
+    salary: 3000,
+    languages: ['arabic'],
+    lookingForJob: 'java',
+    available: 'now',
+    reasonToNewJob: 'blah',
+    workingRemotely: 'yes',
+    priorityBenefits: ['nothing'],
     profession: {
       name: 'Technology & development',
       years: 0,
       subProfessions: [{ name: 'System  Architect' }]
     },
-    reasonToNewJob: '',
-    workingRemotely: '',
-    priorityBenefits: []
   })
   const steps = getSteps();
   const getStepContent = (step) => {
@@ -90,9 +89,9 @@ const FirstProfile = () => {
       case 1:
         return <ProfessionForm userData={userData} setUserData={setUserData} />;
       case 2:
-        return <p>Confirm</p>;
+        return <Confirm userData={userData} />;
       case 3:
-        return <p>send</p>;
+        return <SendUserData userData={userData} />;
       case 4:
         return <p>data sent</p>;
       default:
@@ -107,12 +106,7 @@ const FirstProfile = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
   const handleSend = () => { }
-  //console.log(userData)
-  const handelSubmit = () => { }
-  useEffect(() => {
-    console.log(Object.values(userData).map(value => typeof value))
-    console.log(Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value))
-  }, [userData])
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -134,7 +128,7 @@ const FirstProfile = () => {
         </Grid>
         <Grid item xs={12} md={9} style={{ padding: 0, margin: 0 }}>
           <div className={classes.left}>
-            <form onSubmit={handelSubmit}>
+            <form>
               {getStepContent(activeStep)}
             </form>
             <div>

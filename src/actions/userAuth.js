@@ -44,3 +44,17 @@ export const getUserProfile = (token, _id) => {
     return res.json()
   }).catch(error => error)
 }
+export const updateUserProfile = (token, user) => {
+  return fetch(`${API}/user/update`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ ...user })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
