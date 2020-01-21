@@ -6,7 +6,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import GeneralInfoForm from './form/GeneralInfoForm'
-
+import ProfessionForm from './form/ProfessionForm'
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '90vh',
@@ -16,11 +16,11 @@ const useStyles = makeStyles(theme => ({
     boxShadow: '0px 8px 9px 0px #918b8b',
     display: 'flex',
     alignItems: 'flex-start',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flexDirection: 'column',
     height: '100%',
     background: 'white',
-    padding: 20,
+    padding: 50,
   },
   left: {
     height: '100%',
@@ -43,8 +43,8 @@ const useStyles = makeStyles(theme => ({
       alignItems: 'center',
       justifyContent: 'stretch',
       '& > * ': {
-        minWidth: '70%',
-        marginTop: 30
+        marginTop: 30,
+        flex: 1
       }
 
     }
@@ -58,7 +58,7 @@ function getSteps(error) {
 }
 const FirstProfile = () => {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const [userData, setUserData] = useState({})
   const steps = getSteps();
   const getStepContent = (step) => {
@@ -66,7 +66,7 @@ const FirstProfile = () => {
       case 0:
         return <GeneralInfoForm userData={userData} setUserData={setUserData} />;
       case 1:
-        return <p>profession</p>;
+        return <ProfessionForm />;
       case 2:
         return <p>Confirm</p>;
       case 3:

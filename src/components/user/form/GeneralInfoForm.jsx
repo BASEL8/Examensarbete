@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
@@ -10,7 +10,6 @@ import Chip from '@material-ui/core/Chip';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
 
 
@@ -60,15 +59,10 @@ const GeneralInfoForm = () => {
     workingRemotely: '',
     priorityBenefits: []
   });
-  const { about, wantToWorkAs, cities, kindOfEmployment, salary, languages, lookingForJob, available, reasonToNewJob, workingRemotely, priorityBenefits } = UserInfo;
-  const [profession, setProfession] = useState({})
+  const { about, wantToWorkAs, cities, kindOfEmployment, salary, languages, lookingForJob, available } = UserInfo;
   const handleChange = event => {
     setUSerInfo({ ...UserInfo, [event.target.name]: event.target.value });
-    console.log({ ...UserInfo, [event.target.name]: event.target.value });
   };
-  const handleProfession = () => {
-    setProfession({})
-  }
   return (
     <>
       <TextField
@@ -116,6 +110,7 @@ const GeneralInfoForm = () => {
       <TextField
         label="Desired monthly salary "
         name="salary"
+        value={salary}
         onChange={handleChange}
         variant="outlined"
         type="number"
@@ -182,6 +177,15 @@ const GeneralInfoForm = () => {
           />
         </RadioGroup>
       </FormControl>
+      <TextField
+        label="About you"
+        multiline
+        value={about}
+        name="about"
+        onChange={handleChange}
+        rows="4"
+        variant="outlined"
+      />
     </>
   )
 }
