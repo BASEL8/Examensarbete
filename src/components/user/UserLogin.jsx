@@ -66,7 +66,7 @@ const UserLogin = () => {
         return setState({ ...state, email: '', password: '', error: res.error })
       } else {
         setState({ ...state, error: '', loading: false })
-        authenticate(res, () => history.push("/"))
+        authenticate(res, () => history.push(`/user/profile/${res.user._id}`))
       }
     })
   }

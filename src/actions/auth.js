@@ -53,6 +53,7 @@ export const isAuth = () => {
 export const signout = (next) => {
   removeCookie('token');
   removeLocalStorage('user');
+  history.push('/');
   next(false);
   return fetch(`${API}/signout`, { method: 'GET' }).then(res => res).catch(error => console.log(error))
 }
