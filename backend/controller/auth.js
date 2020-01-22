@@ -89,12 +89,10 @@ exports.signin = (req, res) => {
     //generate a token send to client
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.cookie('token', token, { expiresIn: '1d' })
-    const { _id, username, name, email, role } = user;
+    user.hashed_password = undefined
     res.json({
       token,
-      user: {
-        _id, username, name, email, role,
-      }
+      user
     })
   })
 }
