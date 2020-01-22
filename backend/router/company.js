@@ -5,7 +5,7 @@ const { company, updateCompany, createAnnounce } = require('../controller/compan
 
 
 router.get('/company', company)
-router.put('/company', updateCompany)
+router.put('/company/update', requiresignin, companyAuthMiddleware, updateCompany)
 router.post('/company/announce', requiresignin, companyAuthMiddleware, createAnnounce)
 
 
