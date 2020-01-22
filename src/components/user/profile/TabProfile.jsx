@@ -129,37 +129,39 @@ const TabProfile = () => {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Grid item xs={12} sm={4}>
-            <Paper className={classes.welcomeMessage}>
-              <h1>Welcome , {name}</h1>
-              <div>
-                <h3>{profession.name}</h3>
-                <div style={{ marginTop: 3 }}>
-                  {profession.subProfessions.map((sub, index) => <Chip key={index}
-                    color="primary"
-                    style={{ marginRight: 10, marginTop: 5 }}
-                    label={sub.name} size="small" spacing={1} />)}
-                </div>
+        <Grid item xs={12} sm={4}>
+          <Paper className={classes.welcomeMessage}>
+            <h2>Welcome</h2>
+            <h2>{name}</h2>
+            <div>
+              <h3>{profession.name}</h3>
+              <div style={{ marginTop: 3 }}>
+                {profession.subProfessions.map((sub, index) => <Chip key={index}
+                  color="primary"
+                  style={{ marginRight: 10, marginTop: 5 }}
+                  label={sub.name} size="small" spacing={1} />)}
               </div>
-              <div>
-                created : <Moment fromNow>{createdAt}</Moment> </div>
-              <div>
-                last update: <Moment fromNow>{updatedAt}</Moment> <Button color="secondary" style={{ marginLeft: 10 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
-              </div>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <Paper className={classes.welcomeMessage}>
+            <div>
+              created : <Moment fromNow>{createdAt}</Moment> </div>
+            <div>
+              last update: <Moment fromNow>{updatedAt}</Moment> <Button color="secondary" style={{ marginLeft: 10 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
+            </div>
 
-              <div style={{ textTransform: 'lowercase' }}>
-                {email}
-              </div>
-              <div>
-                published: {published ? <>yes <span role="img" aria-label="happy">&#128512;</span></> : <><span>no</span> <span role="img" aria-label="sad">&#128552;</span></>}
-              </div>
-              <div>{!published && <Button variant="outlined" color="secondary">Publish now</Button>}</div>
-            </Paper>
-          </Grid>
+            <div style={{ textTransform: 'lowercase' }}>
+              {email}
+            </div>
+            <div>
+              published: {published ? <>yes <span role="img" aria-label="happy">&#128512;</span></> : <><span>no</span> <span role="img" aria-label="sad">&#128552;</span></>}
+            </div>
+            <div>{!published && <Button variant="outlined" color="secondary">Publish now</Button>}</div>
+          </Paper>
         </Grid>
-        <Grid item xs={12}>
-        </Grid>
+
         <Grid item xs={12} sm={6}>
           <Paper className={classes.info}>
             <div>
@@ -180,7 +182,7 @@ const TabProfile = () => {
             </div>
             <div>
               <h3>{cities.length > 1 ? 'cities' : 'city'} that your are looking to work in : </h3>
-              <div>{cities.join(',')}</div>
+              <div>{cities.join(', ')}</div>
             </div>
             <div>
               <h3>kind of employment</h3>
@@ -192,11 +194,11 @@ const TabProfile = () => {
           <Paper className={classes.info_2}>
             <div>
               <h3>languages</h3>
-              <div>{languages}</div>
+              <div>{languages.join(', ')}</div>
             </div>
             <div>
               <h3>your {priorityBenefits.length} most priority benefits</h3>
-              <div>{priorityBenefits}</div>
+              <div>{priorityBenefits.join(', ')}</div>
             </div>
             <div>
               <h3>reasonToNewJob</h3>
@@ -212,7 +214,6 @@ const TabProfile = () => {
             </div>
           </Paper>
         </Grid>
-
         <Grid item xs={12} sm={3}>
           <Paper className={classes.soon}>sOon</Paper>
         </Grid>

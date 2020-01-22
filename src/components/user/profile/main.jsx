@@ -13,6 +13,8 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import BlockIcon from '@material-ui/icons/Block';
 import BlockOutlinedIcon from '@material-ui/icons/BlockOutlined';
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
+import MessageIcon from '@material-ui/icons/Message';
 import TabProfile from './TabProfile'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -128,20 +130,24 @@ const Main = () => {
         className={classes.tabs}
       >
         <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
-        <Tab label={value !== 1 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
-        <Tab label={value !== 2 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
-        <Tab label={value !== 3 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+        <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
+        <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+        <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
+        <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
         <TabProfile />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        contacted by
+        all contact requests
       </TabPanel>
       <TabPanel value={value} index={2}>
-        search
+        connecting with just now
       </TabPanel>
       <TabPanel value={value} index={3}>
+        search
+      </TabPanel>
+      <TabPanel value={value} index={4}>
         blocked
       </TabPanel>
     </div>
