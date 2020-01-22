@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import GeneralInfoForm from './form/GeneralInfoForm'
 import ProfessionForm from './form/ProfessionForm'
 import SendUserData from './form/SendUserData'
+import { isAuth } from '../../actions/auth';
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '90vh',
@@ -67,22 +68,25 @@ function getSteps(error) {
 const FirstProfile = () => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0);
-  const [userData, setUserData] = useState({
-    about: 'about',
-    wantToWorkAs: 'want to work as',
-    cities: ['helsingborg'],
-    kindOfEmployment: 'kind of',
-    salary: 3000,
-    languages: ['arabic'],
-    lookingForJob: 'java',
-    available: 'now',
-    reasonToNewJob: 'blah',
-    workingRemotely: 'yes',
-    priorityBenefits: ['nothing'],
+  let user = isAuth()
+  delete user.role
+  delete user.published
+  const [userData, setUserData] = useState(isAuth().profileComplete ? { ...user } : {
+    about: '',
+    wantToWorkAs: '',
+    cities: [],
+    kindOfEmployment: '',
+    salary: 0,
+    languages: [],
+    lookingForJob: '',
+    available: '',
+    reasonToNewJob: '',
+    workingRemotely: '',
+    priorityBenefits: [''],
     profession: {
-      name: 'Technology & development',
+      name: '',
       years: 0,
-      subProfessions: [{ name: 'System  Architect' }]
+      subProfessions: [{ name: '' }]
     },
   })
   const [error, setError] = useState('')
@@ -107,7 +111,8 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
-
+  console.log(Object.values(userData).map(value => value))
+  console.log(Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value))
   return (
     <div className={classes.root}>
       <div className={classes.left}>

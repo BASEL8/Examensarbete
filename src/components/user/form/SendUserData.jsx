@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { updateUserProfile } from '../../../actions/userAuth'
-import { getCookie, isAuth, authenticate } from '../../../actions/auth'
+import { getCookie, isAuth, setLocalStorage } from '../../../actions/auth'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom'
 const SendUserData = ({ userData, setError, setActiveStep }) => {
@@ -13,6 +13,8 @@ const SendUserData = ({ userData, setError, setActiveStep }) => {
         return setError(res.error)
       } else {
         setLoading(false)
+        setLocalStorage('user', res)
+        console.log(res)
       }
     })
   }, [setActiveStep, setError, userData])

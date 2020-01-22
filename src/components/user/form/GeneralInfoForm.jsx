@@ -32,17 +32,16 @@ const MenuProps = {
   },
 };
 const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+  'Helsingborg',
+  'Stockholm',
+  'Malmö',
+  'Oslo',
 ];
+const languages_ = [
+  'Arabic',
+  'Swedish',
+  'English'
+]
 
 const GeneralInfoForm = ({ setUserData, userData }) => {
   const theme = useTheme();
@@ -121,7 +120,7 @@ const GeneralInfoForm = ({ setUserData, userData }) => {
             </div>
           )}
         >
-          {names.map(name => (
+          {languages_.map(name => (
             <MenuItem key={name} value={name} style={getStyles(name, cities, theme)}>
               {name}
             </MenuItem>

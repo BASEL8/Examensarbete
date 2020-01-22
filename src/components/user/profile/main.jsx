@@ -13,6 +13,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import BlockIcon from '@material-ui/icons/Block';
 import BlockOutlinedIcon from '@material-ui/icons/BlockOutlined';
+import TabProfile from './TabProfile'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -46,29 +47,34 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     minHeight: '90vh',
+    '& .MuiTypography-root': {
+      flex: 1
+    },
     '& .MuiTabs-root': {
       border: 'none',
+      flexShrink: 0
     },
     '& .MuiTabs-flexContainer': {
       background: theme.palette.primary.main,
       padding: '20px 10px',
       borderRadius: 10,
-      margin: 20,
+      margin: '23px 20px',
       width: 60,
-      height: '90%',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      boxShadow: '0px 2px 1px 1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)'
     },
     '& .MuiTabs-scroller': {
       display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
+      justifyContent: 'stretch',
+      alignItems: 'flex-start'
     },
     '& .MuiTabs-indicator': {
-      width: '50%',
+      width: '55%',
       borderTopLeftRadius: '100%',
       borderBottomLeftRadius: '100%',
       background: 'white',
-      right: 18,
+      right: 15,
+
       '&:before': {
         zIndex: 999,
         content: '""',
@@ -127,7 +133,7 @@ const Main = () => {
         <Tab label={value !== 3 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        user profile
+        <TabProfile />
       </TabPanel>
       <TabPanel value={value} index={1}>
         contacted by
