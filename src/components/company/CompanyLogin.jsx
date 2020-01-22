@@ -60,13 +60,16 @@ const UserLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     login({ email, password }).then(res => {
-      console.log(res)
       if (res.error) {
         setOpen(true)
         return setState({ ...state, email: '', password: '', error: res.error })
       } else {
         setState({ ...state, error: '', loading: false })
-        authenticate(res, () => history.push("/"))
+        if (res.user.profileComplete) {
+          authenticate(res, () => history.push(`/company/profile/${res.user._id}`))
+        } else {
+          authenticate(res, () => history.push(`/company/update/${res.user._id}`))
+        }
       }
     })
   }

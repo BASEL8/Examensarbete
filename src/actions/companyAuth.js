@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { API } from '../config'
+import { handleResponse } from './auth'
 
 export const preSignup = (user) => {
   return fetch(`${API}/company/pre-signup`, {
@@ -30,4 +31,18 @@ export const login = (user) => {
     },
     body: JSON.stringify(user)
   }).then(res => res.json()).catch(error => error)
+}
+export const updateCompanyProfile = (token, user) => {
+  return fetch(`${API}/company/update`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ ...user })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
 }

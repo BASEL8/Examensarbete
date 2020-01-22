@@ -13,7 +13,8 @@ import CompanyRegister from './company/CompanyRegister'
 import CompanyLogin from './company/CompanyLogin'
 import CompanyActivation from './company/CompanyActivation'
 import NotCompleteProfile from './user/NotCompleteProfile'
-
+import CompanyNotComplete from './company/CompanyNotComplete'
+import CompanyProfile from './company/CompanyProfile'
 const MainRouter = () => {
   return (
 
@@ -28,6 +29,8 @@ const MainRouter = () => {
       <Route exact path="/company/register" component={CompanyRegister} />
       <Route exact path="/company/login" component={CompanyLogin} />
       <Route exact path="/company/activation/:activationToken" component={CompanyActivation} />
+      <Route exact path="/company/update/:_id" component={CompanyNotComplete} />
+      <Route exact path="/company/profile/:_id" component={CompanyProfile} />
     </Switch>
   )
 }
