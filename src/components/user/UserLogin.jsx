@@ -66,7 +66,12 @@ const UserLogin = () => {
         return setState({ ...state, email: '', password: '', error: res.error })
       } else {
         setState({ ...state, error: '', loading: false })
-        authenticate(res, () => history.push(`/user/profile/${res.user._id}`))
+        if (res.user.profileComplete) {
+          authenticate(res, () => history.push(`/user/profile/${res.user._id}`))
+        } else {
+          authenticate(res, () => history.push(`/user/update/${res.user._id}`))
+        }
+
       }
     })
   }
