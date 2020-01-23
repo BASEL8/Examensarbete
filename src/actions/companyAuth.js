@@ -46,3 +46,31 @@ export const updateCompanyProfile = (token, user) => {
     return res.json()
   }).catch(error => error)
 }
+export const companyCreateAnnounce = (token, announce) => {
+  return fetch(`${API}/company/announce`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ ...announce })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
+export const getCompanyProfile = (token) => {
+  return fetch(`${API}/company`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
+export const getUserPublicProfile = (token, _id) => { }

@@ -47,7 +47,6 @@ const GeneralInfoForm = ({ setUserData, userData }) => {
   const theme = useTheme();
   const { about, wantToWorkAs, cities, kindOfEmployment, salary, languages, lookingForJob, available } = userData;
   const handleChange = event => {
-    //setUSerInfo({ ...UserInfo, [event.target.name]: event.target.value });
     setUserData({ ...userData, [event.target.name]: event.target.value })
   };
   return (

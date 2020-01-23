@@ -15,6 +15,7 @@ import BlockIcon from '@material-ui/icons/Block';
 import BlockOutlinedIcon from '@material-ui/icons/BlockOutlined';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import MessageIcon from '@material-ui/icons/Message';
+import CompanyTabProfile from './CompanyTabProfile'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -141,7 +142,7 @@ const Main = () => {
         <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        profile
+        <CompanyTabProfile />
       </TabPanel>
       <TabPanel value={value} index={1}>
         all contact requests
