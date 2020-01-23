@@ -218,8 +218,8 @@ exports.signupCompany = (req, res) => {
       } else {
         const { email, password, companyName, organisationNumber } = decoded
         let profile = `${process.env.CLIENT_URL}/profile/company/${companyName}`;
-        let company = new Company({ email, password, companyName, organisationNumber, profile });
-        company.save((err, user) => {
+        let newCompany = new Company({ email, password, companyName, organisationNumber, profile });
+        newCompany.save((err, company) => {
           if (err) {
             return res.status(400).json({
               error: errorHandler(err)

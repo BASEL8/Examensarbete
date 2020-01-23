@@ -11,7 +11,7 @@ const companySchema = new mongoose.Schema({
     lowercase: true
   },
   organisationNumber: {
-    type: Number,
+    type: String,
     trim: true,
     required: true,
     unique: true,
@@ -58,6 +58,12 @@ const companySchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
+  createdBy: {
+    type: String
+  },
+  city: {
+    type: String
+  }
 
 }, { timestamps: true })
 
