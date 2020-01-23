@@ -14,12 +14,16 @@ exports.updateCompany = (req, res) => {
         companyName,
         organisationNumber,
         about,
-        website
+        website,
+        city,
+        createdBy
       } = req.body
       company.companyName = companyName
       company.organisationNumber = organisationNumber
       company.about = about
       company.website = website
+      company.city = city
+      company.createdBy = createdBy
       company.profileComplete = Object.values(req.body).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) === -1
       company.save((err, response) => {
         if (err) {
