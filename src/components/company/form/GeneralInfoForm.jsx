@@ -5,7 +5,10 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
   const { companyName,
     organisationNumber,
     about,
-    website } = userData;
+    website,
+    createdBy,
+    city
+  } = userData;
   const handleChange = event => {
     setUserData({ ...userData, [event.target.name]: event.target.value })
   };
@@ -29,6 +32,20 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
         label="website"
         name="website"
         value={website}
+        onChange={handleChange}
+        variant="outlined"
+      />
+      <TextField
+        label="this account Created By"
+        value={createdBy}
+        name="createdBy"
+        onChange={handleChange}
+        variant="outlined"
+      />
+      <TextField
+        label="City"
+        value={city}
+        name="city"
         onChange={handleChange}
         variant="outlined"
       />

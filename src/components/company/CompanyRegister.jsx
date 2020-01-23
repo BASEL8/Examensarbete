@@ -53,7 +53,7 @@ const CompanyRegister = () => {
         return setState({ ...setState, error: res.er, name: '', email: '', password: '', message: '' })
       }
       setOpenSuccess(true)
-      setState({ ...state, error: '', name: '', email: '', password: '', message: res.success })
+      setState({ ...state, error: '', name: '', email: '', password: '', organisationNumber: '', message: res.success })
     }
     )
   }
