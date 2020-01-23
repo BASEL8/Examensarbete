@@ -35,44 +35,19 @@ exports.updateCompany = (req, res) => {
 }
 exports.createAnnounce = (req, res) => {
   const { _id } = req.profile
-  const { wantToWorkAs,
-    cities,
-    salary,
-    lookingForJob,
-    available,
-    workingRemotely,
+  const {
+    city,
     priorityBenefits,
-    profession } = req.body;
-  if (!wantToWorkAs) {
-    return res.json({ err: 'wantToWorkAs is required' })
-  }
-  if (!cities || cities.length === 0) {
-    return res.json({ err: 'cities is required' })
-  }
-  if (!salary || salary === 0) {
-    return res.json({ err: 'salary is required' })
-  }
-  if (!workingRemotely) {
-    return res.json({ err: 'workingRemotely is required' })
-  }
-  if (!lookingForJob) {
-    return res.json({ err: 'lookingForJob is required' })
-  }
-  if (!available) {
-    return res.json({ err: 'available is required' })
-  }
-  if (!profession) {
-    return res.json({ err: 'profession is required' })
-  }
+    profession,
+    workingRemotely,
+    kindOfEmployment
+  } = req.body;
   let announce = new Announce();
-  announce.wantToWorkAs = wantToWorkAs
-  announce.cities = cities
-  announce.salary = salary
-  announce.lookingForJob = lookingForJob
-  announce.available = available
+  announce.city = city
   announce.workingRemotely = workingRemotely
   announce.priorityBenefits = priorityBenefits
   announce.profession = profession
+  announce.kindOfEmployment = kindOfEmployment
   announce.company = _id;
   // let arrayOfCategories = categories && categories.split(',')
   // let arrayOfTags = tags && tags.split(',')
