@@ -14,7 +14,6 @@ const SendUserData = ({ setError, setActiveStep, userData }) => {
       } else {
         setLoading(false)
         setLocalStorage('user', res)
-        console.log(res)
       }
     })
   }, [setActiveStep, setError, userData])

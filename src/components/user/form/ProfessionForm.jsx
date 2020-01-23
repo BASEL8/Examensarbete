@@ -353,13 +353,12 @@ const ProfessionForm = ({ setUserData, userData }) => {
     , "development Opportunities"
     , "Just want to work in -house"
   ]
-  console.log()
   return (
     <>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend" className={classes.radioTable}>Profession</FormLabel>
         <RadioGroup aria-label="profession" name="profession" value={profession.name} onChange={handleChange} className={classes.radioGroup}>
-          {professions.map(({ name }, index) => <FormControlLabel key={index} value={name} control={<Radio />} label={name} />)}
+          {professions.map(({ name }, index) => <FormControlLabel key={index} value={name} control={<Radio color="primary" />} label={name} />)}
 
         </RadioGroup>
       </FormControl>
@@ -395,9 +394,9 @@ const ProfessionForm = ({ setUserData, userData }) => {
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend" className={classes.radioTable}> Interested in working remotely</FormLabel>
         <RadioGroup aria-label="workingRemotely" name="workingRemotely" value={workingRemotely} onChange={handleChange} className={classes.radioGroup}>
-          <FormControlLabel value={'yes'} control={<Radio />} label={'Yes'} />
-          <FormControlLabel value={'no'} control={<Radio />} label={'No'} />
-          <FormControlLabel value={'only remotely'} control={<Radio />} label={'Only remotely'} />
+          <FormControlLabel value={'yes'} control={<Radio color="primary" />} label={'Yes'} />
+          <FormControlLabel value={'no'} control={<Radio color="primary" />} label={'No'} />
+          <FormControlLabel value={'only remotely'} control={<Radio color="primary" />} label={'Only remotely'} />
         </RadioGroup>
       </FormControl>
       <FormGroup className={classes.checkbox}>

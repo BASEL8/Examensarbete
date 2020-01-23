@@ -45,15 +45,22 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.primary.background,
     display: 'flex',
     minHeight: '90vh',
     '& .MuiTypography-root': {
       flex: 1
     },
+    '& .MuiBox-root': {
+      margin: 20,
+      marginLeft: 0,
+      borderRadius: 10,
+      background: 'white',
+      minHeight: '90%'
+    },
     '& .MuiTabs-root': {
       border: 'none',
-      flexShrink: 0
+      flexShrink: 0,
     },
     '& .MuiTabs-flexContainer': {
       background: theme.palette.primary.main,
@@ -70,34 +77,33 @@ const useStyles = makeStyles(theme => ({
       alignItems: 'flex-start'
     },
     '& .MuiTabs-indicator': {
-      width: '55%',
-      borderTopLeftRadius: '100%',
-      borderBottomLeftRadius: '100%',
+      width: 108,
+      borderTopLeftRadius: 300,
+      borderBottomLeftRadius: 300,
       background: 'white',
-      right: 15,
+      right: -33,
 
       '&:before': {
         zIndex: 999,
         content: '""',
         position: 'absolute',
-        top: -32,
-        bottom: 0,
-        right: 0,
-        width: 40,
+        top: -34,
+        right: 33,
+        width: 44,
         height: 34,
         borderRadius: '50%',
-        boxShadow: '17px 16px 4px 0 white'
+        boxShadow: `18px 20px 4px 0 white`
       },
       '&:after': {
         zIndex: 999,
         content: '""',
         position: 'absolute',
         bottom: -32,
-        right: 0,
-        width: 40,
+        right: 33,
+        width: 44,
         height: 34,
         borderRadius: '50%',
-        boxShadow: '17px -16px 4px 0 white'
+        boxShadow: `18px -20px 4px 0 white`
       }
     },
     '& .MuiButtonBase-root': {

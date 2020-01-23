@@ -12,7 +12,6 @@ const CompanyActivation = () => {
   const { error, success } = state;
   useEffect(() => {
     activationToken && signup(activationToken).then(res => {
-      console.log(res)
       if (res.error) {
         setState({ error: res.error, success: '' })
       }

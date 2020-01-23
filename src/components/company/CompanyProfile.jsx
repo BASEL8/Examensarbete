@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { isAuth } from '../../actions/auth'
 import Main from './profile/Main'
 const CompanyProfile = () => {

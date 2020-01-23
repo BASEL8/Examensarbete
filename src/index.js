@@ -15,10 +15,12 @@ const Main = () => {
   const outerTheme = createMuiTheme({
     palette: {
       primary: {
-        main: '#FF3F6B',
-        mainLight: '#5486FF',
-        second: '#AE0A06'
+        main: '#4267B2',
+        background: '#E9EBEE'
       },
+      text: {
+        primary: '#606770',
+      }
     },
   });
   return (

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -111,8 +110,6 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
-  console.log(Object.values(userData).map(value => value))
-  console.log(Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value))
   return (
     <div className={classes.root}>
       <div className={classes.left}>

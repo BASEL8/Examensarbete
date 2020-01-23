@@ -15,94 +15,15 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: 'left',
     color: theme.palette.text.secondary,
-    minHeight: 150
-  },
-  welcomeMessage: {
-    padding: theme.spacing(2),
-    textAlign: 'left',
+    background: theme.palette.primary.background,
     minHeight: 150,
-    color: 'white',
-    background: '#FFC200',
-    textTransform: 'capitalize',
     '& > * ': {
       marginTop: 10,
-      fontWeight: 600
-    }
-  },
-  info: {
-    padding: theme.spacing(2),
-    minHeight: 150,
-    background: '#51A7FA',
-    color: 'white',
-    '& > div': {
-      marginBottom: 10,
-      paddingBottom: 10,
-      borderBottom: '1px solid white',
-      '& > div': {
-        marginTop: 10
+      '& > span': {
+        fontWeight: 600,
       }
-    },
-    '& > div:last-child': {
-      borderBottom: 'none'
     }
   },
-  info_2: {
-    padding: theme.spacing(2),
-    minHeight: 150,
-    background: '#029579',
-    color: 'white',
-    '& > div': {
-      marginBottom: 10,
-      paddingBottom: 10,
-      borderBottom: '1px solid white',
-      '& > div': {
-        marginTop: 10
-      }
-    },
-    '& > div:last-child': {
-      borderBottom: 'none'
-    }
-  },
-  soon: {
-    padding: theme.spacing(2),
-    minHeight: 150,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
-    fontWeight: 600,
-    background: '#F4EFD3'
-  },
-  soon_1: {
-    padding: theme.spacing(2),
-    minHeight: 150,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
-    fontWeight: 600,
-    background: '#B0EACD'
-  },
-  soon_2: {
-    padding: theme.spacing(2),
-    minHeight: 150,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
-    fontWeight: 600,
-    background: '#FAAFFF'
-  },
-  soon_3: {
-    padding: theme.spacing(2),
-    minHeight: 150,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
-    fontWeight: 600,
-    background: '#B1B075'
-  }
 }));
 const TabProfile = () => {
   const classes = useStyles();
@@ -130,14 +51,15 @@ const TabProfile = () => {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={4}>
-          <Paper className={classes.welcomeMessage}>
-            <h2>Welcome</h2>
+          <Paper className={classes.paper}>
+            <h4>Welcome</h4>
             <h2>{name}</h2>
             <div>
-              <h3>{profession.name}</h3>
+              <h4>{profession.name}</h4>
               <div style={{ marginTop: 3 }}>
                 {profession.subProfessions.map((sub, index) => <Chip key={index}
                   color="primary"
+                  variant="outlined"
                   style={{ marginRight: 10, marginTop: 5 }}
                   label={sub.name} size="small" spacing={1} />)}
               </div>
@@ -145,11 +67,11 @@ const TabProfile = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={8}>
-          <Paper className={classes.welcomeMessage}>
+          <Paper className={classes.paper}>
             <div>
-              created : <Moment fromNow>{createdAt}</Moment> </div>
+              created :<span><Moment fromNow>{createdAt}</Moment></span></div>
             <div>
-              last update: <Moment fromNow>{updatedAt}</Moment> <Button color="secondary" style={{ marginLeft: 10 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
+              last update: <span><Moment fromNow>{updatedAt}</Moment></span> <Button color="primary" style={{ marginLeft: 10 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
             </div>
 
             <div style={{ textTransform: 'lowercase' }}>
@@ -157,74 +79,74 @@ const TabProfile = () => {
             </div>
             <div>
               published: {published ? <>yes <span role="img" aria-label="happy">&#128512;</span></> : <><span>no</span> <span role="img" aria-label="sad">&#128552;</span></>}
+              {!published && <Button style={{ marginLeft: 15 }} size="small" variant="outlined" color="primary">Publish now</Button>}
             </div>
-            <div>{!published && <Button variant="outlined" color="secondary">Publish now</Button>}</div>
           </Paper>
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.info}>
+          <Paper className={classes.paper}>
             <div>
-              <h3>Looking for to work with</h3>
-              <div>{lookingForJob}</div>
+              <div>Looking for to work with</div>
+              <h3>{lookingForJob}</h3>
             </div>
             <div>
-              <h3>You want to work as</h3>
-              <div>{wantToWorkAs}</div>
+              <div>You want to work as</div>
+              <h3>{wantToWorkAs}</h3>
             </div>
             <div>
-              <h3>Working remotely</h3>
-              <div>{workingRemotely}</div>
+              <div>Working remotely</div>
+              <h3>{workingRemotely}</h3>
             </div>
             <div>
-              <h3>Available from</h3>
-              <div>{available}</div>
+              <div>Available from</div>
+              <h3>{available}</h3>
             </div>
             <div>
-              <h3>{cities.length > 1 ? 'cities' : 'city'} that your are looking to work in : </h3>
-              <div>{cities.join(', ')}</div>
+              <div>{cities.length > 1 ? 'cities' : 'city'} that your are looking to work in : </div>
+              <h3>{cities.join(', ')}</h3>
             </div>
             <div>
-              <h3>kind of employment</h3>
-              <div>{kindOfEmployment}</div>
+              <div>kind of employment</div>
+              <h3>{kindOfEmployment}</h3>
             </div>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.info_2}>
+          <Paper className={classes.paper}>
             <div>
-              <h3>languages</h3>
-              <div>{languages.join(', ')}</div>
+              <div>languages</div>
+              <h3>{languages.join(', ')}</h3>
             </div>
             <div>
-              <h3>your {priorityBenefits.length} most priority benefits</h3>
-              <div>{priorityBenefits.join(', ')}</div>
+              <div>your {priorityBenefits.length} most priority benefits</div>
+              <h3>{priorityBenefits.join(', ')}</h3>
             </div>
             <div>
-              <h3>reasonToNewJob</h3>
-              <div>{reasonToNewJob}</div>
+              <div>reasonToNewJob</div>
+              <h3>{reasonToNewJob}</h3>
             </div>
             <div>
-              <h3>salary you looking for</h3>
-              <div>{salary}</div>
+              <div>salary you looking for</div>
+              <h3>{salary}</h3>
             </div>
             <div>
-              <h3>About you</h3>
-              <div>{about}</div>
+              <div>About you</div>
+              <h3>{about}</h3>
             </div>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.soon}>sOon</Paper>
+          <Paper className={classes.paper}>sOon</Paper>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.soon_1}>sOon</Paper>
+          <Paper className={classes.paper}>sOon</Paper>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.soon_2}>sOon</Paper>
+          <Paper className={classes.paper}>sOon</Paper>
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Paper className={classes.soon_3}>sOon</Paper>
+          <Paper className={classes.paper}>sOon</Paper>
         </Grid>
       </Grid>
     </div >

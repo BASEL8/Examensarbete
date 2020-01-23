@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import { isAuth, signout } from '../actions/auth'
 const useStyles = makeStyles(theme => ({
@@ -31,7 +31,6 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
   const classes = useStyles()
   const [auth, setAuth] = useState(isAuth())
   const location = useLocation()
-  const history = useHistory()
   useEffect(() => {
     setAuth(isAuth())
   }, [location])
