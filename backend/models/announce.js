@@ -20,6 +20,6 @@ const announceSchema = new mongoose.Schema({
     required: true
   },
   profession: { type: { testSchema }, require: true },
-  company: [{ type: ObjectId, ref: 'Company', require: true }],
+  company: { type: ObjectId, ref: 'Company', require: true },
 }, { timestamps: true })
 module.exports = mongoose.model('Announce', announceSchema);

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { ObjectId } = mongoose.Schema
+const { testSchema } = require('./profession')
+
 const companySchema = new mongoose.Schema({
   companyName: {
     type: String,
@@ -63,7 +65,11 @@ const companySchema = new mongoose.Schema({
   },
   city: {
     type: String
-  }
+  },
+  workingRemotely: {
+    type: String
+  },
+  profession: { type: { testSchema }, require: true },
 
 }, { timestamps: true })
 
