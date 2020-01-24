@@ -52,7 +52,7 @@ const JustForYourCompany = () => {
     })
   }
   return (
-    !error && users.length!==0 && <List className={classes.root}>
+    !error && users.length !== 0 && <List className={classes.root}>
       {
         users.map(({ _id, profession, cities, languages, success }, index) =>
           <Fragment key={_id}>

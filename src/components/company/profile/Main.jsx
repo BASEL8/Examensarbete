@@ -178,8 +178,10 @@ const Main = () => {
         <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <CompanyTabProfile 
-        user={user} handleOpen = {handleOpen} handleOpenRemove = {handleOpenRemove} handleClose ={handleClose} open= {open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
+        <CompanyTabProfile
+          user={user}
+          handleOpen={handleOpen}
+          handleOpenRemove={handleOpenRemove} handleClose={handleClose} open={open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ContactedByYou contactedByYou={user.contactedByYou} />
