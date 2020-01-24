@@ -124,7 +124,6 @@ describe('Company Model Test', () => {
         priorityBenefits: [],
         profession: [profession._id]
       })
-    console.log(response.body)
     done()
   })
 })

@@ -59,7 +59,6 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
     companyName,
     email,
     createdAt,
-    updatedAt,
     city,
     about,
     organisationNumber,
@@ -67,10 +66,8 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
     website,
     createdBy,
     profession,
-    workingRemotely,
     announces,
   } = user;
-  console.log(user)
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -129,7 +126,7 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
             <div>
               Website : <span>{website}</span>
             </div>
-             <div>
+            <div>
               <Button color="primary" style={{ zIndex: 100 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/company/update/${user._id}`}>update</Link></Button>
             </div>
           </Paper>

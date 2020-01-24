@@ -12,13 +12,13 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     maxHeight: 350,
     overflow: 'scroll',
     backgroundColor: theme.palette.background.paper,
   },
   text: {
     fontSize: 12,
+    flex: 1
   },
 }));
 
@@ -32,7 +32,7 @@ const JustForYourCompany = () => {
       if (res.error) {
         return setError(res.error)
       } else {
-        console.log(res)
+        setError('')
         return setUsers(res)
       }
     })
@@ -42,7 +42,7 @@ const JustForYourCompany = () => {
       if (res.error) {
         return setError(res.error)
       }
-
+      setError('')
       setUsers(users.map((user, index) => {
         if (user._id === _id) {
           user.success = true;
@@ -51,8 +51,10 @@ const JustForYourCompany = () => {
       }));
     })
   }
+  if (error) return <p>{error}</p>
   return (
-    users && users.length !== 0 && <List className={classes.root}>
+    users && users.length !== 0 &&
+    <List className={classes.root}>
       {
         users.map(({ _id, profession, cities, languages, success }, index) =>
           <Fragment key={_id}>

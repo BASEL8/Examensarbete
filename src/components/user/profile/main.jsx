@@ -139,42 +139,45 @@ const Main = () => {
       if (res.error) {
         return setError(res.error)
       }
+      setError('')
       return setUser(res)
     })
   }, [history])
-  console.log(user)
   return (
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
-        <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
-        <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
-        <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-        <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <TabProfile user={user} />
+    <>
+      <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
+      <div className={classes.root}>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          className={classes.tabs}
+        >
+          <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
+          <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
+          <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+          <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
+          <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <TabProfile user={user} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <ContactRequests contactRequests={user.contactRequests} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          connecting with just now
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ContactRequests contactRequests={user.contactRequests} />
+        <TabPanel value={value} index={3}>
+          search
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        connecting with just now
+        <TabPanel value={value} index={4}>
+          blocked
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        search
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        blocked
-      </TabPanel>
-    </div>
+      </div>
+    </>
   )
 }
 

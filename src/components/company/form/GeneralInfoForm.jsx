@@ -76,7 +76,6 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
     city,
     profession
   } = userData;
-  console.log(userData)
   const handleChange = (event) => {
     if (event.target.name === 'profession') {
       return setUserData({

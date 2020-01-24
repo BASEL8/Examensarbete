@@ -141,6 +141,7 @@ const Main = () => {
       if (res.error) {
         return setError(res.error)
       } else {
+        setError('')
         setUserData({ ...res.company, announces: res.announces })
       }
     })
@@ -162,40 +163,43 @@ const Main = () => {
     setValue(newValue);
   };
   return (
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
-        <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
-        <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
-        <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-        <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <CompanyTabProfile
-          user={user}
-          handleOpen={handleOpen}
-          handleOpenRemove={handleOpenRemove} handleClose={handleClose} open={open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
+    <>
+      <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
+      <div className={classes.root}>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          className={classes.tabs}
+        >
+          <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
+          <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
+          <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+          <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
+          <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <CompanyTabProfile
+            user={user}
+            handleOpen={handleOpen}
+            handleOpenRemove={handleOpenRemove} handleClose={handleClose} open={open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <ContactedByYou contactedByYou={user.contactedByYou} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          connecting with just now
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ContactedByYou contactedByYou={user.contactedByYou} />
+        <TabPanel value={value} index={3}>
+          search
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        connecting with just now
+        <TabPanel value={value} index={4}>
+          blocked
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        search
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        blocked
-      </TabPanel>
-    </div>
+      </div>
+    </>
   )
 }
 

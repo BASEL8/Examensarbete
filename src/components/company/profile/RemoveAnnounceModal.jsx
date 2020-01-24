@@ -42,6 +42,7 @@ const RemoveAnnounceModal = ({ handleClose, handleOpen, open: { status, _id }, s
       if (res.error) {
         return setError(res.error)
       }
+      setError('')
       handleClose()
     })
   }

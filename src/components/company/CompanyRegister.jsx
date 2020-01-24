@@ -47,7 +47,6 @@ const CompanyRegister = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     preSignup({ email, companyName, organisationNumber, password }).then(res => {
-      console.log(res)
       if (res.err) {
         setOpenError(true)
         return setState({ ...setState, error: res.er, companyName: '', email: '', password: '', message: '' })

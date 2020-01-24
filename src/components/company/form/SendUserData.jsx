@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { updateCompanyProfile } from '../../../actions/companyAuth'
 import { getCookie } from '../../../actions/auth'
 import CircularProgress from '@material-ui/core/CircularProgress';
 const SendUserData = ({ setError, setActiveStep, userData }) => {
-  const [loading, setLoading] = useState(true)
   useEffect(() => {
     let token = getCookie('token')
     updateCompanyProfile(token, userData).then(res => {

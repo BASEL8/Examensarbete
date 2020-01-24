@@ -117,8 +117,6 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
-  console.log(Object.values(userData).map(value => value))
-  console.log(Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value))
   return (
     <div className={classes.root}>
       <div className={classes.left}>
@@ -152,7 +150,6 @@ const FirstProfile = () => {
             :
             activeStep === 3 && error &&
             <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
-
           }
         </div>}
       </div>

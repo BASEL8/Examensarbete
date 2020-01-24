@@ -74,7 +74,6 @@ describe('User Model Test', () => {
           Authorization: `Bearer ${token}`
         })
         .send({ ...professions[index] })
-      console.log(response.body)
       expect(response.status).toEqual(200);
       expect(response.body._id).toBeDefined()
       if (response.status === 200) {

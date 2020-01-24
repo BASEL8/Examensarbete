@@ -417,6 +417,7 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
       >
         <Fade in={open}>
           <div className={classes.paper}>
+            <h4>{error}</h4>
             <h2>Create Announce</h2>
             <>
               <FormControl className={classes.formControl}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { getCookie } from '../../../actions/auth'
-import { justForYourCompany, sendContactRequest } from '../../../actions/companyAuth'
+import { sendContactRequest } from '../../../actions/companyAuth'
 import { companyJustForYou } from '../../../actions/userAuth'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -14,18 +14,18 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     maxHeight: 350,
     overflow: 'scroll',
     backgroundColor: theme.palette.background.paper,
   },
   text: {
     fontSize: 12,
+    flex: 1
   },
 }));
 const CompanyJustForYou = () => {
   const classes = useStyles();
-  const [users, setUsers] = useState([])
+  const [companies, setCompanies] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const CompanyJustForYou = () => {
       if (res.error) {
         return setError(res.error)
       } else {
-        console.log(res)
-        //return setUsers(res)
+        setError('')
+        return setCompanies(res)
       }
     })
   }, [])
@@ -43,8 +43,8 @@ const CompanyJustForYou = () => {
       if (res.error) {
         return setError(res.error)
       }
-
-      setUsers(users.map((user, index) => {
+      setError('')
+      setCompanies(companies.map((user, index) => {
         if (user._id === _id) {
           user.success = true;
         }
@@ -53,16 +53,16 @@ const CompanyJustForYou = () => {
     })
   }
   return (
-    !error && users.length !== 0 && <List className={classes.root}>
+    !error && companies.length !== 0 && <List className={classes.root}>
       {
-        users.map(({ _id, profession, cities, languages, success }, index) =>
+        Array.isArray(companies) && companies.map(({ _id, profession, city, success, companyName }, index) =>
           <Fragment key={_id}>
             <ListItem alignItems="flex-start">
               <div className={classes.text}>
+                <h4>{companyName}</h4>
                 <h4>{profession.name}</h4>
                 <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
-                <p> {cities.join(', ')}</p>
-                <p>{languages.join(', ')}</p>
+                <p> {city}</p>
               </div>
               <ListItemAvatar style={{ textAlign: 'right' }}>
                 {success ?
@@ -73,7 +73,7 @@ const CompanyJustForYou = () => {
                   </Button>}
               </ListItemAvatar>
             </ListItem>
-            {index !== users.length - 1 && <Divider variant="fullWidth" component="li" />}
+            {index !== companies.length - 1 && <Divider variant="fullWidth" component="li" />}
           </Fragment>
         )
       }
