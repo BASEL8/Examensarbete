@@ -39,6 +39,7 @@ const companySchema = new mongoose.Schema({
   },
   website: {
     type: String,
+    lowercase: true
   },
   hashed_password: {
     type: String,
@@ -61,10 +62,12 @@ const companySchema = new mongoose.Schema({
     contentType: String
   },
   createdBy: {
-    type: String
+    type: String,
+    lowercase: true
   },
   city: {
-    type: String
+    type: String,
+    lowercase: true
   },
   workingRemotely: {
     type: String

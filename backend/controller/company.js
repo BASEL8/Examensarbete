@@ -21,14 +21,13 @@ exports.company = (req, res) => {
 }
 exports.updateCompany = (req, res) => {
   const { _id } = req.profile;
+  console.log(req.profile)
   Company.findOne({ _id }, { "hashed_password": 0 })
     .exec((err, company) => {
       if (err) {
         return res.json({ err })
       }
       const {
-        companyName,
-        organisationNumber,
         about,
         website,
         city,
@@ -36,19 +35,16 @@ exports.updateCompany = (req, res) => {
         workingRemotely,
         profession
       } = req.body
-      company.companyName = companyName
-      company.organisationNumber = organisationNumber
       company.about = about
       company.website = website
       company.city = city
       company.createdBy = createdBy
       company.workingRemotely = workingRemotely
       company.profession = profession
-
       company.profileComplete = Object.values(req.body).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) === -1
       company.save((err, response) => {
         if (err) {
-          return res.json(err)
+          return res.json({ error: errorHandler(err) })
         }
         return res.json(company)
       });
@@ -95,7 +91,7 @@ exports.justForYourCompany = (req, res) => {
     {
       published: true,
       cities: city,
-      'profession.name': profession.name.toLowerCase(),
+      'profession.name': profession.name,
       'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactRequests: { "$ne": _id }
     },

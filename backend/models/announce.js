@@ -4,11 +4,12 @@ const { testSchema } = require('./profession')
 const announceSchema = new mongoose.Schema({
   city: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   kindOfEmployment: {
     type: String,
-    required: true
+    required: true,
   },
   workingRemotely: {
     type: String,
@@ -17,7 +18,7 @@ const announceSchema = new mongoose.Schema({
   priorityBenefits: {
     type: [],
     default: undefined,
-    required: true
+    required: true,
   },
   profession: { type: { testSchema }, require: true },
   company: { type: ObjectId, ref: 'Company', require: true },

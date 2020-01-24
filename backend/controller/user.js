@@ -1,6 +1,8 @@
 
 const User = require('../models/user');
 const Profession = require('../models/profession')
+const Company = require('../models/company')
+const { errorHandler } = require('../helpers/dbErrorHandler')
 exports.users = (req, res) => {
   User.find({ published: true }, { "hashed_password": 0, "email": 0, "name": 0, username: 0 }).exec((err, users) => {
     if (err) {
@@ -10,13 +12,15 @@ exports.users = (req, res) => {
   })
 }
 exports.user = (req, res) => {
-  let { _id } = req.params;
-  User.findOne({ _id }, { "hashed_password": 0 }).exec((err, user) => {
-    if (err) {
-      return res.status(300).json({ err: 'error' })
-    }
-    return res.json(user)
-  })
+  let { _id } = req.profile;
+  User.findOne({ _id }, { "hashed_password": 0 })
+    .populate('contactRequests', '_id companyName profession city')
+    .exec((err, user) => {
+      if (err) {
+        return res.status(300).json({ err: 'error' })
+      }
+      return res.json(user)
+    })
 }
 exports.publish = (req, res) => {
   const { _id, published } = req.body;
@@ -55,13 +59,13 @@ exports.updateUser = (req, res) => {
         workingRemotely,
         priorityBenefits,
         profession } = req.body
-      user.about = about
-      user.wantToWorkAs = wantToWorkAs
-      user.cities = cities
-      user.kindOfEmployment = kindOfEmployment
+      user.about = about.toLowerCase()
+      user.wantToWorkAs = wantToWorkAs.toLowerCase()
+      user.cities = cities.map(city => city.toLowerCase())
+      user.kindOfEmployment = kindOfEmployment.toLowerCase()
       user.salary = salary
-      user.languages = languages
-      user.lookingForJob = lookingForJob
+      user.languages = languages.map(lang => lang.toLowerCase())
+      user.lookingForJob = lookingForJob.toLowerCase()
       user.available = available
       user.reasonToNewJob = reasonToNewJob
       user.workingRemotely = workingRemotely
@@ -97,6 +101,24 @@ exports.listUsers = (req, res) => {
 }
 exports.deleteMyProfile = (req, res) => {
   return res.json('created')
+}
+exports.companyJustForYou = (req, res) => {
+  const { cities, profession, _id } = req.profile;
+  Company.find(
+    {
+      city: { "$in": cities },
+      'profession.name': profession.name,
+      'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
+      contactedByYou: { "$ne": _id }
+    },
+    { 'hashed_password': 0, email: 0, role: 0 })
+    .exec((error, company) => {
+      if (error) {
+        return res.json({ error: errorHandler(error) })
+      }
+      company.contactedByYou = undefined
+      return res.json(company)
+    })
 }
 exports.AdminRemoveUser = (req, res) => {
   return res.json('created')
