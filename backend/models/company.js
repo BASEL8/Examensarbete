@@ -70,6 +70,7 @@ const companySchema = new mongoose.Schema({
     type: String
   },
   profession: { type: { testSchema }, require: true },
+  contactedByYou: [{ type: ObjectId, ref: 'User', require: true }]
 
 }, { timestamps: true })
 

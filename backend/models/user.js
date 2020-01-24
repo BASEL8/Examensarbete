@@ -89,6 +89,7 @@ const userSchema = new mongoose.Schema({
   profession: {
     type: { testSchema },
   },
+  contactRequests: [{ type: ObjectId, ref: 'Company', require: true }],
 }, { timestamps: true })
 
 
