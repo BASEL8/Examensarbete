@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { isAuth, getCookie } from '../../../actions/auth'
-import { getCompanyProfile } from '../../../actions/companyAuth'
 import Moment from 'react-moment';
 import Button from '@material-ui/core/Button';
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import AddAnnounceModal from './AddAnnounceModal'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
@@ -14,6 +12,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import RemoveAnnounceModal from './RemoveAnnounceModal';
 import Chip from '@material-ui/core/Chip';
+import JustForYourCompany from './JustForYourCompany'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,38 +53,8 @@ const useStyles = makeStyles(theme => ({
   },
 
 }));
-const CompanyTabProfile = () => {
+const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, open, handleCloseRemove, openRemove, setError }) => {
   const classes = useStyles();
-  const [user, setUserData] = useState({})
-  const history = useHistory()
-  const [error, setError] = useState('');
-  const [open, setOpen] = useState(false);
-  const [openRemove, setOpenRemove] = useState({ status: false, _id: '' });
-  useEffect(() => {
-    if (!isAuth()) {
-      history.pushState('/')
-    }
-    getCompanyProfile(getCookie('token')).then(res => {
-      if (res.error) {
-        return setError(res.error)
-      } else {
-        setUserData({ ...res.company, announces: res.announces })
-      }
-    })
-  }, [history, open, openRemove.status])
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpenRemove = (_id) => {
-    setOpenRemove({ status: true, _id });
-  };
-
-  const handleCloseRemove = () => {
-    setOpenRemove({ status: false, _id: '' });
-  };
   const {
     companyName,
     email,
@@ -99,9 +68,9 @@ const CompanyTabProfile = () => {
     createdBy,
     profession,
     workingRemotely,
-    announces
+    announces,
   } = user;
-
+  console.log(user)
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -151,9 +120,6 @@ const CompanyTabProfile = () => {
             </div>
             <div>
               created :<span><Moment fromNow>{createdAt}</Moment></span></div>
-            <div>
-              last update: <span><Moment fromNow>{updatedAt}</Moment></span> <Button color="primary" style={{ marginLeft: 10, zIndex: 100 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/company/update/${user._id}`}>update</Link></Button>
-            </div>
             <div style={{ textTransform: 'lowercase' }}>
               {email}
             </div>
@@ -162,6 +128,9 @@ const CompanyTabProfile = () => {
             </div>
             <div>
               Website : <span>{website}</span>
+            </div>
+             <div>
+              <Button color="primary" style={{ zIndex: 100 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/company/update/${user._id}`}>update</Link></Button>
             </div>
           </Paper>
         </Grid>
@@ -185,10 +154,11 @@ const CompanyTabProfile = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <div>
-              <h3>Talents just for you</h3>
-              <div>find talent according to your company information or job announce</div>
+            <div style={{ flex: 0 }}>
+              <h3>People you may want to meet</h3>
+              <div style={{ fontSize: 10 }}>find them according to your company information</div>
             </div>
+            <JustForYourCompany />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={3}>

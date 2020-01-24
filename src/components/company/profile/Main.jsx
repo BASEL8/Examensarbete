@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -16,6 +16,13 @@ import BlockOutlinedIcon from '@material-ui/icons/BlockOutlined';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import MessageIcon from '@material-ui/icons/Message';
 import CompanyTabProfile from './CompanyTabProfile'
+import ContactedByYou from './ContactedByYou'
+import { isAuth, getCookie } from '../../../actions/auth'
+import { getCompanyProfile } from '../../../actions/companyAuth'
+import { useHistory } from 'react-router-dom'
+
+
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -121,7 +128,36 @@ const useStyles = makeStyles(theme => ({
 const Main = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [user, setUserData] = useState({})
+  const history = useHistory()
+  const [error, setError] = useState('');
+  const [open, setOpen] = useState(false);
+  const [openRemove, setOpenRemove] = useState({ status: false, _id: '' });
+  useEffect(() => {
+    if (!isAuth()) {
+      history.push('/')
+    }
+    getCompanyProfile(getCookie('token')).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      } else {
+        setUserData({ ...res.company, announces: res.announces })
+      }
+    })
+  }, [history, open, openRemove.status])
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpenRemove = (_id) => {
+    setOpenRemove({ status: true, _id });
+  };
 
+  const handleCloseRemove = () => {
+    setOpenRemove({ status: false, _id: '' });
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -142,10 +178,11 @@ const Main = () => {
         <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <CompanyTabProfile />
+        <CompanyTabProfile 
+        user={user} handleOpen = {handleOpen} handleOpenRemove = {handleOpenRemove} handleClose ={handleClose} open= {open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        all contact requests
+        <ContactedByYou contactedByYou={user.contactedByYou} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         connecting with just now
