@@ -133,9 +133,9 @@ const GeneralInfoForm = ({ setUserData, userData }) => {
           name="lookingForJob"
           value={lookingForJob}
           onChange={handleChange}>
-          <FormControlLabel value="notLooking" control={<Radio color="primary" />} label="Not looking for an active job but open to suggestions" />
+          <FormControlLabel value="not looking" control={<Radio color="primary" />} label="Not looking for an active job but open to suggestions" />
           <FormControlLabel value="looking" control={<Radio color="primary" />} label="Looking for an active job" />
-          <FormControlLabel value="notInterested" control={<Radio color="primary" />} label="Not interested in changing my job" />
+          <FormControlLabel value="not interested" control={<Radio color="primary" />} label="Not interested in changing my job" />
         </RadioGroup>
       </FormControl>
       <FormControl component="fieldset">
@@ -145,11 +145,11 @@ const GeneralInfoForm = ({ setUserData, userData }) => {
           value={available}
           onChange={handleChange}>
           <FormControlLabel value="immediately" control={<Radio color="primary" />} label="Immediately" />
-          <FormControlLabel value="within2weeks" control={<Radio color="primary" />} label="Within 2 weeks" />
-          <FormControlLabel value="oneMonth" control={<Radio color="primary" />} label="One month" />
-          <FormControlLabel value="twoMonth" control={<Radio color="primary" />} label="Two month" />
-          <FormControlLabel value="threeMonths" control={<Radio color="primary" />} label="Three months" />
-          <FormControlLabel value="moreThanThreeMonths" control={<Radio color="primary" />} label="More than three months" />
+          <FormControlLabel value="within two weeks" control={<Radio color="primary" />} label="Within 2 weeks" />
+          <FormControlLabel value="one month" control={<Radio color="primary" />} label="One month" />
+          <FormControlLabel value="two month" control={<Radio color="primary" />} label="Two month" />
+          <FormControlLabel value="three months" control={<Radio color="primary" />} label="Three months" />
+          <FormControlLabel value="more than three months" control={<Radio color="primary" />} label="More than three months" />
 
           <TextField
             id="date"

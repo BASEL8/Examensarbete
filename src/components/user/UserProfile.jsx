@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import { isAuth } from '../../actions/auth'
-import Main from './profile/main'
+import Main from './profile/Main'
 const UserProfile = () => {
   const history = useHistory()
-  const [user, setUser] = useState(isAuth())
   useEffect(() => {
     if (!isAuth()) {
       return history.push('/')
     }
-    setUser(isAuth())
   }, [history])
   return (
-    <Main user={user} />
+    <Main />
   )
 }
 export default UserProfile;

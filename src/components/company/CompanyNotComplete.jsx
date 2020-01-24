@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import { isAuth } from '../../actions/auth';
 import GeneralInfoForm from './form/GeneralInfoForm'
 import SendUserData from './form/SendUserData'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,9 +72,9 @@ const CompanyNotComplete = () => {
   delete user.role
   delete user.published
   delete user.confirmed
-  const [userData, setUserData] = useState(isAuth().profileComplete ? { ...user } : {
-    companyName: '',
-    organisationNumber: '',
+  delete user.contactedByYou
+  delete user.__v
+  const [userData, setUserData] = useState({
     about: '',
     website: '',
     createdBy: '',
@@ -86,7 +87,6 @@ const CompanyNotComplete = () => {
     },
   })
   const [error, setError] = useState('')
-  console.log(userData)
   const steps = getSteps(error);
 
   const getStepContent = (step) => {
@@ -95,8 +95,11 @@ const CompanyNotComplete = () => {
         return <GeneralInfoForm userData={userData} setUserData={setUserData} />;
       case 1:
         return <SendUserData userData={userData} setError={setError} setActiveStep={setActiveStep} />;
-      case 3:
-        return <div className={classes.errorPage}>{error} , please try agin later...</div>;
+      case 2:
+        return error ? <div className={classes.errorPage}>{error} , please try agin later...</div> : <div className={classes.errorPage}>
+          <p>your profile is ready, don't forget to publish it!</p>
+          <p> <Link to={`/company/profile/${isAuth()._id}`}> Profile</Link></p>
+        </div>;
       default:
         return 'Unknown step';
     }
@@ -105,6 +108,7 @@ const CompanyNotComplete = () => {
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
+
   return (
     <div className={classes.root}>
       <div className={classes.left}>
@@ -133,7 +137,7 @@ const CompanyNotComplete = () => {
             disabled={(activeStep === 0) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
           >Next</Button>
           }
-          {activeStep === 2 && <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>}
+          {activeStep === 2 && error && <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>}
         </div>
       </div>
     </div >

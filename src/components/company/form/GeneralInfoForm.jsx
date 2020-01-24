@@ -68,8 +68,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const GeneralInfoForm = ({ userData, setUserData }) => {
   const classes = useStyles()
-  const { companyName,
-    organisationNumber,
+  const {
     about,
     website,
     createdBy,
@@ -112,24 +111,24 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
     if (event.target.name === 'kindOfEmployment') {
       return setUserData({ ...userData, kindOfEmployment: event.target.value })
     }
-    return setUserData({ ...userData, [event.target.name]: event.target.value })
+    return setUserData({ ...userData, [event.target.name]: event.target.value.toLowerCase() })
 
 
   }
 
   const professions = [
     {
-      name: 'Technology & development',
+      name: 'technology & development',
       years: 0,
       subProfessions: []
     },
     {
-      name: 'Design',
+      name: 'design',
       years: 0,
       subProfessions: []
     },
     {
-      name: 'Processer & Analys',
+      name: 'processer & analys',
       years: 0,
       subProfessions: []
     }
@@ -137,207 +136,193 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
   const subProfessions = [
 
     {
-      name: 'System  Architect',
+      name: 'system  Architect',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'System Admin',
+      name: 'system Admin',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Games',
+      name: 'games',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Test',
+      name: 'test',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'QA',
+      name: 'qa',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'IT Security',
+      name: 'iT Security',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
       name: 'iOS',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Hybrid',
+      name: 'hybrid',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Electronics',
+      name: 'electronics',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Hardware',
+      name: 'hardware',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Full-stack',
+      name: 'full-stack',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Front-end',
+      name: 'front-end',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Embedded',
+      name: 'embedded',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'DevOps',
+      name: 'devOps',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Database',
+      name: 'database',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Data Science',
+      name: 'data science',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Cloud',
+      name: 'cloud',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'BI',
+      name: 'bi',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Backend',
+      name: 'backend',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Apps',
+      name: 'apps',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Android',
+      name: 'android',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Animation',
+      name: 'animation',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'Graphic design',
+      name: 'graphic design',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'UI',
+      name: 'ui',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'UX',
+      name: 'ux',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'Visual design',
+      name: 'visual design',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'business Developer',
+      name: 'business developer',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'business Architect',
+      name: 'business architect',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
       name: 'business Analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'System Administration',
+      name: 'system administration',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'management Consultant',
+      name: 'management consultant',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'solution Architect',
+      name: 'solution architect',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Requirements Analyst',
+      name: 'requirements analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Infrastructure',
+      name: 'infrastructure',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Growth',
+      name: 'growth',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Data Analyst',
+      name: 'data analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
       name: 'application',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
   ];
   return (
     <>
-      <TextField
-        label="Company Name"
-        name="companyName"
-        value={companyName}
-        onChange={handleChange}
-        variant="outlined"
-      />
-      <TextField
-        label="organisation Number"
-        name="organisationNumber"
-        value={organisationNumber}
-        onChange={handleChange}
-        variant="outlined"
-      />
       <TextField
         label="website"
         name="website"

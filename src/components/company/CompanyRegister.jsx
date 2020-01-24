@@ -50,10 +50,10 @@ const CompanyRegister = () => {
       console.log(res)
       if (res.err) {
         setOpenError(true)
-        return setState({ ...setState, error: res.er, name: '', email: '', password: '', message: '' })
+        return setState({ ...setState, error: res.er, companyName: '', email: '', password: '', message: '' })
       }
       setOpenSuccess(true)
-      setState({ ...state, error: '', name: '', email: '', password: '', organisationNumber: '', message: res.success })
+      setState({ ...state, error: '', companyName: '', email: '', password: '', organisationNumber: '', message: res.success })
     }
     )
   }

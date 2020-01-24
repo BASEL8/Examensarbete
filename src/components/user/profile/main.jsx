@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -16,6 +16,10 @@ import BlockOutlinedIcon from '@material-ui/icons/BlockOutlined';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import MessageIcon from '@material-ui/icons/Message';
 import TabProfile from './TabProfile'
+import { useHistory } from 'react-router-dom'
+import { getUserProfile } from '../../../actions/userAuth'
+import { getCookie, isAuth } from '../../../actions/auth';
+import ContactRequests from './ContactRequests';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -121,10 +125,24 @@ const useStyles = makeStyles(theme => ({
 const Main = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const [user, setUser] = useState({})
+  const [error, setError] = useState('')
+  const history = useHistory()
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  useEffect(() => {
+    if (!isAuth()) {
+      history.push('/')
+    }
+    getUserProfile(getCookie('token')).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      return setUser(res)
+    })
+  }, [history])
+  console.log(user)
   return (
     <div className={classes.root}>
       <Tabs
@@ -142,10 +160,10 @@ const Main = () => {
         <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <TabProfile />
+        <TabProfile user={user} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        all contact requests
+        <ContactRequests contactRequests={user.contactRequests} />
       </TabPanel>
       <TabPanel value={value} index={2}>
         connecting with just now

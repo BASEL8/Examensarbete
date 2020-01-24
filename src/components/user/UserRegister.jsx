@@ -56,7 +56,7 @@ const UserRegister = () => {
     }
   }, [history])
   const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value })
+    setState({ ...state, [e.target.name]: e.target.value.toLowerCase() })
   }
 
   const handleSubmit = (e) => {

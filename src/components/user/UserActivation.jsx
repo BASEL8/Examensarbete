@@ -29,7 +29,7 @@ const UserActivation = () => {
         {(!error && !success) && <CircularProgress />}
         {!success ?
           <h4 style={{ textAlign: 'center' }}>{error}, <Link style={{ margin: '0 10px' }} to='/user/login'>Login </Link> with this emil or reset your password</h4>
-          : <h4 style={{ textAlign: 'center' }}>{success}, or click here <Link style={{ margin: '0 10px' }} to='/user/login'>Login </Link></h4>}
+          : <h4 style={{ textAlign: 'center' }}>{success}</h4>}
       </>
     }</AuthIndex>
   )

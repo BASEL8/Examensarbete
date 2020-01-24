@@ -8,6 +8,8 @@ import GeneralInfoForm from './form/GeneralInfoForm'
 import ProfessionForm from './form/ProfessionForm'
 import SendUserData from './form/SendUserData'
 import { isAuth } from '../../actions/auth';
+import { Link } from 'react-router-dom'
+
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '90vh',
@@ -70,6 +72,7 @@ const FirstProfile = () => {
   let user = isAuth()
   delete user.role
   delete user.published
+  delete user.contactRequests
   const [userData, setUserData] = useState(isAuth().profileComplete ? { ...user } : {
     about: '',
     wantToWorkAs: '',
@@ -99,7 +102,11 @@ const FirstProfile = () => {
       case 2:
         return <SendUserData userData={userData} setError={setError} setActiveStep={setActiveStep} />;
       case 3:
-        return <div className={classes.errorPage}>{error} , please try agin later...</div>;
+        return error ? <div className={classes.errorPage}>{error} , please try agin later...</div> :
+          <div className={classes.errorPage}>{error}
+            <p>your profile is ready, don't forget to publish it!</p>
+            <p> <Link to={`/user/profile/${isAuth()._id}`}> Profile</Link></p>
+          </div>;
       default:
         return 'Unknown step';
     }
@@ -110,6 +117,8 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
+  console.log(Object.values(userData).map(value => value))
+  console.log(Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value))
   return (
     <div className={classes.root}>
       <div className={classes.left}>
@@ -141,10 +150,9 @@ const FirstProfile = () => {
               disabled={(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
             >Next</Button>
             :
-            activeStep === 3 ?
-              <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
-              :
-              <Button variant="contained" color="primary">Send</Button>
+            activeStep === 3 && error &&
+            <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
+
           }
         </div>}
       </div>

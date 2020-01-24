@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { isAuth } from '../../../actions/auth'
 import Moment from 'react-moment';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import { Link } from 'react-router-dom'
+import CompanyJustForYou from './CompanyJustForYou';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary,
     background: theme.palette.primary.background,
     minHeight: 150,
+    height: '100%',
     '& > * ': {
       marginTop: 10,
       '& > span': {
@@ -25,9 +26,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
 }));
-const TabProfile = () => {
+const TabProfile = ({ user }) => {
   const classes = useStyles();
-  const [user] = useState(isAuth())
   const {
     name,
     published,
@@ -55,9 +55,9 @@ const TabProfile = () => {
             <h4>Welcome</h4>
             <h2>{name}</h2>
             <div>
-              <h4>{profession.name}</h4>
+              <h4>{profession && profession.name}</h4>
               <div style={{ marginTop: 3 }}>
-                {profession.subProfessions.map((sub, index) => <Chip key={index}
+                {profession && profession.subProfessions.map((sub, index) => <Chip key={index}
                   color="primary"
                   variant="outlined"
                   style={{ marginRight: 10, marginTop: 5 }}
@@ -103,8 +103,8 @@ const TabProfile = () => {
               <h3>{available}</h3>
             </div>
             <div>
-              <div>{cities.length > 1 ? 'cities' : 'city'} that your are looking to work in : </div>
-              <h3>{cities.join(', ')}</h3>
+              <div>{cities && cities.length > 1 ? 'cities' : 'city'} that your are looking to work in : </div>
+              <h3>{cities && cities.join(', ')}</h3>
             </div>
             <div>
               <div>kind of employment</div>
@@ -116,11 +116,11 @@ const TabProfile = () => {
           <Paper className={classes.paper}>
             <div>
               <div>languages</div>
-              <h3>{languages.join(', ')}</h3>
+              <h3>{languages && languages.join(', ')}</h3>
             </div>
             <div>
-              <div>your {priorityBenefits.length} most priority benefits</div>
-              <h3>{priorityBenefits.join(', ')}</h3>
+              <div>your {priorityBenefits && priorityBenefits.length} most priority benefits</div>
+              <h3>{priorityBenefits && priorityBenefits.join(', ')}</h3>
             </div>
             <div>
               <div>reasonToNewJob</div>
@@ -142,11 +142,10 @@ const TabProfile = () => {
         <Grid item xs={12} sm={3}>
           <Paper className={classes.paper}>sOon</Paper>
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <Paper className={classes.paper}>sOon</Paper>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Paper className={classes.paper}>sOon</Paper>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <CompanyJustForYou />
+          </Paper>
         </Grid>
       </Grid>
     </div >

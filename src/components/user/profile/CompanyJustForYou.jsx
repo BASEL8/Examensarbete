@@ -1,6 +1,7 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { getCookie } from '../../../actions/auth'
 import { justForYourCompany, sendContactRequest } from '../../../actions/companyAuth'
+import { companyJustForYou } from '../../../actions/userAuth'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,6 +10,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import SendIcon from '@material-ui/icons/Send';
 import { Button } from '@material-ui/core';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -21,19 +23,18 @@ const useStyles = makeStyles(theme => ({
     fontSize: 12,
   },
 }));
-
-const JustForYourCompany = () => {
+const CompanyJustForYou = () => {
   const classes = useStyles();
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
-    justForYourCompany(getCookie('token')).then(res => {
+    companyJustForYou(getCookie('token')).then(res => {
       if (res.error) {
         return setError(res.error)
       } else {
         console.log(res)
-        return setUsers(res)
+        //return setUsers(res)
       }
     })
   }, [])
@@ -52,7 +53,7 @@ const JustForYourCompany = () => {
     })
   }
   return (
-    users && users.length !== 0 && <List className={classes.root}>
+    !error && users.length !== 0 && <List className={classes.root}>
       {
         users.map(({ _id, profession, cities, languages, success }, index) =>
           <Fragment key={_id}>
@@ -77,8 +78,6 @@ const JustForYourCompany = () => {
         )
       }
     </List>
-
-  );
+  )
 }
-
-export default JustForYourCompany;
+export default CompanyJustForYou;

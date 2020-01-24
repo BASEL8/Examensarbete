@@ -93,17 +93,17 @@ const ProfessionForm = ({ setUserData, userData }) => {
   }
   const professions = [
     {
-      name: 'Technology & development',
+      name: 'technology & development',
       years: 0,
       subProfessions: []
     },
     {
-      name: 'Design',
+      name: 'design',
       years: 0,
       subProfessions: []
     },
     {
-      name: 'Processer & Analys',
+      name: 'processer & analys',
       years: 0,
       subProfessions: []
     }
@@ -111,247 +111,246 @@ const ProfessionForm = ({ setUserData, userData }) => {
   const subProfessions = [
 
     {
-      name: 'System  Architect',
+      name: 'system  Architect',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'System Admin',
+      name: 'system Admin',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Games',
+      name: 'games',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Test',
+      name: 'test',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'QA',
+      name: 'qa',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'IT Security',
+      name: 'iT Security',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
       name: 'iOS',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Hybrid',
+      name: 'hybrid',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Electronics',
+      name: 'electronics',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Hardware',
+      name: 'hardware',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Full-stack',
+      name: 'full-stack',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Front-end',
+      name: 'front-end',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Embedded',
+      name: 'embedded',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'DevOps',
+      name: 'devOps',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Database',
+      name: 'database',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Data Science',
+      name: 'data science',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Cloud',
+      name: 'cloud',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'BI',
+      name: 'bi',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Backend',
+      name: 'backend',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Apps',
+      name: 'apps',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Android',
+      name: 'android',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Animation',
+      name: 'animation',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'Graphic design',
+      name: 'graphic design',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'UI',
+      name: 'ui',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'UX',
+      name: 'ux',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'Visual design',
+      name: 'visual design',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'business Developer',
+      name: 'business developer',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'business Architect',
+      name: 'business architect',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
       name: 'business Analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'System Administration',
+      name: 'system administration',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'management Consultant',
+      name: 'management consultant',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'solution Architect',
+      name: 'solution architect',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Requirements Analyst',
+      name: 'requirements analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Infrastructure',
+      name: 'infrastructure',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Growth',
+      name: 'growth',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Data Analyst',
+      name: 'data analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
       name: 'application',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
   ];
   const reasons = [
     "no special reason",
-    "I want higher wages",
-    "I will move to another city",
-    "I'm looking for other or better benefits",
-    "I want more responsibility",
-    "I want to be challenged more",
-    "I want to deepen my knowledge of existing skills",
-    "I want to learn new skills or skills",
-    "I want to work with something that matches my values",
-    "I want to work with a company that has a corporate culture that suits me",
-    "I want a better work - life balance",
-    "I want to be able to work more flexibly",
-    "I want to work in another industry",
-    "I want to work for a certain type of company",
-    "I want to work with other types of assignments",
+    "i want higher wages",
+    "i will move to another city",
+    "i'm looking for other or better benefits",
+    "i want more responsibility",
+    "i want to be challenged more",
+    "i want to deepen my knowledge of existing skills",
+    "i want to learn new skills or skills",
+    "i want to work with something that matches my values",
+    "i want to work with a company that has a corporate culture that suits me",
+    "i want a better work - life balance",
+    "i want to be able to work more flexibly",
+    "i want to work in another industry",
+    "i want to work for a certain type of company",
+    "i want to work with other types of assignments",
   ]
   const benefits = [
-    "Allergy - adapted office"
-    , "Workplace not located in office landscape"
-    , "Allocated time for further education"
-    , "Balance between leisure and work"
-    , "Car"
+    "allergy - adapted office"
+    , "workplace not located in office landscape"
+    , "allocated time for further education"
+    , "balance between leisure and work"
+    , "car"
     , "bonus Model"
-    , "Central office"
-    , "Partnership"
-    , "Own responsibility"
-    , "Not interested in probation"
-    , "Extra parental allowance"
-    , "Fixed salary"
-    , "Flexible working hours"
+    , "central office"
+    , "partnership"
+    , "own responsibility"
+    , "not interested in probation"
+    , "extra parental allowance"
+    , "fixed salary"
+    , "flexible working hours"
     , "trust Working"
-    , "Freedom at work"
+    , "freedom at work"
     , "wellness Contributions"
     , "health Insurance"
-    , "Pets are allowed"
+    , "pets are allowed"
     , "career Opportunities"
-    , "Koddagar"
-    , "Collective agreements"
-    , "Competitive salary"
-    , "More than 25 days of vacation"
-    , "Ability to work from home"
-    , "Possibility to choose own equipment"
-    , "Opportunity to work abroad"
-    , "New technique"
-    , "Want customer contact"
-    , "Variable salary"
-    , "Health insurance"
-    , "Stable working situation"
+    , "collective agreements"
+    , "competitive salary"
+    , "more than 25 days of vacation"
+    , "ability to work from home"
+    , "possibility to choose own equipment"
+    , "opportunity to work abroad"
+    , "new technique"
+    , "want customer contact"
+    , "variable salary"
+    , "health insurance"
+    , "stable working situation"
     , "dental Insurance"
-    , "Access to shower"
-    , "Access to gym"
-    , "Occupational"
-    , "Extended support for parental leave"
+    , "access to shower"
+    , "access to gym"
+    , "occupational"
+    , "extended support for parental leave"
     , "development Opportunities"
-    , "Just want to work in -house"
+    , "just want to work in -house"
   ]
   return (
     <>

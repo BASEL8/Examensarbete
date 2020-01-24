@@ -31,8 +31,8 @@ export const login = (user) => {
     body: JSON.stringify(user)
   }).then(res => res.json()).catch(error => error)
 }
-export const getUserProfile = (token, _id) => {
-  return fetch(`${API}/user/${_id}`, {
+export const getUserProfile = (token) => {
+  return fetch(`${API}/user`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -53,6 +53,19 @@ export const updateUserProfile = (token, user) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ ...user })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
+export const companyJustForYou = (token) => {
+  return fetch(`${API}/user/companyJustForYou`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
   }).then(res => {
     handleResponse(res)
     return res.json()
