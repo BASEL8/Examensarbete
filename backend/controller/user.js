@@ -111,7 +111,13 @@ exports.companyJustForYou = (req, res) => {
       'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactedByYou: { "$ne": _id }
     },
-    { 'hashed_password': 0, email: 0, role: 0 })
+    {
+      'hashed_password': 0,
+      email: 0,
+      role: 0,
+      profileComplete: 0,
+      createdBy: 0
+    })
     .exec((error, company) => {
       if (error) {
         return res.json({ error: errorHandler(error) })
