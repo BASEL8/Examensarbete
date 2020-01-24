@@ -12,6 +12,9 @@ import AddAnnounceModal from './AddAnnounceModal'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import HelpIcon from '@material-ui/icons/Help';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import RemoveAnnounceModal from './RemoveAnnounceModal';
+import Chip from '@material-ui/core/Chip';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -57,6 +60,7 @@ const CompanyTabProfile = () => {
   const history = useHistory()
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const [openRemove, setOpenRemove] = useState({ status: false, _id: '' });
   useEffect(() => {
     if (!isAuth()) {
       history.pushState('/')
@@ -68,12 +72,19 @@ const CompanyTabProfile = () => {
         setUserData({ ...res.company, announces: res.announces })
       }
     })
-  }, [history, open])
+  }, [history, open, openRemove.status])
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleOpenRemove = (_id) => {
+    setOpenRemove({ status: true, _id });
+  };
+
+  const handleCloseRemove = () => {
+    setOpenRemove({ status: false, _id: '' });
   };
   const {
     companyName,
@@ -86,6 +97,8 @@ const CompanyTabProfile = () => {
     confirmed,
     website,
     createdBy,
+    profession,
+    workingRemotely,
     announces
   } = user;
 
@@ -109,6 +122,17 @@ const CompanyTabProfile = () => {
             </div>
             <div>
               <div>{about}</div>
+            </div>
+
+            <div>
+              <h4>{profession && profession.name}</h4>
+              <div style={{ marginTop: 3 }}>
+                {profession && profession.subProfessions.map((sub, index) => <Chip key={index}
+                  color="primary"
+                  variant="outlined"
+                  style={{ marginRight: 10, marginTop: 5 }}
+                  label={sub.name} size="small" spacing={1} />)}
+              </div>
             </div>
             <div>
               <Button
@@ -147,7 +171,10 @@ const CompanyTabProfile = () => {
             {announces && announces.map(({ _id, profession, createdAt, updatedAt }, index) => <Paper key={_id} className={classes.card}>
               <div>
                 <h4>{profession.name}</h4>
-                <Button size="small" style={{ zIndex: 100 }}><HighlightOffIcon /></Button>
+                <Button size="small" style={{ zIndex: 100 }} onClick={() => handleOpenRemove(_id)}><HighlightOffIcon /></Button>
+              </div>
+              <div style={{ justifyContent: 'flex-start', fontSize: 10, marginBottom: 5 }}>
+                <span>{profession.subProfessions.map(({ name }) => name).join(', ')}</span>
               </div>
               <div style={{ justifyContent: 'flex-start', fontSize: 10 }}>
                 <span>created : <Moment fromNow>{createdAt}</Moment></span>
@@ -178,6 +205,7 @@ const CompanyTabProfile = () => {
         </Grid>
       </Grid>
       <AddAnnounceModal handleOpen={handleOpen} handleClose={handleClose} open={open} />
+      <RemoveAnnounceModal handleClose={handleCloseRemove} handleOpen={handleOpenRemove} open={openRemove} setError={setError} />
     </div >
   )
 }

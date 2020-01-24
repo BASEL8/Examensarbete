@@ -73,4 +73,18 @@ export const getCompanyProfile = (token) => {
     return res.json()
   }).catch(error => error)
 }
+export const removeAnnounce = (token, _id) => {
+  return fetch(`${API}/company/announce/remove`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ _id })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
 export const getUserPublicProfile = (token, _id) => { }

@@ -75,10 +75,20 @@ const CompanyNotComplete = () => {
     companyName: '',
     organisationNumber: '',
     about: '',
-    website: ''
+    website: '',
+    createdBy: '',
+    city: '',
+    workingRemotely: '',
+    profession: {
+      name: 'Technology & development',
+      years: 0,
+      subProfessions: []
+    },
   })
-  const [error, setError] = useState('asdasd')
+  const [error, setError] = useState('')
+  console.log(userData)
   const steps = getSteps(error);
+
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -91,6 +101,7 @@ const CompanyNotComplete = () => {
         return 'Unknown step';
     }
   }
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
