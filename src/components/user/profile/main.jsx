@@ -79,7 +79,8 @@ const useStyles = makeStyles(theme => ({
     '& .MuiTabs-scroller': {
       display: 'flex',
       justifyContent: 'stretch',
-      alignItems: 'flex-start'
+      alignItems: 'flex-start',
+      overflow: 'hidden'
     },
     '& .MuiTabs-indicator': {
       width: 108,
@@ -124,7 +125,7 @@ const useStyles = makeStyles(theme => ({
 
 const Main = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
   const [user, setUser] = useState({})
   const [error, setError] = useState('')
   const history = useHistory()

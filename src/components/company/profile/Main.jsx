@@ -82,7 +82,8 @@ const useStyles = makeStyles(theme => ({
     '& .MuiTabs-scroller': {
       display: 'flex',
       justifyContent: 'stretch',
-      alignItems: 'flex-start'
+      alignItems: 'flex-start',
+      overflow: 'hidden'
     },
     '& .MuiTabs-indicator': {
       width: 108,

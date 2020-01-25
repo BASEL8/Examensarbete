@@ -82,3 +82,14 @@ export const rejectRequest = (token, contactRequestId) => {
     body: JSON.stringify({ contactRequestId })
   }).then(res => res.json()).catch(error => error)
 }
+export const acceptRequest = (token, contactRequestId) => {
+  return fetch(`${API}/user/accept`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ contactRequestId })
+  }).then(res => res.json()).catch(error => error)
+}

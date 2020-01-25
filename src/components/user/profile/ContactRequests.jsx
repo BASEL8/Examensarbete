@@ -9,7 +9,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import { Button } from '@material-ui/core';
 import Moment from 'react-moment';
-import { rejectRequest } from '../../../actions/userAuth'
+import { rejectRequest, acceptRequest } from '../../../actions/userAuth'
 import { getCookie } from '../../../actions/auth';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,6 +58,15 @@ const ContactRequests = ({ contactRequests, eventsTracker }) => {
       setError('')
     })
   }
+  const accept = (_id) => {
+    return acceptRequest(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setRequests(contactRequests.filter((req, index) => req._id !== _id))
+      setError('')
+    })
+  }
   return (
     <>
       {<p>{error}</p>}
@@ -75,11 +84,11 @@ const ContactRequests = ({ contactRequests, eventsTracker }) => {
                     <p> {city}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <Button onClick={() => reject(_id)}>
-                      <HighlightOffIcon />
+                    <Button size="small" color="secondary" onClick={() => reject(_id)}>
+                      <HighlightOffIcon fontSize="small" />
                     </Button>
-                    <Button>
-                      <CheckCircleOutlinedIcon />
+                    <Button size="small" color="primary" onClick={() => accept(_id)}>
+                      <CheckCircleOutlinedIcon fontSize="small" />
                     </Button>
                   </div>
                 </ListItem>
