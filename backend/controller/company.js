@@ -98,7 +98,15 @@ exports.justForYourCompany = (req, res) => {
       contactRequests: { "$ne": _id },
       acceptedByYou: { "$ne": _id }
     },
-    { 'hashed_password': 0, name: 0, email: 0, role: 0 })
+    {
+      'hashed_password': 0,
+      name: 0,
+      email: 0,
+      role: 0,
+      contactRequests: 0,
+      acceptedByYou: 0,
+      eventsTracker: 0
+    })
     .exec((error, users) => {
       if (error) {
         return res.json({ error: errorHandler(error) })

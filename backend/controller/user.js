@@ -119,7 +119,10 @@ exports.companyJustForYou = (req, res) => {
       email: 0,
       role: 0,
       profileComplete: 0,
-      createdBy: 0
+      createdBy: 0,
+      eventsTracker: 0,
+      acceptedYourRequest: 0,
+      contactedByYou: 0
     })
     .exec((error, company) => {
       if (error) {
