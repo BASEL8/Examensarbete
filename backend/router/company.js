@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const { requiresignin, companyAuthMiddleware } = require('../controller/auth')
-const { company, updateCompany, createAnnounce, removeAnnounce, justForYourCompany, sendContactRequest } = require('../controller/company')
+const { company, updateCompany, createAnnounce, removeAnnounce, justForYourCompany, sendContactRequest, declinedUser } = require('../controller/company')
 
 
 router.get('/company', requiresignin, companyAuthMiddleware, company)
@@ -10,6 +10,7 @@ router.post('/company/announce', requiresignin, companyAuthMiddleware, createAnn
 router.delete('/company/announce/remove', requiresignin, companyAuthMiddleware, removeAnnounce)
 router.get('/company/justForYouCompany', requiresignin, companyAuthMiddleware, justForYourCompany)
 router.post('/company/contactUser', requiresignin, companyAuthMiddleware, sendContactRequest)
+router.post('/company/declinedUser', requiresignin, companyAuthMiddleware, declinedUser)
 
 
 module.exports = router;

@@ -5,6 +5,7 @@ const Company = require('../models/company')
 const { errorHandler } = require('../helpers/dbErrorHandler')
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
 exports.users = (req, res) => {
   User.find({ published: true }, { "hashed_password": 0, "email": 0, "name": 0, username: 0 }).exec((err, users) => {
     if (err) {
@@ -17,6 +18,7 @@ exports.user = (req, res) => {
   let { _id } = req.profile;
   User.findOne({ _id }, { "hashed_password": 0 })
     .populate('contactRequests', '_id companyName profession city')
+    .populate('acceptedByYou', '_id companyName profession city')
     .exec((err, user) => {
       if (err) {
         return res.status(300).json({ err: 'error' })

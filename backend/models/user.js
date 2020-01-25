@@ -93,6 +93,7 @@ const userSchema = new mongoose.Schema({
   profession: {
     type: { testSchema },
   },
+  EmploymentContract: { with: { type: ObjectId, ref: 'Company' }, done: { type: Boolean } },
   acceptedByYou: [{ type: ObjectId, ref: 'Company', require: true }],
   eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
   contactRequests: [{ type: ObjectId, ref: 'Company', require: true }],

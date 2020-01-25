@@ -8,6 +8,7 @@ exports.company = (req, res) => {
   const { _id } = req.profile;
   Company.findById(_id, { 'hashed_password': 0 })
     .populate('contactedByYou', '_id profession cities languages')
+    .populate('acceptedYourRequest', '_id profession cities languages email name')
     .exec((error, company) => {
       if (error) {
         return res.json({ error: errorHandler(error) })
@@ -114,6 +115,35 @@ exports.justForYourCompany = (req, res) => {
       return res.json(users)
     })
 }
+exports.declinedUser = (req, res) => {
+  const { _id, companyName } = req.profile;
+  const { userId } = req.body;
+  User.findById(userId).exec((err, user) => {
+    if (err) {
+      return res.json({ error: errorHandler(err) })
+    }
+    user.acceptedByYou = user.acceptedByYou.filter(contact => contact.toString() !== _id.toString())
+    user.eventsTracker = [...user.eventsTracker, { eventName: `${companyName} will not continue with the proses` }]
+    user.save((erro, result) => {
+      if (erro) {
+        return res.json({ error: errorHandler(erro) })
+      }
+      Company.findById(_id).exec((error, company) => {
+        if (error) {
+          return res.json({ error: errorHandler(error) })
+        }
+        company.eventsTracker = [...company.eventsTracker, { eventName: `you chose not to continue with ${user.name}` }]
+        company.acceptedYourRequest = company.acceptedYourRequest.filter(contact => contact.toString() !== userId.toString())
+        company.save((er, resultCompany) => {
+          if (er) {
+            return res.json({ error: errorHandler(er) })
+          }
+          return res.json({ success: 'success' })
+        })
+      })
+    })
+  })
+}
 exports.sendContactRequest = (req, res) => {
   const { _id, companyName } = req.profile;
   const { _id: userId } = req.body;
@@ -143,7 +173,7 @@ exports.sendContactRequest = (req, res) => {
             to: email,
             from: process.env.EMAIL_FROM,
             subject: `Contact Request`,
-            html: `<h4>${companyName} sent contact request<h4>, login for more information`
+            html: `< h4 > ${companyName} sent contact request < h4 >, login for more information`
           }
           sgMail.send(emailData).then(sent => {
             return res.json({ success: 'success', userId })
