@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   right: {
-    boxShadow: '0px 8px 9px 0px #918b8b',
+    boxShadow: '2px -8px 8px 0px #918b8b;',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import clsx from 'clsx';
-import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useLocation } from 'react-router-dom'
@@ -37,12 +35,15 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
   return (
     <>
       <div className={classes.list}>
-        <Link className={classes.link} to={"/"}>Talents</Link>
-        <Link className={classes.link} to={"/company"}>Companies</Link>
-        {!auth && <><Link className={classes.link} to={"/user/register"}>Register</Link>
+
+        {!auth && <>
+          <Link className={classes.link} to={"/"}>Talents</Link>
+          <Link className={classes.link} to={"/company"}>Companies</Link>
+          <Link className={classes.link} to={"/user/register"}>Register</Link>
           <Button variant="outlined" color="inherit" style={{ marginLeft: 20, marginRight: 20 }}>
             <Link className={classes.link} to={"/user/login"}>login</Link>
-          </Button></>}
+          </Button>
+        </>}
 
       </div>
       <Divider orientation="vertical" />
@@ -53,15 +54,6 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
           onClick={() => signout(setAuth)}
         >
           <ExitToAppIcon />
-        </IconButton>
-        <IconButton
-          color="inherit"
-          aria-label="open"
-          edge="end"
-          onClick={handleDrawerOpen}
-          className={clsx(open && classes.hide)}
-        >
-          <SettingsIcon />
         </IconButton>
       </>
       }
