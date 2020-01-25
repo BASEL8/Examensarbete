@@ -124,7 +124,7 @@ const useStyles = makeStyles(theme => ({
 
 const Main = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
   const [user, setUser] = useState({})
   const [error, setError] = useState('')
   const history = useHistory()

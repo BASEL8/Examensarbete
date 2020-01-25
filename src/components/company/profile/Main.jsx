@@ -145,7 +145,7 @@ const Main = () => {
         setUserData({ ...res.company, announces: res.announces })
       }
     })
-  }, [history, open, openRemove.status])
+  }, [history, open, openRemove.status, value])
   const handleOpen = () => {
     setOpen(true);
   };

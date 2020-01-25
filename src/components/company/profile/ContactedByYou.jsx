@@ -49,7 +49,7 @@ const ContactedByYou = ({ contactedByYou, eventsTracker }) => {
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <h4>contacted by you</h4>
-            <List className={classes.root}>{contactedByYou && contactedByYou.map(({ _id, profession, cities, languages, success }, index) =>
+            {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou && contactedByYou.map(({ _id, profession, cities, languages, success }, index) =>
               <Fragment key={_id}>
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>
@@ -66,7 +66,7 @@ const ContactedByYou = ({ contactedByYou, eventsTracker }) => {
               </Fragment>
             )}
             </List>
-          </Paper>
+            }</Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.eventsTracker}>
