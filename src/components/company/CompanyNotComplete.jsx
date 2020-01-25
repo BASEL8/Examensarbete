@@ -132,14 +132,14 @@ const CompanyNotComplete = () => {
         </form>
         <div>
           {activeStep === 0 && <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             onClick={handleNext}
             className={classes.button}
             disabled={(activeStep === 0) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
           >Next</Button>
           }
-          {activeStep === 2 && error && <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>}
+          {activeStep === 2 && error && <Button variant="outlined" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>}
         </div>
       </div>
     </div >

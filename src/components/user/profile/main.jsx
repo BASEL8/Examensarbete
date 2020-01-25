@@ -20,6 +20,7 @@ import { useHistory } from 'react-router-dom'
 import { getUserProfile } from '../../../actions/userAuth'
 import { getCookie, isAuth } from '../../../actions/auth';
 import ContactRequests from './ContactRequests';
+import CompaniesYouAccepted from './CompaniesYouAccepted'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -169,8 +170,8 @@ const Main = () => {
           <ContactRequests contactRequests={user.contactRequests} eventsTracker={user.eventsTracker} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          connecting with just now
-      </TabPanel>
+          <CompaniesYouAccepted acceptedByYou={user.acceptedByYou} />
+        </TabPanel>
         <TabPanel value={value} index={3}>
           search
       </TabPanel>

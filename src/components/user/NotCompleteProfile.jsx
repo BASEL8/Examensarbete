@@ -143,7 +143,7 @@ const FirstProfile = () => {
           {activeStep !== 3 && activeStep !== (steps.length - 2) ?
 
             <Button
-              variant="contained"
+              variant="outlined"
               color="primary"
               onClick={handleNext}
               className={classes.button}
@@ -151,7 +151,7 @@ const FirstProfile = () => {
             >Next</Button>
             :
             activeStep === 3 && error &&
-            <Button variant="contained" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
+            <Button variant="outlined" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
           }
         </div>}
       </div>

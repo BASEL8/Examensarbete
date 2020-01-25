@@ -96,7 +96,7 @@ const UserLogin = () => {
             variant="outlined"
             type="password"
           />
-          <Button variant="contained" color="primary" size="large" type="submit">Login</Button>
+          <Button variant="outlined" color="primary" size="large" type="submit">Login</Button>
         </form>
         {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">{error}</Alert>

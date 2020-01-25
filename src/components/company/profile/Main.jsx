@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -20,6 +20,7 @@ import ContactedByYou from './ContactedByYou'
 import { isAuth, getCookie } from '../../../actions/auth'
 import { getCompanyProfile } from '../../../actions/companyAuth'
 import { useHistory } from 'react-router-dom'
+import AcceptedYouRequest from './AcceptedYouRequest';
 
 
 
@@ -133,6 +134,7 @@ const Main = () => {
   const history = useHistory()
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false)
   const [openRemove, setOpenRemove] = useState({ status: false, _id: '' });
   useEffect(() => {
     if (!isAuth()) {
@@ -146,7 +148,7 @@ const Main = () => {
         setUserData({ ...res.company, announces: res.announces })
       }
     })
-  }, [history, open, openRemove.status, value])
+  }, [history, open, openRemove.status, value, forceUpdate])
   const handleOpen = () => {
     setOpen(true);
   };
@@ -191,8 +193,8 @@ const Main = () => {
           <ContactedByYou contactedByYou={user.contactedByYou} eventsTracker={user.eventsTracker} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          connecting with just now
-      </TabPanel>
+          <AcceptedYouRequest acceptedYouRequest={user.acceptedYourRequest} setForceUpdate={setForceUpdate} forceUpdate={forceUpdate} />
+        </TabPanel>
         <TabPanel value={value} index={3}>
           search
       </TabPanel>

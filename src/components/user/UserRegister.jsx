@@ -102,7 +102,7 @@ const UserRegister = () => {
             variant="outlined"
             type="password"
           />
-          <Button variant="contained" color="primary" size="large" type="submit">Submit</Button>
+          <Button variant="outlined" color="primary" size="large" type="submit">Submit</Button>
         </form>
         {error && <Snackbar open={openError} autoHideDuration={10000} onClose={() => setOpenError(false)} >
           <Alert onClose={() => setOpenError(false)} severity="error">{error}</Alert>

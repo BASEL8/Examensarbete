@@ -67,8 +67,8 @@ const RemoveAnnounceModal = ({ handleClose, handleOpen, open: { status, _id }, s
               remove this announce !!!
             </div>
             <div>
-              <Button variant="contained" onClick={handleClose} color="secondary" >Cancel</Button>
-              <Button variant="contained" color="primary" onClick={handleRemove} >Remove</Button>
+              <Button variant="outlined" onClick={handleClose} color="secondary" >Cancel</Button>
+              <Button variant="outlined" color="primary" onClick={handleRemove} >Remove</Button>
             </div>
           </div>
         </Fade>

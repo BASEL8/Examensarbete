@@ -529,8 +529,8 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
               />
             </>
             <div className={classes.formControl} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button style={{ marginRight: 10 }} variant="contained" color="secondary" onClick={handleClose}>Cancel</Button>
-              <Button variant="contained" color="primary" disabled={Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
+              <Button style={{ marginRight: 10 }} variant="outlined" color="secondary" onClick={handleClose}>Cancel</Button>
+              <Button variant="outlined" color="primary" disabled={Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
                 onClick={handleSendDate}
               >Send</Button>
             </div>

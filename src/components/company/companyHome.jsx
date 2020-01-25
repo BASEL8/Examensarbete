@@ -230,7 +230,7 @@ const Company = () => {
       </h2>
           <p className={classes.headerText}>
             Get access to a curated and active pool with tech talent who are all open to new challenges. Sign up and meet tech talent for free.      </p>
-          <Button variant="contained" color="primary" style={{ marginTop: 30 }}>
+          <Button variant="outlined" color="primary" style={{ marginTop: 30 }}>
             <Link className={classes.link} to={"/company/register"}>Register</Link>
           </Button>
         </div>
@@ -312,7 +312,7 @@ const Company = () => {
         </div>
       </div>
       <div style={{ marginTop: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Button variant="contained" color="primary" size="large">
+        <Button variant="outlined" color="primary" size="large">
           <Link className={classes.link} to={"/company/register"}>
             Get started
           </Link>

@@ -161,7 +161,7 @@ const Home = () => {
           <p className={classes.headerText}>
             We match you and your wishes to hundreds of tech companies so that they can contact through personal offers, completely anonymously. Find out which employers are interested in you and can meet your expectations.
       </p>
-          <Button variant="contained" color="primary" style={{ marginTop: 30 }}>
+          <Button variant="outlined" color="primary" style={{ marginTop: 30 }}>
             <Link className={classes.link} to={"/user/register"}>Register</Link>
           </Button>
         </div>
