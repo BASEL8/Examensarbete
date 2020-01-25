@@ -150,7 +150,7 @@ exports.rejectRequest = (req, res) => {
           if (err) {
             return res.json({ error: errorHandler(err) })
           }
-          return res.json(result)
+          return res.json({ success: 'success' })
         })
       })
     })
