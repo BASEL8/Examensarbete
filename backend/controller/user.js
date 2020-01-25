@@ -3,6 +3,8 @@ const User = require('../models/user');
 const Profession = require('../models/profession')
 const Company = require('../models/company')
 const { errorHandler } = require('../helpers/dbErrorHandler')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 exports.users = (req, res) => {
   User.find({ published: true }, { "hashed_password": 0, "email": 0, "name": 0, username: 0 }).exec((err, users) => {
     if (err) {
@@ -109,7 +111,8 @@ exports.companyJustForYou = (req, res) => {
       city: { "$in": cities },
       'profession.name': profession.name,
       'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
-      contactedByYou: { "$ne": _id }
+      contactedByYou: { "$ne": _id },
+      acceptedYourRequest: { "$ne": _id }
     },
     {
       'hashed_password': 0,
@@ -151,6 +154,47 @@ exports.rejectRequest = (req, res) => {
             return res.json({ error: errorHandler(err) })
           }
           return res.json({ success: 'success' })
+        })
+      })
+    })
+  })
+}
+exports.acceptRequest = (req, res) => {
+  const { contactRequestId } = req.body
+  const { _id, name } = req.profile;
+  Company.findById(contactRequestId).exec((error, company) => {
+    if (error) {
+      return res.json({ error: errorHandler(error) })
+    }
+    const { email } = company
+    company.acceptedYourRequest = [...company.acceptedYourRequest, _id]
+    company.eventsTracker = [...company.eventsTracker, { eventName: ` ${name} accepted your request` }]
+    company.contactedByYou = company.contactedByYou.filter(contact => contact.toString() !== _id.toString())
+
+    company.save((erro, result) => {
+      if (erro) {
+        return res.json({ error: errorHandler(erro) })
+      }
+      User.findById(_id).exec((err, user) => {
+        if (err) {
+          return res.json({ error: errorHandler(err) })
+        }
+        user.eventsTracker = [...user.eventsTracker, { eventName: `you accepted request from ${company.companyName}` }]
+        user.acceptedByYou = [...user.acceptedByYou, contactRequestId]
+        user.contactRequests = user.contactRequests.filter(contact => contact.toString() !== contactRequestId.toString())
+        user.save((er, companyResult) => {
+          if (er) {
+            return res.json({ error: errorHandler(er) })
+          }
+          const emailData = {
+            to: email,
+            from: process.env.EMAIL_FROM,
+            subject: `Contact Request accepted`,
+            html: `<h4>there is user accepted you request</h4>`
+          }
+          sgMail.send(emailData).then(sent => {
+            return res.json({ success: 'success' })
+          })
         })
       })
     })
