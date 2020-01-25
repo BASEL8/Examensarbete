@@ -74,6 +74,8 @@ const CompanyNotComplete = () => {
   delete user.confirmed
   delete user.contactedByYou
   delete user.__v
+  delete user.eventsTracker
+  delete user.acceptedYourRequest
   const [userData, setUserData] = useState({
     about: '',
     website: '',

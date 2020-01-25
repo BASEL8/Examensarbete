@@ -20,7 +20,7 @@ const UserActivation = () => {
       else {
         setState({ error: '', success: res.success })
       }
-      return setTimeout(() => { history.push('/user/login', { email: res.email }) }, 10000)
+      return setTimeout(() => { history.push('/user/login', { email: res.email }) }, 5000)
     })
   }, [activationToken, history])
   return (
