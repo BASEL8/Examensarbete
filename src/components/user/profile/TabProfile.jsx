@@ -25,6 +25,29 @@ const useStyles = makeStyles(theme => ({
       }
     }
   },
+  info: {
+    padding: theme.spacing(2),
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+    background: theme.palette.primary.background,
+    minHeight: 150,
+    height: '100%',
+    fontSize: 10,
+    '& > * ': {
+      marginTop: 5,
+      '& > span': {
+        fontWeight: 600,
+      }
+    }
+  },
+  eventsTracker: {
+    padding: theme.spacing(2),
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+    background: theme.palette.primary.background,
+    minHeight: 150,
+    height: '100%',
+  }
 }));
 const TabProfile = ({ user }) => {
   const classes = useStyles();
@@ -45,7 +68,8 @@ const TabProfile = ({ user }) => {
     salary,
     wantToWorkAs,
     about,
-    workingRemotely
+    workingRemotely,
+    eventsTracker
   } = user;
   return (
     <div className={classes.root}>
@@ -73,7 +97,6 @@ const TabProfile = ({ user }) => {
             <div>
               last update: <span><Moment fromNow>{updatedAt}</Moment></span> <Button color="primary" style={{ marginLeft: 10 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
             </div>
-
             <div style={{ textTransform: 'lowercase' }}>
               {email}
             </div>
@@ -85,7 +108,7 @@ const TabProfile = ({ user }) => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.info}>
             <div>
               <div>Looking for to work with</div>
               <h3>{lookingForJob}</h3>
@@ -110,10 +133,6 @@ const TabProfile = ({ user }) => {
               <div>kind of employment</div>
               <h3>{kindOfEmployment}</h3>
             </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
             <div>
               <div>languages</div>
               <h3>{languages && languages.join(', ')}</h3>
@@ -134,6 +153,14 @@ const TabProfile = ({ user }) => {
               <div>About you</div>
               <h3>{about}</h3>
             </div>
+
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.eventsTracker}>
+            <h4>History</h4>
+            {eventsTracker && eventsTracker.map(({ eventName, _id, date }, index) => <div key={_id} style={{ fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <p>{eventName}</p><Moment fromNow>{date}</Moment></div>)}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={3}>

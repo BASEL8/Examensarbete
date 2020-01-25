@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'space-between',
     justifyContent: 'center',
     flexDirection: 'column',
+    borderRadius: 4,
     '&>div': {
       display: 'flex',
       alignItems: 'center',
@@ -140,7 +141,7 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
                 <Button size="small" style={{ zIndex: 100 }} onClick={() => handleOpenRemove(_id)}><HighlightOffIcon /></Button>
               </div>
               <div style={{ justifyContent: 'flex-start', fontSize: 10, marginBottom: 5 }}>
-                <span>{profession.subProfessions.map(({ name }) => name).join(', ')}</span>
+                <span>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</span>
               </div>
               <div style={{ justifyContent: 'flex-start', fontSize: 10 }}>
                 <span>created : <Moment fromNow>{createdAt}</Moment></span>
@@ -158,10 +159,7 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
             <JustForYourCompany />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <Paper className={classes.paper}>sOon</Paper>
-        </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>sOon</Paper>
         </Grid>
         <Grid item xs={12} sm={3}>

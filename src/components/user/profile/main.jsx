@@ -142,7 +142,7 @@ const Main = () => {
       setError('')
       return setUser(res)
     })
-  }, [history])
+  }, [history, value])
   return (
     <>
       <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
@@ -165,7 +165,7 @@ const Main = () => {
           <TabProfile user={user} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ContactRequests contactRequests={user.contactRequests} />
+          <ContactRequests contactRequests={user.contactRequests} eventsTracker={user.eventsTracker} />
         </TabPanel>
         <TabPanel value={value} index={2}>
           connecting with just now

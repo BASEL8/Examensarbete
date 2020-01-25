@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     maxHeight: 350,
     overflow: 'scroll',
     backgroundColor: theme.palette.background.paper,
+    borderRadius: 4
   },
   text: {
     fontSize: 12,
@@ -43,7 +44,7 @@ const JustForYourCompany = () => {
         return setError(res.error)
       }
       setError('')
-      setUsers(users.map((user, index) => {
+      setUsers(users && users.map((user, index) => {
         if (user._id === _id) {
           user.success = true;
         }
@@ -61,7 +62,7 @@ const JustForYourCompany = () => {
             <ListItem alignItems="flex-start">
               <div className={classes.text}>
                 <h4>{profession.name}</h4>
-                <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
                 <p> {cities.join(', ')}</p>
                 <p>{languages.join(', ')}</p>
               </div>

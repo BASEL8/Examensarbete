@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     minWidth: 350,
+    minHeight: 650,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'stretch',
@@ -100,7 +101,7 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
       })
     }
     if (event.target.name === 'subProfession') {
-      if (profession.subProfessions.map((ob, index) => ob.name).indexOf(event.target.value) === -1) {
+      if (profession && profession.subProfessions.map((ob, index) => ob.name).indexOf(event.target.value) === -1) {
         setUserData({
           ...userData,
           profession: {
@@ -127,7 +128,7 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
       setUserData({ ...userData, kindOfEmployment: event.target.value })
     }
     if (event.target.name === 'city') {
-      setUserData({ ...userData, city: event.target.value })
+      setUserData({ ...userData, city: event.target.value.toLowerCase() })
     }
     if (event.target.name === 'priorityBenefits') {
       if (priorityBenefits.indexOf(event.target.value) === -1 && priorityBenefits.length <= 8) {
@@ -140,17 +141,17 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
   }
   const professions = [
     {
-      name: 'Technology & development',
+      name: 'technology & development',
       years: 0,
       subProfessions: []
     },
     {
-      name: 'Design',
+      name: 'design',
       years: 0,
       subProfessions: []
     },
     {
-      name: 'Processer & Analys',
+      name: 'processer & analys',
       years: 0,
       subProfessions: []
     }
@@ -158,189 +159,189 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
   const subProfessions = [
 
     {
-      name: 'System  Architect',
+      name: 'system  Architect',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'System Admin',
+      name: 'system Admin',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Games',
+      name: 'games',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Test',
+      name: 'test',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'QA',
+      name: 'qa',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'IT Security',
+      name: 'iT Security',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
       name: 'iOS',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Hybrid',
+      name: 'hybrid',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Electronics',
+      name: 'electronics',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Hardware',
+      name: 'hardware',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Full-stack',
+      name: 'full-stack',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Front-end',
+      name: 'front-end',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Embedded',
+      name: 'embedded',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'DevOps',
+      name: 'devOps',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Database',
+      name: 'database',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Data Science',
+      name: 'data science',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Cloud',
+      name: 'cloud',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'BI',
+      name: 'bi',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Backend',
+      name: 'backend',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Apps',
+      name: 'apps',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Android',
+      name: 'android',
       years: 0,
-      profession: 'Technology & development'
+      profession: 'technology & development'
     },
     {
-      name: 'Animation',
+      name: 'animation',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'Graphic design',
+      name: 'graphic design',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'UI',
+      name: 'ui',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'UX',
+      name: 'ux',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'Visual design',
+      name: 'visual design',
       years: 0,
-      profession: 'Design'
+      profession: 'design'
     },
     {
-      name: 'business Developer',
+      name: 'business developer',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'business Architect',
+      name: 'business architect',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
       name: 'business Analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'System Administration',
+      name: 'system administration',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'management Consultant',
+      name: 'management consultant',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'solution Architect',
+      name: 'solution architect',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Requirements Analyst',
+      name: 'requirements analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Infrastructure',
+      name: 'infrastructure',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Growth',
+      name: 'growth',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
-      name: 'Data Analyst',
+      name: 'data analyst',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
     {
       name: 'application',
       years: 0,
-      profession: 'Processer & Analys'
+      profession: 'processer & analys'
     },
   ];
   const benefits = [
@@ -428,14 +429,13 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
                   onChange={handleChange}
                   name='profession'
                 >
-                  {professions.map(({ name }, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
+                  {professions && professions.map(({ name }, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
                 </Select>
               </FormControl>
               {profession.name &&
                 <Autocomplete
                   multiple
                   autoSelect={true}
-
                   options={subProfessions.filter((index) => index.profession === profession.name)}
                   getOptionLabel={({ name }) => name}
                   value={profession.subProfessions}
@@ -451,7 +451,7 @@ const AddAnnounceModal = ({ handleClose, handleOpen, open }) => {
                         style={{ marginRight: 8 }}
                         onChange={handleChange}
                         value={name}
-                        checked={profession.subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1}
+                        checked={profession && profession.subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1}
                       />
                       {name}
                     </>

@@ -187,7 +187,7 @@ const Main = () => {
             handleOpenRemove={handleOpenRemove} handleClose={handleClose} open={open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ContactedByYou contactedByYou={user.contactedByYou} />
+          <ContactedByYou contactedByYou={user.contactedByYou} eventsTracker={user.eventsTracker} />
         </TabPanel>
         <TabPanel value={value} index={2}>
           connecting with just now
