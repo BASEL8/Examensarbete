@@ -93,6 +93,7 @@ const userSchema = new mongoose.Schema({
   profession: {
     type: { testSchema },
   },
+  eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
   contactRequests: [{ type: ObjectId, ref: 'Company', require: true }],
 }, { timestamps: true })
 

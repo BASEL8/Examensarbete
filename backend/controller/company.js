@@ -2,6 +2,8 @@ const Company = require('../models/company')
 const Announce = require('../models/announce')
 const User = require('../models/user')
 const { errorHandler } = require('../helpers/dbErrorHandler')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 exports.company = (req, res) => {
   const { _id } = req.profile;
   Company.findById(_id, { 'hashed_password': 0 })
@@ -104,13 +106,15 @@ exports.justForYourCompany = (req, res) => {
     })
 }
 exports.sendContactRequest = (req, res) => {
-  const { _id } = req.profile;
+  const { _id, companyName } = req.profile;
   const { _id: userId } = req.body;
   User.findById(userId).exec((error, user) => {
     if (error) {
       return res.json({ error: errorHandler(error) })
     }
     user.contactRequests = [...user.contactRequests, _id]
+    user.eventsTracker = [...user.eventsTracker, { eventName: `${companyName} sent contact request` }]
+    const { email } = user;
     user.save((err, result) => {
       if (err) {
         return res.json({ error: errorHandler(err) })
@@ -120,11 +124,21 @@ exports.sendContactRequest = (req, res) => {
           return res.json({ error: errorHandler(er) })
         }
         company.contactedByYou = [...company.contactedByYou, userId]
+        company.eventsTracker = [...company.eventsTracker, { eventName: `you sent contact request to ${user.profession.name} user` }]
+
         company.save((e, result) => {
           if (e) {
             return res.json({ error: errorHandler(e) })
           }
-          return res.json({ success: 'success', userId })
+          const emailData = {
+            to: email,
+            from: process.env.EMAIL_FROM,
+            subject: `Contact Request`,
+            html: `<h4>${companyName} sent contact request<h4>, login for more information`
+          }
+          sgMail.send(emailData).then(sent => {
+            return res.json({ success: 'success', userId })
+          })
         })
       })
     })

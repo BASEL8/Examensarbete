@@ -73,8 +73,8 @@ const companySchema = new mongoose.Schema({
     type: String
   },
   profession: { type: { testSchema }, require: true },
-  contactedByYou: [{ type: ObjectId, ref: 'User', require: true }]
-
+  contactedByYou: [{ type: ObjectId, ref: 'User', require: true }],
+  eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
 }, { timestamps: true })
 
 
