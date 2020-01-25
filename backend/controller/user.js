@@ -126,6 +126,36 @@ exports.companyJustForYou = (req, res) => {
       return res.json(company)
     })
 }
+exports.rejectRequest = (req, res) => {
+  const { contactRequestId } = req.body
+  const { _id } = req.profile;
+  User.findById(_id).exec((error, user) => {
+    if (error) {
+      return res.json({ error: errorHandler(error) })
+    }
+    Company.findById(contactRequestId).exec((erro, company) => {
+      if (erro) {
+        return res.json({ error: errorHandler(erro) })
+      }
+      company.contactedByYou = company.contactedByYou.filter(contacted => contacted.toString() !== _id.toString())
+      company.eventsTracker = [...company.eventsTracker, { eventName: `user reject yor contact request` }]
+
+      company.save((er, companyResult) => {
+        if (er) {
+          return res.json({ error: errorHandler(er) })
+        }
+        user.eventsTracker = [...user.eventsTracker, { eventName: `you rejected request from ${company.companyName}` }]
+        user.contactRequests = user.contactRequests.filter(contact => contact.toString() !== contactRequestId)
+        user.save((err, result) => {
+          if (err) {
+            return res.json({ error: errorHandler(err) })
+          }
+          return res.json(result)
+        })
+      })
+    })
+  })
+}
 exports.AdminRemoveUser = (req, res) => {
   return res.json('created')
 }
