@@ -5,24 +5,25 @@ import { Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { isAuth } from '../../actions/auth'
 import { preSignup } from '../../actions/companyAuth'
 const useStyles = makeStyles(theme => ({
   form: {
     width: '90%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      justifyContent: 'stretch',
-    },
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'stretch',
     '& > *': {
       margin: 10,
       flex: 1
     }
+  },
+  link: {
+    textDecoration: 'none',
+    fontWeight: 600,
+    color: theme.palette.primary.main
   }
 }));
 const Alert = (props) => {
@@ -61,6 +62,9 @@ const CompanyRegister = () => {
     <AuthIndex>{
       <>
         <h3>Create Account for your company</h3>
+        <Button variant="outlined" color="primary">
+          <Link className={classes.link} to="/user/register">talents ? Register here</Link>
+        </Button>
         <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"
@@ -94,7 +98,7 @@ const CompanyRegister = () => {
             variant="outlined"
             type="password"
           />
-          <Button variant="outlined" color="primary" size="large" type="submit">Submit</Button>
+          <Button variant="contained" color="primary" size="large" type="submit">Submit</Button>
         </form>
         {error && <Snackbar open={openError} autoHideDuration={10000} onClose={() => setOpenError(false)} >
           <Alert onClose={() => setOpenError(false)} severity="error">{error}</Alert>

@@ -49,7 +49,7 @@ const UserRegister = ({ children }) => {
           <Grid item xs={3} style={{ padding: 0, margin: 0 }} >
             <div className={classes.right}>
               <p>"Streamlined from start to finish, no difficult extra steps without direct contact with potential employers."</p>
-              <h3>Andreas, Software Developer</h3>
+              <h3>Basel, frontend Developer</h3>
             </div>
           </Grid>
         </Hidden>

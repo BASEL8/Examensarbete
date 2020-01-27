@@ -23,17 +23,18 @@ const useStyles = makeStyles(theme => ({
   form: {
     width: '90%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      justifyContent: 'stretch',
-    },
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'stretch',
     '& > *': {
       margin: 10,
       flex: 1
     }
+  },
+  link: {
+    textDecoration: 'none',
+    fontWeight: 600,
+    color: theme.palette.primary.main
   }
 }));
 const Alert = (props) => {
@@ -79,6 +80,9 @@ const UserLogin = () => {
     <AuthIndex>{
       <>
         <h3>Login</h3>
+        <Button variant="outlined" color="primary">
+          <Link to="/company/login" className={classes.link}>Employer ? Login here</Link>
+        </Button>
         <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"
@@ -96,12 +100,11 @@ const UserLogin = () => {
             variant="outlined"
             type="password"
           />
-          <Button variant="outlined" color="primary" size="large" type="submit">Login</Button>
+          <Button variant="contained" color="primary" size="large" type="submit">Login</Button>
         </form>
         {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">{error}</Alert>
         </Snackbar>}
-        <Link to="/company/login">Employer ? Login here</Link>
       </>
     }
     </AuthIndex>

@@ -8,6 +8,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
 import { isAuth, authenticate } from '../../actions/auth'
 import { login } from '../../actions/companyAuth'
+import { Link } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   left: {
     height: '100%',
@@ -23,17 +24,18 @@ const useStyles = makeStyles(theme => ({
   form: {
     width: '90%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      justifyContent: 'stretch',
-    },
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'stretch',
     '& > *': {
       margin: 10,
       flex: 1
     }
+  },
+  link: {
+    textDecoration: 'none',
+    fontWeight: 600,
+    color: theme.palette.primary.main
   }
 }));
 const Alert = (props) => {
@@ -77,7 +79,10 @@ const UserLogin = () => {
   return (
     <AuthIndex>{
       <>
-        <h3>Login</h3>
+        <h3>Company Login</h3>
+        <Button variant="outlined" color="primary">
+          <Link to="/user/login" className={classes.link}>Talen ? Login here</Link>
+        </Button>
         <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"
@@ -95,7 +100,7 @@ const UserLogin = () => {
             variant="outlined"
             type="password"
           />
-          <Button variant="outlined" color="primary" size="large" type="submit">Login</Button>
+          <Button variant="contained" color="primary" size="large" type="submit">Login</Button>
         </form>
         {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} style={{ position: 'fixed', left: 100 }}>
           <Alert onClose={handleClose} severity="error">{error}</Alert>

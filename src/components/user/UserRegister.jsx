@@ -26,17 +26,18 @@ const useStyles = makeStyles(theme => ({
   form: {
     width: '90%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      justifyContent: 'stretch',
-    },
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'stretch',
     '& > *': {
       margin: 10,
       flex: 1
     }
+  },
+  link: {
+    textDecoration: 'none',
+    fontWeight: 600,
+    color: theme.palette.primary.main
   }
 }));
 const Alert = (props) => {
@@ -76,7 +77,9 @@ const UserRegister = () => {
       <>
         <h3>Create Account</h3>
         <p>You are now minutes from getting offers from +800 tech companies</p>
-        <Link to="/company/register">Employer ? Register here</Link>
+        <Button variant="outlined" color="primary">
+          <Link to="/company/register" className={classes.link}>Employer ? Register here</Link>
+        </Button>
         <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"
@@ -102,7 +105,7 @@ const UserRegister = () => {
             variant="outlined"
             type="password"
           />
-          <Button variant="outlined" color="primary" size="large" type="submit">Submit</Button>
+          <Button variant="contained" color="primary" size="large" type="submit">Submit</Button>
         </form>
         {error && <Snackbar open={openError} autoHideDuration={10000} onClose={() => setOpenError(false)} >
           <Alert onClose={() => setOpenError(false)} severity="error">{error}</Alert>
