@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    '&>:first-child': {
+    '&>*:not(:last-child)': {
       flex: 1,
       display: 'flex',
       alignItems: 'center',
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
       flexDirection: 'column',
       alignItems: 'flex-start',
       justifyContent: 'center',
-      '& > * ': {
+      '& > *': {
         marginTop: 30,
         width: '100%',
       }
@@ -86,13 +86,14 @@ const FirstProfile = () => {
     available: '',
     reasonToNewJob: '',
     workingRemotely: '',
-    priorityBenefits: [''],
+    priorityBenefits: [],
     profession: {
       name: '',
       years: 0,
       subProfessions: [{ name: '' }]
     },
   })
+  const [dataToComplete, setDataToComplete] = useState(Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : (userData.profession.name && userData.profession.subProfessions.length !== 0) ? null : key : userData[key] ? null : key))
   const [error, setError] = useState('')
   const steps = getSteps(error);
   const getStepContent = (step) => {
@@ -106,7 +107,7 @@ const FirstProfile = () => {
       case 3:
         return error ? <div className={classes.errorPage}>{error} , please try agin later...</div> :
           <div className={classes.errorPage}>{error}
-            <p>your profile is ready, don't forget to publish it!</p>
+            <p>your profile is ready, don't forget to publish it! </p>
             <p> <Link to={`/user/profile/${isAuth()._id}`}> Profile</Link></p>
           </div>;
       default:
@@ -119,6 +120,29 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
+  useEffect(() => {
+    setDataToComplete((Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : userData.profession.name || userData.profession.subProfessions.length === 0 ? null : key : userData[key] ? null : key)))
+  }, [userData])
+  // for (const key in userData) {
+  //   if (userData.hasOwnProperty(key) && !userData[key]) {
+
+  //     //console.log(key)
+  //   }
+  //   if (userData.hasOwnProperty(key) && Array.isArray(userData[key]) && userData[key].length === 0) {
+  //     // console.log(key)
+  //   }
+  //   if (key === 'profession' && !userData.profession.name) {
+  //     console.log(key)
+  //   }
+  //   if (key === 'profession' && userData.profession.subProfessions.length === 0) {
+  //     console.log(key)
+  //   }
+  // }
+
+  console.log()
+
+
+
   return (
     <div className={classes.root}>
       <div className={classes.left}>
@@ -135,6 +159,8 @@ const FirstProfile = () => {
         </Stepper>
       </div>
       <div className={classes.right}>
+        <div>
+        </div>
         <form>
           {getStepContent(activeStep)}
         </form>

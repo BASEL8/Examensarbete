@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    '&>:first-child': {
+    '&>:not(:last-child)': {
       flex: 1,
       display: 'flex',
       alignItems: 'center',
@@ -127,6 +127,7 @@ const CompanyNotComplete = () => {
         </Stepper>
       </div>
       <div className={classes.right}>
+        <p>basel</p>
         <form>
           {getStepContent(activeStep)}
         </form>
