@@ -10,7 +10,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import { Button } from '@material-ui/core';
 import { getCookie } from '../../../actions/auth';
-import { cancelContactUser } from '../../../actions/companyAuth';
+import { cancelContactUser, declineContactRequestFromUser, acceptContactRequestFromUser } from '../../../actions/companyAuth';
 
 
 const useStyles = makeStyles(theme => ({
@@ -58,6 +58,13 @@ const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForc
       setError('')
     })
   }
+  const handleDeclineContactRequestFromUser = (_id) => {
+    return declineContactRequestFromUser(getCookie('token'), _id).then(res => console.log(res))
+
+  }
+  const handleAcceptContactRequestFromUser = (_id) => {
+    return acceptContactRequestFromUser(getCookie('token'), _id).then(res => console.log(res))
+  }
   return (
     <>
       {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
@@ -98,8 +105,12 @@ const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForc
                     <p>{languages.join(', ')}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <HighlightOffIcon fontSize="small" />
-                    <CheckCircleOutlinedIcon fontSize="small" />
+                    <Button onClick={() => handleDeclineContactRequestFromUser(_id)}>
+                      <HighlightOffIcon fontSize="small" />
+                    </Button>
+                    <Button onClick={() => handleAcceptContactRequestFromUser(_id)}>
+                      <CheckCircleOutlinedIcon fontSize="small" />
+                    </Button>
                   </div>
                 </ListItem>
                 {index !== wantToContactYou.length - 1 && <Divider variant="fullWidth" component="li" />}
