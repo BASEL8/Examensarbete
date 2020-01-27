@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 exports.users = (req, res) => {
   User.find({ published: true }, { "hashed_password": 0, "email": 0, "name": 0, username: 0 }).exec((err, users) => {
     if (err) {
-      return res.status(300).json({ err: 'error' })
+      return res.status(300).json({ error: 'error' })
     }
     return res.json({ users })
   })
@@ -22,26 +22,26 @@ exports.user = (req, res) => {
     .populate('contactedByYou', '_id companyName profession city')
     .exec((err, user) => {
       if (err) {
-        return res.status(300).json({ err: 'error' })
+        return res.status(300).json({ error: 'error' })
       }
       return res.json(user)
     })
 }
 exports.publish = (req, res) => {
-  const { _id, published } = req.body;
-  User.findOne({ _id }, { "hashed_password": 0, "email": 0, "name": 0, username: 0 }).exec((err, user) => {
+  const { _id } = req.profile;
+  User.findById({ _id }).exec((err, user) => {
     if (err) {
-      return res.status(300).json({ err: 'error' })
+      return res.status(300).json({ error: 'error' })
     }
     if (!user) {
-      return res.status(300).json({ err: 'no user with this name' })
+      return res.status(300).json({ error: 'no user with this name' })
     }
-    user.published = published;
+    user.published = !user.published;
     user.save((saveErr, saveRes) => {
       if (saveErr) {
-        return res.status(300).json({ err: saveErr })
+        return res.status(300).json({ error: saveErr })
       }
-      return res.json(user)
+      return res.json({ success: 'success' })
     })
   })
 }
@@ -113,7 +113,7 @@ exports.companyJustForYou = (req, res) => {
     {
       city: { "$in": cities },
       'profession.name': profession.name,
-      'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
+      //  'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactedByYou: { "$ne": _id },
       acceptedYourRequest: { "$ne": _id },
       wantToContactYou: { "$ne": _id }

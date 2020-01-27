@@ -96,7 +96,7 @@ exports.justForYourCompany = (req, res) => {
       published: true,
       cities: city,
       'profession.name': profession.name,
-      'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
+      //   'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactRequests: { "$ne": _id },
       acceptedByYou: { "$ne": _id },
       contactedByYou: { "$ne": _id }
