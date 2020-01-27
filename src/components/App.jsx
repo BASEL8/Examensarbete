@@ -87,7 +87,7 @@ const App = () => {
           <NavLinks />
         </Toolbar>
       </AppBar>
-      <main style={{ flex: 1, paddingTop: 50 }}>
+      <main style={{ flex: 1, paddingTop: 0 }}>
         <div style={{ flex: 1 }}>
           <MainRouter />
         </div>

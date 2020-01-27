@@ -21,6 +21,8 @@ import { getUserProfile } from '../../../actions/userAuth'
 import { getCookie, isAuth } from '../../../actions/auth';
 import ContactRequests from './ContactRequests';
 import CompaniesYouAccepted from './CompaniesYouAccepted'
+import Hidden from '@material-ui/core/Hidden';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -62,7 +64,10 @@ const useStyles = makeStyles(theme => ({
       marginLeft: 0,
       borderRadius: 10,
       background: 'white',
-      minHeight: '90%'
+      minHeight: '90%',
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: 20,
+      },
     },
     '& .MuiTabs-root': {
       border: 'none',
@@ -150,21 +155,38 @@ const Main = () => {
   return (
     <>
       <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
-      <div className={classes.root}>
+      <Hidden mdUp>
         <Tabs
-          orientation="vertical"
           variant="scrollable"
           value={value}
           onChange={handleChange}
           aria-label="Vertical tabs example"
-          className={classes.tabs}
+          className={classes.tabsHor}
         >
-          <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
-          <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
-          <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
-          <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-          <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
+          <Tab label={<AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
+          <Tab label={<MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
+          <Tab label={<DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+          <Tab label={<SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
+          <Tab label={<BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
         </Tabs>
+      </Hidden>
+      <div className={classes.root}>
+        <Hidden smDown>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            className={classes.tabs}
+          >
+            <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
+            <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
+            <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+            <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
+            <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
+          </Tabs>
+        </Hidden>
         <TabPanel value={value} index={0}>
           <TabProfile user={user} forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
         </TabPanel>
