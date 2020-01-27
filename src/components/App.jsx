@@ -10,6 +10,7 @@ import MainRouter from './MainRouter'
 import NavLinks from './NavLinks'
 import Footer from './Footer'
 import { NAME } from '../config'
+import { Link } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -67,6 +68,12 @@ const useStyles = makeStyles(theme => ({
   homePageLink: {
     textDecoration: 'none',
     color: 'white'
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: 700,
+    margin: '0 15px'
   }
 }));
 
@@ -74,6 +81,7 @@ const App = () => {
   const classes = useStyles();
 
   return (
+
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -82,7 +90,9 @@ const App = () => {
       >
         <Toolbar>
           <Typography variant="h5" noWrap className={classes.title}>
-            {NAME}
+            <Link className={classes.link} to="/">
+              {NAME}
+            </Link>
           </Typography>
           <NavLinks />
         </Toolbar>
@@ -93,7 +103,6 @@ const App = () => {
         </div>
         <Footer />
       </main>
-
     </div>
   );
 }

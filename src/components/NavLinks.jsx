@@ -35,10 +35,9 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
   return (
     <>
       <div className={classes.list}>
-
+        <Link className={classes.link} to={"/"}>Talents</Link>
+        <Link className={classes.link} to={"/company"}>Companies</Link>
         {!auth && <>
-          <Link className={classes.link} to={"/"}>Talents</Link>
-          <Link className={classes.link} to={"/company"}>Companies</Link>
           <Link className={classes.link} to={"/user/register"}>Register</Link>
           <Button variant="outlined" color="inherit" style={{ marginLeft: 20, marginRight: 20 }}>
             <Link className={classes.link} to={"/user/login"}>login</Link>
@@ -48,6 +47,12 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
       </div>
       <Divider orientation="vertical" />
       {auth && <>
+        {
+          auth.companyName ?
+            <Link className={classes.link} to={`/company/profile/${auth._id}`}>profile</Link>
+            :
+            <Link className={classes.link} to={`/user/profile/${auth._id}`}>profile</Link>
+        }
         <IconButton
           color="inherit"
           className={classes.link}
