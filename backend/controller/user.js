@@ -226,7 +226,7 @@ exports.contactMe = (req, res) => {
           return res.json({ error: errorHandler(er) })
         }
         user.contactedByYou = [...user.contactedByYou, companyId]
-        user.eventsTracker = [...company.eventsTracker, { eventName: `you sent contact request to ${company.companyName}` }]
+        user.eventsTracker = [...user.eventsTracker, { eventName: `you sent contact request to ${company.companyName}` }]
 
         user.save((e, result) => {
           if (e) {
