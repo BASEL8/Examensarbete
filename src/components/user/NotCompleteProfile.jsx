@@ -123,6 +123,26 @@ const FirstProfile = () => {
   useEffect(() => {
     setDataToComplete((Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : userData.profession.name || userData.profession.subProfessions.length === 0 ? null : key : userData[key] ? null : key)))
   }, [userData])
+  // for (const key in userData) {
+  //   if (userData.hasOwnProperty(key) && !userData[key]) {
+
+  //     //console.log(key)
+  //   }
+  //   if (userData.hasOwnProperty(key) && Array.isArray(userData[key]) && userData[key].length === 0) {
+  //     // console.log(key)
+  //   }
+  //   if (key === 'profession' && !userData.profession.name) {
+  //     console.log(key)
+  //   }
+  //   if (key === 'profession' && userData.profession.subProfessions.length === 0) {
+  //     console.log(key)
+  //   }
+  // }
+
+  console.log()
+
+
+
   return (
     <div className={classes.root}>
       <div className={classes.left}>

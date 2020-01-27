@@ -45,13 +45,7 @@ const JustForYourCompany = () => {
         return setError(res.error)
       }
       setError('')
-      setUsers(users && users.map((user, index) => {
-        if (user._id === _id) {
-          user.success = true;
-        }
-        return user;
-      }));
-      setTimeout(() => setForceUpdate(!forceUpdate), 3000)
+      setForceUpdate(!forceUpdate)
     })
   }
   if (error) return <p>{error}</p>

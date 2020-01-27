@@ -22,6 +22,7 @@ import { getCookie, isAuth } from '../../../actions/auth';
 import ContactRequests from './ContactRequests';
 import CompaniesYouAccepted from './CompaniesYouAccepted'
 import Hidden from '@material-ui/core/Hidden';
+import Badge from '@material-ui/core/Badge';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -164,10 +165,10 @@ const Main = () => {
           className={classes.tabsHor}
         >
           <Tab label={<AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
-          <Tab label={<MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
-          <Tab label={<DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+          <Tab label={<Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
+          <Tab label={<Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
           <Tab label={<SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-          <Tab label={<BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
+          <Tab label={<Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
         </Tabs>
       </Hidden>
       <div className={classes.root}>
@@ -181,10 +182,10 @@ const Main = () => {
             className={classes.tabs}
           >
             <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
-            <Tab label={value !== 1 ? <MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <MessageIcon fontSize='small' color={"primary"} />} {...a11yProps(1)} />
-            <Tab label={value !== 2 ? <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <DoneOutlinedIcon fontSize='small' color={"primary"} />} {...a11yProps(2)} />
+            <Tab label={value !== 1 ? <Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
+            <Tab label={value !== 2 ? <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length) || 0} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
             <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-            <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
+            <Tab label={value !== 4 ? <Badge badgeContent={4} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
           </Tabs>
         </Hidden>
         <TabPanel value={value} index={0}>
