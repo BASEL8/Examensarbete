@@ -9,6 +9,7 @@ exports.company = (req, res) => {
   Company.findById(_id, { 'hashed_password': 0 })
     .populate('contactedByYou', '_id profession cities languages')
     .populate('acceptedYourRequest', '_id profession cities languages email name')
+    .populate('wantToContactYou', '_id profession cities languages email name')
     .exec((error, company) => {
       if (error) {
         return res.json({ error: errorHandler(error) })
