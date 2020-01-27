@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     minHeight: '100%',
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
   },
   appBar: {
     boxShadow: "none",
@@ -76,7 +77,7 @@ const App = () => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="absolute"
+        position="relative"
         className={classes.appBar}
       >
         <Toolbar>
