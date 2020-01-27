@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 import image_1 from '../img/1.png'
 import image_2 from '../img/2.png'
 import image_3 from '../img/3.png'
@@ -161,11 +162,11 @@ const Home = () => {
           <p className={classes.headerText}>
             We match you and your wishes to hundreds of tech companies so that they can contact through personal offers, completely anonymously. Find out which employers are interested in you and can meet your expectations.
       </p>
-          <Button variant="outlined" color="primary" style={{ marginTop: 30 }}>
+          <Button variant="contained" color="primary" style={{ marginTop: 30 }}>
             <Link className={classes.link} to={"/user/register"}>Register</Link>
           </Button>
         </div>
-        <div className={classes.headerImage}></div>
+        <Hidden smDown><div className={classes.headerImage}></div></Hidden>
       </div>
       {data.map(({ title, text, image }, index) => <Step key={index} index={index} title={title} text={text} image={image} />)}
     </div>

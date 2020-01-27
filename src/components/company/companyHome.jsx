@@ -230,7 +230,7 @@ const Company = () => {
       </h2>
           <p className={classes.headerText}>
             Get access to a curated and active pool with tech talent who are all open to new challenges. Sign up and meet tech talent for free.      </p>
-          <Button variant="outlined" color="primary" style={{ marginTop: 30 }}>
+          <Button variant="contained" color="primary" style={{ marginTop: 30 }}>
             <Link className={classes.link} to={"/company/register"}>Register</Link>
           </Button>
         </div>
