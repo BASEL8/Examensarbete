@@ -45,8 +45,9 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   }
 }));
-const ContactRequests = ({ contactRequests, eventsTracker }) => {
+const ContactRequests = ({ contactRequests, eventsTracker, contactedByYou }) => {
   const classes = useStyles()
+  console.log(contactedByYou)
   const [error, setError] = useState('')
   const [requests, setRequests] = useState(contactRequests)
   const reject = (_id) => {
@@ -96,13 +97,32 @@ const ContactRequests = ({ contactRequests, eventsTracker }) => {
               </Fragment>
             )}
             </List>
-            }</Paper>
+            }
+          </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.eventsTracker}>
-            <h4>History</h4>
-            {eventsTracker && eventsTracker.map(({ eventName, _id, date }, index) => <div key={_id} style={{ fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <p>{eventName}</p><Moment fromNow>{date}</Moment></div>)}
+            <h4>companies want to contact!</h4>
+            {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou.map(({ _id, companyName, profession, city, success }, index) =>
+              <Fragment key={_id}>
+                <ListItem alignItems="flex-start">
+                  <div className={classes.text}>
+                    <h4>{companyName}</h4>
+                    <p>{profession.name}</p>
+                    <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                    <p> {city}</p>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <Button size="small" color="secondary" onClick={() => reject(_id)}>
+                      <HighlightOffIcon fontSize="small" />
+                    </Button>
+                  </div>
+                </ListItem>
+                {index !== contactedByYou.length - 1 && <Divider variant="fullWidth" component="li" />}
+              </Fragment>
+            )}
+            </List>
+            }
           </Paper>
         </Grid>
       </Grid>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { getCookie } from '../../../actions/auth'
-import { sendContactRequest } from '../../../actions/companyAuth'
+import { contactMe } from '../../../actions/userAuth'
 import { companyJustForYou } from '../../../actions/userAuth'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -27,6 +27,7 @@ const CompanyJustForYou = () => {
   const classes = useStyles();
   const [companies, setCompanies] = useState([])
   const [error, setError] = useState('')
+  const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
     companyJustForYou(getCookie('token')).then(res => {
@@ -37,19 +38,15 @@ const CompanyJustForYou = () => {
         return setCompanies(res)
       }
     })
-  }, [])
+  }, [forceUpdate])
   const handleContactRequest = (_id) => {
-    sendContactRequest(getCookie('token'), _id).then(res => {
+    contactMe(getCookie('token'), _id).then(res => {
       if (res.error) {
         return setError(res.error)
       }
+      console.log(res)
       setError('')
-      setCompanies(companies.map((user, index) => {
-        if (user._id === _id) {
-          user.success = true;
-        }
-        return user;
-      }));
+      setTimeout(() => setForceUpdate(!forceUpdate), 3000)
     })
   }
   return (

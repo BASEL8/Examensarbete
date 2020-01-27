@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   }
 }));
-const TabProfile = ({ user }) => {
+const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
   const classes = useStyles();
   const {
     name,

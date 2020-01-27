@@ -130,6 +130,8 @@ const Main = () => {
   const [user, setUser] = useState({})
   const [error, setError] = useState('')
   const history = useHistory()
+  const [forceUpdate, setForceUpdate] = useState(false)
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -164,10 +166,10 @@ const Main = () => {
           <Tab label={value !== 4 ? <BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <BlockIcon fontSize='small' color={"primary"} />} {...a11yProps(4)} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <TabProfile user={user} />
+          <TabProfile user={user} forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ContactRequests contactRequests={user.contactRequests} eventsTracker={user.eventsTracker} />
+          <ContactRequests contactRequests={user.contactRequests} eventsTracker={user.eventsTracker} contactedByYou={user.contactedByYou} />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <CompaniesYouAccepted acceptedByYou={user.acceptedByYou} />

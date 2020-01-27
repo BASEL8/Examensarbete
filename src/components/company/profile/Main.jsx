@@ -133,7 +133,6 @@ const Main = () => {
   const [user, setUserData] = useState({})
   const history = useHistory()
   const [error, setError] = useState('');
-
   const [forceUpdate, setForceUpdate] = useState(false)
   useEffect(() => {
     if (!isAuth()) {

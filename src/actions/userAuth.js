@@ -93,3 +93,14 @@ export const acceptRequest = (token, contactRequestId) => {
     body: JSON.stringify({ contactRequestId })
   }).then(res => res.json()).catch(error => error)
 }
+export const contactMe = (token, companyId) => {
+  return fetch(`${API}/user/contactMe`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ companyId })
+  }).then(res => res.json()).catch(error => error)
+}
