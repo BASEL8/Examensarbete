@@ -97,6 +97,7 @@ const userSchema = new mongoose.Schema({
   acceptedByYou: [{ type: ObjectId, ref: 'Company', require: true }],
   eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
   contactRequests: [{ type: ObjectId, ref: 'Company', require: true }],
+  contactedByYou: [{ type: ObjectId, ref: 'Company', require: true }],
 }, { timestamps: true })
 
 

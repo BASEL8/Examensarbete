@@ -19,6 +19,7 @@ exports.user = (req, res) => {
   User.findOne({ _id }, { "hashed_password": 0 })
     .populate('contactRequests', '_id companyName profession city')
     .populate('acceptedByYou', '_id companyName profession city')
+    .populate('contactedByYou', '_id companyName profession city')
     .exec((err, user) => {
       if (err) {
         return res.status(300).json({ err: 'error' })
@@ -114,7 +115,8 @@ exports.companyJustForYou = (req, res) => {
       'profession.name': profession.name,
       'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactedByYou: { "$ne": _id },
-      acceptedYourRequest: { "$ne": _id }
+      acceptedYourRequest: { "$ne": _id },
+      wantToContactYou: { "$ne": _id }
     },
     {
       'hashed_password': 0,
@@ -204,6 +206,46 @@ exports.acceptRequest = (req, res) => {
       })
     })
   })
+}
+exports.contactMe = (req, res) => {
+  const { _id, profession } = req.profile;
+  const { companyId } = req.body;
+  Company.findById(companyId).exec((error, company) => {
+    if (error) {
+      return res.json({ error: errorHandler(error) })
+    }
+    company.wantToContactYou = [...company.wantToContactYou, _id]
+    company.eventsTracker = [...company.eventsTracker, { eventName: `${profession.name} user sent contact request` }]
+    const { email } = company;
+    company.save((err, result) => {
+      if (err) {
+        return res.json({ error: errorHandler(err) })
+      }
+      User.findById(_id).exec((er, user) => {
+        if (er) {
+          return res.json({ error: errorHandler(er) })
+        }
+        user.contactedByYou = [...user.contactedByYou, companyId]
+        user.eventsTracker = [...company.eventsTracker, { eventName: `you sent contact request to ${company.companyName}` }]
+
+        user.save((e, result) => {
+          if (e) {
+            return res.json({ error: errorHandler(e) })
+          }
+          const emailData = {
+            to: email,
+            from: process.env.EMAIL_FROM,
+            subject: `Contact Request`,
+            html: `<h4> ${profession.name} user sent contact request </h4>, <p>login for more information</p>`
+          }
+          sgMail.send(emailData).then(sent => {
+            return res.json({ success: 'success' })
+          })
+        })
+      })
+    })
+  })
+
 }
 exports.AdminRemoveUser = (req, res) => {
   return res.json('created')
