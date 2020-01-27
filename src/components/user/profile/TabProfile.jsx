@@ -18,7 +18,10 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.primary.background,
     minHeight: 150,
     height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
     '& > * ': {
+      flex: 1,
       marginTop: 10,
       '& > span': {
         fontWeight: 600,
@@ -74,7 +77,7 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <h4>Welcome</h4>
             <h2>{name}</h2>
@@ -90,19 +93,19 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
             </div>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <div>
               created :<span><Moment fromNow>{createdAt}</Moment></span></div>
-            <div>
-              last update: <span><Moment fromNow>{updatedAt}</Moment></span> <Button color="primary" style={{ marginLeft: 10 }} variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
-            </div>
             <div style={{ textTransform: 'lowercase' }}>
               {email}
             </div>
             <div>
               published: {published ? <>yes <span role="img" aria-label="happy">&#128512;</span></> : <><span>no</span> <span role="img" aria-label="sad">&#128552;</span></>}
               {!published && <Button style={{ marginLeft: 15 }} size="small" variant="outlined" color="primary">Publish now</Button>}
+            </div>
+            <div>
+              <Button color="primary" variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
             </div>
           </Paper>
         </Grid>
@@ -157,7 +160,7 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.eventsTracker} style={{maxHeight:480,overflow:'scroll'}}>
+          <Paper className={classes.eventsTracker} style={{ maxHeight: 480, overflow: 'scroll' }}>
             <h4>History</h4>
             {eventsTracker && eventsTracker.map(({ eventName, _id, date }, index) => <div key={_id} style={{ fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <p>{eventName}</p><Moment fromNow>{date}</Moment></div>)}
