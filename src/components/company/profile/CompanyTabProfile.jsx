@@ -69,6 +69,7 @@ const CompanyTabProfile = ({ user, setError, setForceUpdate, forceUpdate }) => {
     createdBy,
     profession,
     announces,
+    eventsTracker
   } = user;
   const handleOpen = () => {
     setOpen(true);
@@ -176,7 +177,11 @@ const CompanyTabProfile = ({ user, setError, setForceUpdate, forceUpdate }) => {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>sOon</Paper>
+          <Paper className={classes.paper} style={{ maxHeight: 480, overflow: 'scroll' }}>
+            <h4>History</h4>
+            {eventsTracker && eventsTracker.map(({ eventName, _id, date }, index) => <div key={_id} style={{ fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }}>
+              <p>{eventName}</p><Moment fromNow>{date}</Moment></div>)}
+          </Paper>
         </Grid>
         <Grid item xs={12} sm={3}>
           <Paper className={classes.paper}>sOon</Paper>

@@ -7,7 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import Moment from 'react-moment';
+import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
+import { Button } from '@material-ui/core';
 import { getCookie } from '../../../actions/auth';
 import { cancelContactUser } from '../../../actions/companyAuth';
 
@@ -44,8 +45,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ContactedByYou = ({ contactedByYou, eventsTracker, forceUpdate, setForceUpdate }) => {
+const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForceUpdate }) => {
   const classes = useStyles()
+  console.log(wantToContactYou)
   const [error, setError] = useState('')
   const handleCancelContactUser = (_id) => {
     cancelContactUser(getCookie('token'), _id).then(res => {
@@ -80,13 +82,31 @@ const ContactedByYou = ({ contactedByYou, eventsTracker, forceUpdate, setForceUp
               </Fragment>
             )}
             </List>
-            }</Paper>
+            }
+          </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.eventsTracker}>
-            <h4>History</h4>
-            {eventsTracker && eventsTracker.map(({ eventName, _id, date }, index) => <div key={_id} style={{ fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <p>{eventName}</p><Moment fromNow>{date}</Moment></div>)}
+            <h4>want to contact you</h4>
+            {wantToContactYou && wantToContactYou.length !== 0 && <List className={classes.root}>{wantToContactYou && wantToContactYou.map(({ _id, profession, cities, languages, success }, index) =>
+              <Fragment key={_id}>
+                <ListItem alignItems="flex-start">
+                  <div className={classes.text}>
+                    <h4>{profession.name}</h4>
+                    <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                    <p> {cities.join(', ')}</p>
+                    <p>{languages.join(', ')}</p>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <HighlightOffIcon fontSize="small" />
+                    <CheckCircleOutlinedIcon fontSize="small" />
+                  </div>
+                </ListItem>
+                {index !== wantToContactYou.length - 1 && <Divider variant="fullWidth" component="li" />}
+              </Fragment>
+            )}
+            </List>
+            }
           </Paper>
         </Grid>
       </Grid>

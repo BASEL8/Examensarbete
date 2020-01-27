@@ -8,7 +8,6 @@ import Divider from '@material-ui/core/Divider';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import { Button } from '@material-ui/core';
-import Moment from 'react-moment';
 import { rejectRequest, acceptRequest } from '../../../actions/userAuth'
 import { getCookie } from '../../../actions/auth';
 const useStyles = makeStyles(theme => ({

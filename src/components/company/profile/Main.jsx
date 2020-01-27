@@ -180,7 +180,7 @@ const Main = () => {
         <TabPanel value={value} index={1}>
           <ContactedByYou
             contactedByYou={user.contactedByYou}
-            eventsTracker={user.eventsTracker}
+            wantToContactYou={user.wantToContactYou}
             forceUpdate={forceUpdate}
             setForceUpdate={setForceUpdate} />
         </TabPanel>
