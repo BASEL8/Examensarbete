@@ -30,6 +30,7 @@ const AcceptedYouRequest = ({ acceptedYouRequest, setForceUpdate, forceUpdate })
   }
 
   return (<div>
+    {error && <p style={{ color: 'red', textAlign: 'center' }}>error</p>}
     {acceptedYouRequest && acceptedYouRequest.map(({ name, email, _id, profession, cities, languages }, index) =>
       <Paper key={_id} className={classes.paper}>
 

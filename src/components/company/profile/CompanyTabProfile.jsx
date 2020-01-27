@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -54,10 +54,11 @@ const useStyles = makeStyles(theme => ({
   },
 
 }));
-const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, open, handleCloseRemove, openRemove, setError }) => {
+const CompanyTabProfile = ({ user, setError, setForceUpdate, forceUpdate }) => {
   const classes = useStyles();
-  const {
-    companyName,
+  const [open, setOpen] = useState(false);
+  const [openRemove, setOpenRemove] = useState({ status: false, _id: '' });
+  const { companyName,
     email,
     createdAt,
     city,
@@ -69,6 +70,21 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
     profession,
     announces,
   } = user;
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setForceUpdate(!forceUpdate)
+  };
+  const handleOpenRemove = (_id) => {
+    setOpenRemove({ status: true, _id });
+  };
+
+  const handleCloseRemove = () => {
+    setOpenRemove({ status: false, _id: '' });
+    setForceUpdate(!forceUpdate)
+  };
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -156,7 +172,7 @@ const CompanyTabProfile = ({ user, handleOpen, handleOpenRemove, handleClose, op
               <h3>People you may want to meet</h3>
               <div style={{ fontSize: 10 }}>find them according to your company information</div>
             </div>
-            <JustForYourCompany />
+            <JustForYourCompany forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>

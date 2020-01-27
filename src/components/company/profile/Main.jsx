@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -133,9 +133,8 @@ const Main = () => {
   const [user, setUserData] = useState({})
   const history = useHistory()
   const [error, setError] = useState('');
-  const [open, setOpen] = useState(false);
+
   const [forceUpdate, setForceUpdate] = useState(false)
-  const [openRemove, setOpenRemove] = useState({ status: false, _id: '' });
   useEffect(() => {
     if (!isAuth()) {
       history.push('/')
@@ -148,20 +147,8 @@ const Main = () => {
         setUserData({ ...res.company, announces: res.announces })
       }
     })
-  }, [history, open, openRemove.status, value, forceUpdate])
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpenRemove = (_id) => {
-    setOpenRemove({ status: true, _id });
-  };
+  }, [history, value, forceUpdate])
 
-  const handleCloseRemove = () => {
-    setOpenRemove({ status: false, _id: '' });
-  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -186,14 +173,23 @@ const Main = () => {
         <TabPanel value={value} index={0}>
           <CompanyTabProfile
             user={user}
-            handleOpen={handleOpen}
-            handleOpenRemove={handleOpenRemove} handleClose={handleClose} open={open} handleCloseRemove={handleCloseRemove} openRemove={openRemove} setError={setError} />
+            setError={setError}
+            forceUpdate={forceUpdate}
+            setForceUpdate={setForceUpdate}
+          />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ContactedByYou contactedByYou={user.contactedByYou} eventsTracker={user.eventsTracker} />
+          <ContactedByYou
+            contactedByYou={user.contactedByYou}
+            eventsTracker={user.eventsTracker}
+            forceUpdate={forceUpdate}
+            setForceUpdate={setForceUpdate} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <AcceptedYouRequest acceptedYouRequest={user.acceptedYourRequest} setForceUpdate={setForceUpdate} forceUpdate={forceUpdate} />
+          <AcceptedYouRequest
+            acceptedYouRequest={user.acceptedYourRequest}
+            setForceUpdate={setForceUpdate}
+            forceUpdate={forceUpdate} />
         </TabPanel>
         <TabPanel value={value} index={3}>
           search

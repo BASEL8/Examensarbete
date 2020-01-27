@@ -27,6 +27,7 @@ const JustForYourCompany = () => {
   const classes = useStyles();
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
+  const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
     justForYourCompany(getCookie('token')).then(res => {
@@ -37,7 +38,7 @@ const JustForYourCompany = () => {
         return setUsers(res)
       }
     })
-  }, [])
+  }, [forceUpdate])
   const handleContactRequest = (_id) => {
     sendContactRequest(getCookie('token'), _id).then(res => {
       if (res.error) {
@@ -50,6 +51,7 @@ const JustForYourCompany = () => {
         }
         return user;
       }));
+      setTimeout(() => setForceUpdate(!forceUpdate), 3000)
     })
   }
   if (error) return <p>{error}</p>

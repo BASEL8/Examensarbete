@@ -129,4 +129,18 @@ export const declinedUser = (token, userId) => {
     return res.json()
   }).catch(error => error)
 }
+export const cancelContactUser = (token, userId) => {
+  return fetch(`${API}/company/cancelContactUser`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ userId })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
 export const getUserPublicProfile = (token, _id) => { }

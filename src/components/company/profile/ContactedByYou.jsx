@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +8,9 @@ import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Moment from 'react-moment';
+import { getCookie } from '../../../actions/auth';
+import { cancelContactUser } from '../../../actions/companyAuth';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,10 +44,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const ContactedByYou = ({ contactedByYou, eventsTracker }) => {
+const ContactedByYou = ({ contactedByYou, eventsTracker, forceUpdate, setForceUpdate }) => {
   const classes = useStyles()
+  const [error, setError] = useState('')
+  const handleCancelContactUser = (_id) => {
+    cancelContactUser(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setForceUpdate(!forceUpdate)
+      setError('')
+    })
+  }
   return (
     <>
+      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
@@ -59,7 +73,7 @@ const ContactedByYou = ({ contactedByYou, eventsTracker }) => {
                     <p>{languages.join(', ')}</p>
                   </div>
                   <ListItemAvatar style={{ textAlign: 'right' }}>
-                    <HighlightOffIcon />
+                    <HighlightOffIcon onClick={() => handleCancelContactUser(_id)} />
                   </ListItemAvatar>
                 </ListItem>
                 {index !== contactedByYou.length - 1 && <Divider variant="fullWidth" component="li" />}
