@@ -166,7 +166,7 @@ const Home = () => {
             <Link className={classes.link} to={"/user/register"}>Register</Link>
           </Button>
         </div>
-        <Hidden smDown><div className={classes.headerImage}></div></Hidden>
+        <Hidden xlDown><div className={classes.headerImage}></div></Hidden>
       </div>
       {data.map(({ title, text, image }, index) => <Step key={index} index={index} title={title} text={text} image={image} />)}
     </div>

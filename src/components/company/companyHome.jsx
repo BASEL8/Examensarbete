@@ -234,7 +234,7 @@ const Company = () => {
             <Link className={classes.link} to={"/company/register"}>Register</Link>
           </Button>
         </div>
-        <Hidden smDown> <div className={classes.headerImage}></div></Hidden>
+        <Hidden xlDown> <div className={classes.headerImage}></div></Hidden>
       </div>
       <div>
         <div className={classes.paper}>
@@ -312,7 +312,7 @@ const Company = () => {
         </div>
       </div>
       <div style={{ marginTop: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Button variant="outlined" color="primary" size="large">
+        <Button variant="contained" color="primary" size="large">
           <Link className={classes.link} to={"/company/register"}>
             Get started
           </Link>
