@@ -44,7 +44,6 @@ const CompanyJustForYou = () => {
       if (res.error) {
         return setError(res.error)
       }
-      console.log(res)
       setError('')
       setTimeout(() => setForceUpdate(!forceUpdate), 3000)
     })

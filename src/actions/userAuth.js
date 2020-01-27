@@ -104,3 +104,13 @@ export const contactMe = (token, companyId) => {
     body: JSON.stringify({ companyId })
   }).then(res => res.json()).catch(error => error)
 }
+export const userPublish = (token) => {
+  return fetch(`${API}/user/publish`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+  }).then(res => res.json()).catch(error => error)
+}

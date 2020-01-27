@@ -151,7 +151,7 @@ const Main = () => {
       setError('')
       return setUser(res)
     })
-  }, [history, value])
+  }, [history, value, forceUpdate])
   return (
     <>
       <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>

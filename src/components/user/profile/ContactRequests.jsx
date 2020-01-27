@@ -46,7 +46,6 @@ const useStyles = makeStyles(theme => ({
 }));
 const ContactRequests = ({ contactRequests, eventsTracker, contactedByYou }) => {
   const classes = useStyles()
-  console.log(contactedByYou)
   const [error, setError] = useState('')
   const [requests, setRequests] = useState(contactRequests)
   const reject = (_id) => {

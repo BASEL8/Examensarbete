@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
 
 const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForceUpdate }) => {
   const classes = useStyles()
-  console.log(wantToContactYou)
   const [error, setError] = useState('')
   const handleCancelContactUser = (_id) => {
     cancelContactUser(getCookie('token'), _id).then(res => {
@@ -59,11 +58,21 @@ const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForc
     })
   }
   const handleDeclineContactRequestFromUser = (_id) => {
-    return declineContactRequestFromUser(getCookie('token'), _id).then(res => console.log(res))
+    return declineContactRequestFromUser(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setForceUpdate(!forceUpdate)
+    })
 
   }
   const handleAcceptContactRequestFromUser = (_id) => {
-    return acceptContactRequestFromUser(getCookie('token'), _id).then(res => console.log(res))
+    return acceptContactRequestFromUser(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setForceUpdate(!forceUpdate)
+    })
   }
   return (
     <>

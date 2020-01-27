@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 }));
 const CompaniesYouAccepted = ({ acceptedByYou }) => {
   const classes = useStyles()
-  console.log(acceptedByYou)
   return (<div>
     {acceptedByYou && acceptedByYou.map(({ companyName, _id, profession, city }, index) =>
       <Paper key={_id} className={classes.paper}>

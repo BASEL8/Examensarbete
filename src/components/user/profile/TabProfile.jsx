@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import { Link } from 'react-router-dom'
 import CompanyJustForYou from './CompanyJustForYou';
+import { userPublish } from '../../../actions/userAuth'
+import { getCookie } from '../../../actions/auth';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -53,13 +55,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
+  const [error, setError] = useState('')
   const classes = useStyles();
   const {
     name,
     published,
     email,
     createdAt,
-    updatedAt,
     available,
     cities,
     kindOfEmployment,
@@ -74,6 +76,15 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
     workingRemotely,
     eventsTracker
   } = user;
+  const handleProfileStatus = () => {
+    return userPublish(getCookie('token')).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setError('')
+      setForceUpdate(!forceUpdate)
+    })
+  }
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -101,8 +112,8 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
               {email}
             </div>
             <div>
-              published: {published ? <>yes <span role="img" aria-label="happy">&#128512;</span></> : <><span>no</span> <span role="img" aria-label="sad">&#128552;</span></>}
-              {!published && <Button style={{ marginLeft: 15 }} size="small" variant="outlined" color="primary">Publish now</Button>}
+
+              {!published ? <Button size="small" variant="outlined" color="primary" onClick={handleProfileStatus}>Publish now</Button> : <Button size="small" variant="outlined" color="primary" onClick={handleProfileStatus}>hide</Button>}
             </div>
             <div>
               <Button color="primary" variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>
