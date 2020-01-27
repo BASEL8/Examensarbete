@@ -173,10 +173,52 @@ exports.sendContactRequest = (req, res) => {
             to: email,
             from: process.env.EMAIL_FROM,
             subject: `Contact Request`,
-            html: `< h4 > ${companyName} sent contact request < h4 >, login for more information`
+            html: `<h4> ${companyName} sent contact request </h4>, <p>login for more information</p>`
           }
           sgMail.send(emailData).then(sent => {
             return res.json({ success: 'success', userId })
+          })
+        })
+      })
+    })
+  })
+}
+exports.cancelContactUser = (req, res) => {
+  const { _id } = req.profile;
+  const { userId } = req.body;
+  Company.findById(_id).exec((error, company) => {
+    if (error) {
+      return res.json({ error: errorHandler(error) })
+    }
+    company.contactedByYou = company.contactedByYou.filter(contacted => contacted.toString() !== userId)
+    company.eventsTracker = [...company.eventsTracker, { eventName: `you canceled your request` }]
+    company.save((erro, result) => {
+      if (erro) {
+        return res.json({ error: errorHandler(erro) })
+      }
+      User.findById(userId).exec((err, user) => {
+        if (err) {
+          return res.json({ error: errorHandler(err) })
+        }
+        const { email } = user
+        user.contactRequests = user.contactRequests.filter(contact => contact.toString() !== _id.toString())
+        user.eventsTracker = [...user.eventsTracker, {
+          eventName: `${company.companyName} canceled the request!`
+        }]
+        user.save((er, resultUser) => {
+          if (er) {
+            return res.json({ error: errorHandler(er) })
+          }
+          const emailData = {
+            to: email,
+            from: process.env.EMAIL_FROM,
+            subject: `${company.companyName} canceled Contact Request`,
+            html: `<h4> ${company.companyName} canceled contact request </h4>`
+          }
+          sgMail.send(emailData).then(sent => {
+            return res.json({
+              success: 'success'
+            })
           })
         })
       })
