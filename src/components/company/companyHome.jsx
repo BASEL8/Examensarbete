@@ -103,18 +103,17 @@ const useStyles = makeStyles(theme => ({
     marginTop: 50,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexWrap: 'wrap',
-
     '& > div': {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'column',
-      flex: 1
+      height: '100%',
     },
     '& > div img': {
-      maxHeight: 400,
+      maxWidth: '90%',
       marginTop: 50
     },
     '& > div h5': {
