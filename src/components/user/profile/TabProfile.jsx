@@ -87,6 +87,7 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
   }
   return (
     <div className={classes.root}>
+      {error && <p style={{ color: 'red' }}>'error'</p>}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
@@ -185,7 +186,7 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <CompanyJustForYou />
+            <CompanyJustForYou forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
           </Paper>
         </Grid>
       </Grid>

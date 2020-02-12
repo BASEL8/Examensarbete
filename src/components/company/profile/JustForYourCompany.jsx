@@ -23,11 +23,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const JustForYourCompany = () => {
+const JustForYourCompany = ({ forceUpdate, setForceUpdate }) => {
   const classes = useStyles();
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
-  const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
     justForYourCompany(getCookie('token')).then(res => {

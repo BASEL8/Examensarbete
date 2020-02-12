@@ -23,11 +23,10 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
 }));
-const CompanyJustForYou = () => {
+const CompanyJustForYou = ({ setForceUpdate, forceUpdate }) => {
   const classes = useStyles();
   const [companies, setCompanies] = useState([])
   const [error, setError] = useState('')
-  const [forceUpdate, setForceUpdate] = useState(false)
   useEffect(() => {
     companyJustForYou(getCookie('token')).then(res => {
       console.log(res)
@@ -45,7 +44,7 @@ const CompanyJustForYou = () => {
         return setError(res.error)
       }
       setError('')
-      setTimeout(() => setForceUpdate(!forceUpdate), 3000)
+      setForceUpdate(!forceUpdate)
     })
   }
   return (

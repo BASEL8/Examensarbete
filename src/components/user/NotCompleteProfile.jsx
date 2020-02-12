@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -93,7 +93,7 @@ const FirstProfile = () => {
       subProfessions: [{ name: '' }]
     },
   })
-  const [dataToComplete, setDataToComplete] = useState(Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : (userData.profession.name && userData.profession.subProfessions.length !== 0) ? null : key : userData[key] ? null : key))
+  //const [, setDataToComplete] = useState(Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : (userData.profession.name && userData.profession.subProfessions.length !== 0) ? null : key : userData[key] ? null : key))
   const [error, setError] = useState('')
   const steps = getSteps(error);
   const getStepContent = (step) => {
@@ -120,9 +120,9 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
-  useEffect(() => {
-    setDataToComplete((Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : userData.profession.name || userData.profession.subProfessions.length === 0 ? null : key : userData[key] ? null : key)))
-  }, [userData])
+  // useEffect(() => {
+  //   setDataToComplete((Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : userData.profession.name || userData.profession.subProfessions.length === 0 ? null : key : userData[key] ? null : key)))
+  // }, [userData])
   // for (const key in userData) {
   //   if (userData.hasOwnProperty(key) && !userData[key]) {
 
