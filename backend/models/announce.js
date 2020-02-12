@@ -1,36 +1,26 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema
+const { testSchema } = require('./profession')
 const announceSchema = new mongoose.Schema({
-  wantToWorkAs: {
-    type: String
-  },
-  cities: {
-    type: [],
-    default: undefined
+  city: {
+    type: String,
+    required: true,
+    lowercase: true
   },
   kindOfEmployment: {
-    type: String
-  },
-  salary: {
-    type: String
-  },
-  lookingForJob: {
-    type: String
-  },
-  available: {
-    type: String
-  },
-  reasonToNewJob: {
-    type: String
+    type: String,
+    required: true,
   },
   workingRemotely: {
-    type: String
+    type: String,
+    required: true
   },
   priorityBenefits: {
     type: [],
-    default: undefined
+    default: undefined,
+    required: true,
   },
-  profession: { type: ObjectId, ref: 'Profession', require: true },
-  company: [{ type: ObjectId, ref: 'Company', require: true }],
+  profession: { type: { testSchema }, require: true },
+  company: { type: ObjectId, ref: 'Company', require: true },
 }, { timestamps: true })
 module.exports = mongoose.model('Announce', announceSchema);

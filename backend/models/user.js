@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: true,
     max: 32,
+    lowercase: true
   },
   email: {
     type: String,
@@ -28,6 +29,10 @@ const userSchema = new mongoose.Schema({
   profile: {
     type: String,
     required: true
+  },
+  profileComplete: {
+    type: Boolean,
+    default: false
   },
   hashed_password: {
     type: String,
@@ -50,24 +55,27 @@ const userSchema = new mongoose.Schema({
     default: false
   },
   wantToWorkAs: {
-    type: String
+    type: String,
+    lowercase: true
   },
   cities: {
-    type: [],
+    type: [{ type: String, lowercase: true }],
     default: undefined
   },
   kindOfEmployment: {
-    type: String
+    type: String,
+    lowercase: true
   },
   salary: {
     type: String
   },
   languages: {
-    type: [],
+    type: [{ type: String, lowercase: true }],
     default: undefined
   },
   lookingForJob: {
-    type: String
+    type: String,
+    lowercase: true
   },
   available: {
     type: String
@@ -85,6 +93,11 @@ const userSchema = new mongoose.Schema({
   profession: {
     type: { testSchema },
   },
+  EmploymentContract: { with: { type: ObjectId, ref: 'Company' }, done: { type: Boolean } },
+  acceptedByYou: [{ type: ObjectId, ref: 'Company', require: true }],
+  eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
+  contactRequests: [{ type: ObjectId, ref: 'Company', require: true }],
+  contactedByYou: [{ type: ObjectId, ref: 'Company', require: true }],
 }, { timestamps: true })
 
 
