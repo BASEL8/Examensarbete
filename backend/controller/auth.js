@@ -1,3 +1,4 @@
+require('dotenv').config()
 const User = require('../models/user');
 const Company = require('../models/company')
 const shortId = require('shortid');
@@ -58,7 +59,7 @@ exports.signup = (req, res) => {
           }
           const name = user.name;
           const email = user.email
-          res.json({ success: 'Signup success! please login', name, email })
+          res.json({ success: `Congratulations ${name}, you have an account and you will now be redirect to login page`, email })
         })
 
       }
@@ -89,12 +90,10 @@ exports.signin = (req, res) => {
     //generate a token send to client
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.cookie('token', token, { expiresIn: '1d' })
-    const { _id, username, name, email, role } = user;
+    user.hashed_password = undefined
     res.json({
       token,
-      user: {
-        _id, username, name, email, role,
-      }
+      user
     })
   })
 }
@@ -220,8 +219,8 @@ exports.signupCompany = (req, res) => {
       } else {
         const { email, password, companyName, organisationNumber } = decoded
         let profile = `${process.env.CLIENT_URL}/profile/company/${companyName}`;
-        let company = new Company({ email, password, companyName, organisationNumber, profile });
-        company.save((err, user) => {
+        let newCompany = new Company({ email, password, companyName, organisationNumber, profile });
+        newCompany.save((err, company) => {
           if (err) {
             return res.status(400).json({
               error: errorHandler(err)
@@ -229,7 +228,7 @@ exports.signupCompany = (req, res) => {
           }
           const companyName = company.companyName;
           const email = company.email
-          res.json({ success: 'Signup success! please login', companyName, email })
+          res.json({ success: `Congratulations ${companyName}, you have an account and you will now be redirect to login page`, email })
         })
       }
     })
@@ -260,7 +259,7 @@ exports.signinCompany = (req, res) => {
     const { email, companyName, organisationNumber, profile, profileComplete, _id } = company
     res.json({
       token,
-      company: { email, companyName, organisationNumber, profile, profileComplete, _id }
+      user: { email, companyName, organisationNumber, profile, profileComplete, _id }
     })
   })
 }
@@ -340,7 +339,7 @@ exports.companyResetPassword = (req, res) => {
   res.status(200)
 }
 
-
+console.log(process.env.JWT_SECRET)
 exports.requiresignin = expressJwt({
   secret: process.env.JWT_SECRET
 })

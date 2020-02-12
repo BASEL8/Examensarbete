@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { ObjectId } = mongoose.Schema
+const { testSchema } = require('./profession')
+
 const companySchema = new mongoose.Schema({
   companyName: {
     type: String,
@@ -11,7 +13,7 @@ const companySchema = new mongoose.Schema({
     lowercase: true
   },
   organisationNumber: {
-    type: Number,
+    type: String,
     trim: true,
     required: true,
     unique: true,
@@ -37,6 +39,7 @@ const companySchema = new mongoose.Schema({
   },
   website: {
     type: String,
+    lowercase: true
   },
   hashed_password: {
     type: String,
@@ -58,7 +61,22 @@ const companySchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
-
+  createdBy: {
+    type: String,
+    lowercase: true
+  },
+  city: {
+    type: String,
+    lowercase: true
+  },
+  workingRemotely: {
+    type: String
+  },
+  profession: { type: { testSchema }, require: true },
+  contactedByYou: [{ type: ObjectId, ref: 'User', require: true }],
+  wantToContactYou: [{ type: ObjectId, ref: 'User', require: true }],
+  eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
+  acceptedYourRequest: [{ type: ObjectId, ref: 'User', require: true }],
 }, { timestamps: true })
 
 

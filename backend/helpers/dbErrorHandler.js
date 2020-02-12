@@ -33,8 +33,11 @@ exports.errorHandler = error => {
         break;
     }
   } else {
-    for (let errorName in error.errorors) {
-      if (error.errors[errorName].message) message = error.errorors[error.name].message
+    for (let errorName in error.errors) {
+      if (error.errors) {
+        console.log(error.errors[errorName].message)
+        message = error.errors[errorName].message
+      }
     }
   }
   return message;
