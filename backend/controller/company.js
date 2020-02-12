@@ -10,6 +10,7 @@ exports.company = (req, res) => {
     .populate('contactedByYou', '_id profession cities languages')
     .populate('acceptedYourRequest', '_id profession cities languages email name')
     .populate('wantToContactYou', '_id profession cities languages email name')
+    .populate('acceptedByYou', '_id profession cities languages email name')
     .exec((error, company) => {
       if (error) {
         return res.json({ error: errorHandler(error) })
@@ -99,7 +100,8 @@ exports.justForYourCompany = (req, res) => {
       //   'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactRequests: { "$ne": _id },
       acceptedByYou: { "$ne": _id },
-      contactedByYou: { "$ne": _id }
+      contactedByYou: { "$ne": _id },
+      acceptedYourRequest: { "$ne": _id }
     },
     {
       'hashed_password': 0,
@@ -125,6 +127,7 @@ exports.declinedUser = (req, res) => {
       return res.json({ error: errorHandler(err) })
     }
     user.acceptedByYou = user.acceptedByYou.filter(contact => contact.toString() !== _id.toString())
+    user.acceptedYourRequest = user.acceptedYourRequest.filter(contact => contact.toString() !== _id.toString())
     user.eventsTracker = [...user.eventsTracker, { eventName: `${companyName} will not continue with the proses` }]
     user.save((erro, result) => {
       if (erro) {
@@ -136,6 +139,7 @@ exports.declinedUser = (req, res) => {
         }
         company.eventsTracker = [...company.eventsTracker, { eventName: `you chose not to continue with ${user.name}` }]
         company.acceptedYourRequest = company.acceptedYourRequest.filter(contact => contact.toString() !== userId.toString())
+        company.acceptedByYou = company.acceptedByYou.filter(contact => contact.toString() !== userId.toString())
         company.save((er, resultCompany) => {
           if (er) {
             return res.json({ error: errorHandler(er) })
@@ -216,8 +220,53 @@ exports.declineContactRequestFromUser = (req, res) => {
   })
 }
 exports.acceptContactRequestFromUser = (req, res) => {
-  return res.json('you')
+  const { _id, companyName } = req.profile;
+  const { userId } = req.body;
+  User.findById({ _id: userId }).exec((err, user) => {
+    if (err) {
+      return res.json({ error: errorHandler(err) })
+    }
+    if (!user) {
+      return res.json({ error: 'no user with this id' })
+    }
+    user.eventsTracker = [...user.eventsTracker, { eventName: `${companyName} accepted your request` }]
+    user.contactedByYou = user.contactedByYou.filter(contacted => contacted.toString() !== _id.toString())
+    user.acceptedYourRequest = [...user.acceptedYourRequest, _id]
+    const { email, name } = user;
+    user.save((saveErr, result) => {
+      if (saveErr) {
+        return res.json({ error: errorHandler(saveErr) })
+      }
+      Company.findById({ _id }).exec((err, company) => {
+        if (err) {
+          return res.json({ error: errorHandler(err) })
+        }
+        if (!company) {
+          return res.json({ error: 'no company with this id' })
+        }
+        company.acceptedByYou = [...company.acceptedByYou, userId]
+        company.eventsTracker = [company.eventsTracker, { eventName: `you accepted contact request from ${name} ` }]
+        company.wantToContactYou = company.wantToContactYou.filter(contacted => contacted.toString() !== user._id.toString())
+        company.save((companySaveError, companySaveRes) => {
+          if (companySaveError) {
+            return res.json({ error: errorHandler(companySaveError) })
+          }
+          const emailData = {
+            to: email,
+            from: process.env.EMAIL_FROM,
+            subject: `${company.companyName} accepted your Contact Request`,
+            html: `<h4> ${company.companyName} accepted contact request </h4>`
+          }
+          sgMail.send(emailData).then(sent => {
+            return res.json({
+              success: 'success'
+            })
+          })
+        })
+      })
+    })
 
+  })
 }
 exports.cancelContactUser = (req, res) => {
   const { _id } = req.profile;
