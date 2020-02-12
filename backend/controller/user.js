@@ -181,6 +181,7 @@ exports.cancelRequest = (req, res) => {
       }
       company.wantToContactYou = company.wantToContactYou.filter(contacted => contacted.toString() !== _id.toString())
       company.acceptedByYou = company.acceptedByYou.filter(contacted => contacted.toString() !== _id.toString())
+      company.acceptedYourRequest = company.acceptedYourRequest.filter(contacted => contacted.toString() !== _id.toString())
       company.eventsTracker = [...company.eventsTracker, { eventName: `user canceled his contact request` }]
 
       company.save((er, companyResult) => {
@@ -190,6 +191,7 @@ exports.cancelRequest = (req, res) => {
         user.eventsTracker = [...user.eventsTracker, { eventName: `you canceled your request to ${company.companyName}` }]
         user.contactedByYou = user.contactedByYou.filter(contact => contact.toString() !== contactRequestId)
         user.acceptedYourRequest = user.acceptedYourRequest.filter(contact => contact.toString() !== contactRequestId)
+        user.acceptedByYou = user.acceptedByYou.filter(contact => contact.toString() !== contactRequestId)
         user.save((err, result) => {
           if (err) {
             return res.json({ error: errorHandler(err) })
