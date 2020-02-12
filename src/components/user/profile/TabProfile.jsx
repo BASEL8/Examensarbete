@@ -114,7 +114,7 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
             </div>
             <div>
 
-              {!published ? <Button size="small" variant="outlined" color="primary" onClick={handleProfileStatus}>Publish now</Button> : <Button size="small" variant="outlined" color="primary" onClick={handleProfileStatus}>hide</Button>}
+              {!published ? <Button size="small" variant="outlined" color="secondary" onClick={handleProfileStatus}>Publish now</Button> : <Button size="small" variant="outlined" color="primary" onClick={handleProfileStatus}>hide</Button>}
             </div>
             <div>
               <Button color="primary" variant="outlined" size="small"><Link style={{ textDecoration: 'none', color: 'unset' }} to={`/user/update/${user._id}`}>update</Link></Button>

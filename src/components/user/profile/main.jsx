@@ -155,7 +155,8 @@ const Main = () => {
   }, [history, value, forceUpdate])
   return (
     <>
-      <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
+      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+      {user.name && !user.published && <p style={{ color: 'white', background: 'red', textAlign: 'center', textTransform: 'uppercase', fontWeight: 900 }}>don't forget to publish your profile</p>}
       <Hidden mdUp>
         <Tabs
           variant="scrollable"
