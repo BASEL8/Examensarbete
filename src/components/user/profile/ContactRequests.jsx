@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import { Button } from '@material-ui/core';
-import { rejectRequest, acceptRequest } from '../../../actions/userAuth'
+import { rejectRequest, acceptRequest, cancelRequest } from '../../../actions/userAuth'
 import { getCookie } from '../../../actions/auth';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,26 +44,33 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   }
 }));
-const ContactRequests = ({ contactRequests, eventsTracker, contactedByYou }) => {
+const ContactRequests = ({ contactRequests, contactedByYou, forceUpdate, setForceUpdate }) => {
   const classes = useStyles()
   const [error, setError] = useState('')
-  const [requests, setRequests] = useState(contactRequests)
   const reject = (_id) => {
     return rejectRequest(getCookie('token'), _id).then(res => {
       if (res.error) {
         return setError(res.error)
       }
-      setRequests(contactRequests.filter((req, index) => req._id !== _id))
-      setError('')
+      setForceUpdate(!forceUpdate)
     })
+  }
+  const cancel = (_id) => {
+    return cancelRequest(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setForceUpdate(!forceUpdate)
+    }
+
+    )
   }
   const accept = (_id) => {
     return acceptRequest(getCookie('token'), _id).then(res => {
       if (res.error) {
         return setError(res.error)
       }
-      setRequests(contactRequests.filter((req, index) => req._id !== _id))
-      setError('')
+      setForceUpdate(!forceUpdate)
     })
   }
   return (
@@ -73,7 +80,7 @@ const ContactRequests = ({ contactRequests, eventsTracker, contactedByYou }) => 
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <h4>Want to contact you!</h4>
-            {requests && requests.length !== 0 && <List className={classes.root}>{requests.map(({ _id, companyName, profession, city, success }, index) =>
+            {contactRequests && contactRequests.length !== 0 && <List className={classes.root}>{contactRequests.map(({ _id, companyName, profession, city, success }, index) =>
               <Fragment key={_id}>
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>
@@ -100,7 +107,7 @@ const ContactRequests = ({ contactRequests, eventsTracker, contactedByYou }) => 
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.eventsTracker}>
-            <h4>companies want to contact!</h4>
+            <h4>companies contacted by you!</h4>
             {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou.map(({ _id, companyName, profession, city, success }, index) =>
               <Fragment key={_id}>
                 <ListItem alignItems="flex-start">
@@ -111,7 +118,7 @@ const ContactRequests = ({ contactRequests, eventsTracker, contactedByYou }) => 
                     <p> {city}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <Button size="small" color="secondary" onClick={() => reject(_id)}>
+                    <Button size="small" color="secondary" onClick={() => cancel(_id)}>
                       <HighlightOffIcon fontSize="small" />
                     </Button>
                   </div>

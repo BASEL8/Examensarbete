@@ -156,6 +156,7 @@ const Main = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <>
       <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
@@ -169,7 +170,7 @@ const Main = () => {
         >
           <Tab label={<AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
           <Tab label={<Badge badgeContent={user.contactedByYou && user.contactedByYou.length + user.wantToContactYou.length} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
-          <Tab label={<Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
+          <Tab label={<Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length + user.acceptedByYou.length} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
           <Tab label={<SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
           <Tab label={<Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
         </Tabs>
@@ -186,7 +187,7 @@ const Main = () => {
           >
             <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
             <Tab label={value !== 1 ? <Badge badgeContent={user.contactedByYou && user.contactedByYou.length + user.wantToContactYou.length} color="secondary"><MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.contactedByYou && user.contactedByYou.length + user.wantToContactYou.length} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
-            <Tab label={value !== 2 ? <Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
+            <Tab label={value !== 2 ? <Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length + user.acceptedByYou.length} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length + user.acceptedByYou.length} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
             <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
             <Tab label={value !== 4 ? <Badge badgeContent={4} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
           </Tabs>
@@ -209,8 +210,11 @@ const Main = () => {
         <TabPanel value={value} index={2}>
           <AcceptedYouRequest
             acceptedYouRequest={user.acceptedYourRequest}
+            acceptedByYou={user.acceptedByYou}
             setForceUpdate={setForceUpdate}
-            forceUpdate={forceUpdate} />
+            forceUpdate={forceUpdate}
+          />
+
         </TabPanel>
         <TabPanel value={value} index={3}>
           search

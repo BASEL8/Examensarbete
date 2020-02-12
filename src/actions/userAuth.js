@@ -75,7 +75,18 @@ export const rejectRequest = (token, contactRequestId) => {
   return fetch(`${API}/user/reject`, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
+      Accept: 'charset=utf-8',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ contactRequestId })
+  }).then(res => res.json()).catch(error => error)
+}
+export const cancelRequest = (token, contactRequestId) => {
+  return fetch(`${API}/user/cancelRequest`, {
+    method: 'POST',
+    headers: {
+      Accept: 'charset=utf-8',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },

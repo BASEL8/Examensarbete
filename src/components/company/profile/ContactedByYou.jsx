@@ -68,6 +68,7 @@ const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForc
   }
   const handleAcceptContactRequestFromUser = (_id) => {
     return acceptContactRequestFromUser(getCookie('token'), _id).then(res => {
+      console.log(res)
       if (res.error) {
         return setError(res.error)
       }

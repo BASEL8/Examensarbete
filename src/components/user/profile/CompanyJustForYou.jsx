@@ -28,9 +28,9 @@ const CompanyJustForYou = () => {
   const [companies, setCompanies] = useState([])
   const [error, setError] = useState('')
   const [forceUpdate, setForceUpdate] = useState(false)
-
   useEffect(() => {
     companyJustForYou(getCookie('token')).then(res => {
+      console.log(res)
       if (res.error) {
         return setError(res.error)
       } else {

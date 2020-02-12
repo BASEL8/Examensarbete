@@ -153,7 +153,6 @@ const Main = () => {
       return setUser(res)
     })
   }, [history, value, forceUpdate])
-  console.log(user)
   return (
     <>
       <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
@@ -167,7 +166,7 @@ const Main = () => {
         >
           <Tab label={<AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
           <Tab label={<Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
-          <Tab label={<Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
+          <Tab label={<Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length + user.acceptedYourRequest.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
           <Tab label={<SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
           <Tab label={<Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
         </Tabs>
@@ -185,7 +184,7 @@ const Main = () => {
           >
             <Tab label={value !== 0 ? <AccountCircleOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <AccountCircleIcon fontSize='small' color={"primary"} />} {...a11yProps(0)} />
             <Tab disabled={!user.published} label={value !== 1 ? <Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
-            <Tab disabled={!user.published} label={value !== 2 ? <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length) || 0} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
+            <Tab disabled={!user.published} label={value !== 2 ? <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length + user.acceptedYourRequest.length) || 0} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length + user.acceptedYourRequest.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
             <Tab disabled={!user.published} label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
             <Tab disabled={!user.published} label={value !== 4 ? <Badge badgeContent={4} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
           </Tabs>
@@ -194,10 +193,10 @@ const Main = () => {
           <TabProfile user={user} forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ContactRequests contactRequests={user.contactRequests} eventsTracker={user.eventsTracker} contactedByYou={user.contactedByYou} />
+          <ContactRequests contactRequests={user.contactRequests} eventsTracker={user.eventsTracker} contactedByYou={user.contactedByYou} forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <CompaniesYouAccepted acceptedByYou={user.acceptedByYou} />
+          <CompaniesYouAccepted acceptedByYou={user.acceptedByYou} acceptedYourRequest={user.acceptedYourRequest} forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />
         </TabPanel>
         <TabPanel value={value} index={3}>
           search

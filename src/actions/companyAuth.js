@@ -87,7 +87,6 @@ export const removeAnnounce = (token, _id) => {
     return res.json()
   }).catch(error => error)
 }
-
 export const justForYourCompany = (token) => {
   return fetch(`${API}/company/justForYouCompany`, {
     method: 'GET',
