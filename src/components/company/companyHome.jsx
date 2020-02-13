@@ -11,7 +11,6 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import DoneIcon from '@material-ui/icons/Done';
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
-import programer_2 from '../../img/programer_2.jpeg'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,7 +35,6 @@ const useStyles = makeStyles(theme => ({
   headerImage: {
     flexGrow: 1,
     flexShrink: 0,
-    background: `url(${programer_2}) no-repeat center`,
     backgroundSize: 'cover',
     paddingLeft: 20,
     borderRadius: '10%',
@@ -257,11 +255,11 @@ const Company = () => {
         <div className={classes.HowItWorkImages}>
           <div>
             <h5>Traditional recruitment</h5>
-            <img src={require('../../img/company_1.png')} alt="company_1" />
+  {/*  <img src={require('../../img/company_1.png')} alt="company_1" />*/}
           </div>
           <div>
             <h5>Recruitment through us</h5>
-            <img src={require('../../img/company_2.png')} alt="company_2" />
+  {/*  <img src={require('../../img/company_1.png')} alt="company_1" />*/}
           </div>
         </div>
       </div>

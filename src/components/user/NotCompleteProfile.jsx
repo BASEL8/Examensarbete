@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -75,6 +75,8 @@ const FirstProfile = () => {
   delete user.contactRequests
   delete user.acceptedByYou
   delete user.eventsTracker
+  delete user.contactedByYou
+  delete user.acceptedYourRequest
   const [userData, setUserData] = useState(isAuth().profileComplete ? { ...user } : {
     about: '',
     wantToWorkAs: '',
@@ -93,7 +95,7 @@ const FirstProfile = () => {
       subProfessions: [{ name: '' }]
     },
   })
-  //const [, setDataToComplete] = useState(Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : (userData.profession.name && userData.profession.subProfessions.length !== 0) ? null : key : userData[key] ? null : key))
+  const [dataIsComplete, setDataToComplete] = useState(Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : (userData.profession.name && userData.profession.subProfessions.length !== 0) ? null : key : userData[key] ? null : key))
   const [error, setError] = useState('')
   const steps = getSteps(error);
   const getStepContent = (step) => {
@@ -120,26 +122,26 @@ const FirstProfile = () => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
-  // useEffect(() => {
-  //   setDataToComplete((Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : userData.profession.name || userData.profession.subProfessions.length === 0 ? null : key : userData[key] ? null : key)))
-  // }, [userData])
-  // for (const key in userData) {
-  //   if (userData.hasOwnProperty(key) && !userData[key]) {
+  useEffect(() => {
+    setDataToComplete((Object.keys(userData).map(key => typeof userData[key] === 'object' ? Array.isArray(userData[key]) ? userData[key].length === 0 ? key : null : userData.profession.name || userData.profession.subProfessions.length === 0 ? null : key : userData[key] ? null : key)))
+  }, [userData])
+  for (const key in userData) {
+    if (userData.hasOwnProperty(key) && !userData[key]) {
 
-  //     //console.log(key)
-  //   }
-  //   if (userData.hasOwnProperty(key) && Array.isArray(userData[key]) && userData[key].length === 0) {
-  //     // console.log(key)
-  //   }
-  //   if (key === 'profession' && !userData.profession.name) {
-  //     console.log(key)
-  //   }
-  //   if (key === 'profession' && userData.profession.subProfessions.length === 0) {
-  //     console.log(key)
-  //   }
-  // }
+      //console.log(key)
+    }
+    if (userData.hasOwnProperty(key) && Array.isArray(userData[key]) && userData[key].length === 0) {
+      // console.log(key)
+    }
+    if (key === 'profession' && !userData.profession.name) {
+      console.log(key)
+    }
+    if (key === 'profession' && userData.profession.subProfessions.length === 0) {
+      console.log(key)
+    }
+  }
 
-  console.log()
+  console.log(dataIsComplete)
 
 
 
@@ -164,10 +166,12 @@ const FirstProfile = () => {
         <form>
           {getStepContent(activeStep)}
         </form>
-        {activeStep !== 2 && <div>
+        <div>
+
+        </div>
+        {activeStep !== 2 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {activeStep !== 3 && <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>Back</Button>}
           {activeStep !== 3 && activeStep !== (steps.length - 2) ?
-
             <Button
               variant="outlined"
               color="primary"
@@ -179,7 +183,10 @@ const FirstProfile = () => {
             activeStep === 3 && error &&
             <Button variant="outlined" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
           }
+
         </div>}
+        {(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1 && <p>you need to fill all the data</p>}
+        {(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1 && <p style={{ textAlign: 'center' }}>{dataIsComplete.filter(d => d !== null).join(', ')} is/are missing</p>}
       </div>
     </div>
 
