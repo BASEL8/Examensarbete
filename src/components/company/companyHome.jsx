@@ -57,6 +57,14 @@ const useStyles = makeStyles(theme => ({
     fontSize: 15,
     fontFamily: 'Montserrat, sans-serif'
   },
+   mainText: {
+    marginTop:50,
+    marginBottom:50,
+    padding: 30,
+    textAlign: 'center',
+    color: '#333333',
+    fontSize: 24,
+  },
   section: {
   },
    buttonHolder: {
@@ -97,7 +105,12 @@ const useStyles = makeStyles(theme => ({
    bottom: 0,
    width: 100,
       right:0
-    }
+    },
+  '& .svgSpecial': {
+      '& svg': {
+        top:'-30%'
+      }
+    },
   },
   paperTitle: {
     fontWeight: 800,
@@ -253,9 +266,6 @@ const Company = () => {
           <h2 className={classes.headerTitle}>
             Recruit tech talent in record time!
       </h2>
-          <p className={classes.headerText}>
-            Get access to a curated and active pool with tech talent who are all open to new challenges. Sign up and meet tech talent for free.
-            </p>
         </div>
       </div>
             <div className={classes.buttonHolder}>
@@ -265,6 +275,14 @@ const Company = () => {
         </Button>
         </div>
       <div>
+        <div className={classes.mainText}>
+          <p >
+            Get access to a curated and active pool with tech talent who are all open to new challenges.
+            </p>
+          <p>
+             Sign up and meet tech talent for free.
+          </p>
+        </div>
         <div className={classes.paper}>
           <Paper elevation={3} className={classes.paperHolder}>
             <h4 className={classes.paperTitle}>+10 000</h4>
@@ -279,7 +297,9 @@ const Company = () => {
           <Paper elevation={3} className={classes.paperHolder}>
             <h4 className={classes.paperTitle}>4 år</h4>
             <p>is the average experience of the talents.</p>
-           <Experience/>
+            <div className='svgSpecial'>
+            <Experience />
+            </div>
           </Paper>
         </div>
       </div>

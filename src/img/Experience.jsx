@@ -5,7 +5,7 @@ export const Experience = ()=> {
     <svg
       xmlns="http://www.w3.org/2000/svg"
 
-      viewBox="0 0 450 700"
+      viewBox="0 0 450 500"
     >
       <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
         <g>
