@@ -77,9 +77,6 @@ const UserRegister = () => {
       <>
         <h3>Create Account</h3>
         <p>You are now minutes from getting offers from +800 tech companies</p>
-        <Button variant="outlined" color="primary">
-          <Link to="/company/register" className={classes.link}>Employer ? Register here</Link>
-        </Button>
         <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"

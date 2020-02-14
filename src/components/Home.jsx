@@ -5,9 +5,8 @@ import Button from '@material-ui/core/Button';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import FlareSharpIcon from '@material-ui/icons/FlareSharp';
 import Hidden from '@material-ui/core/Hidden';
-import Divider from '@material-ui/core/Divider';
 import Typing from 'react-typing-animation';
-import {Man,Search,Jobs,Girl,Start} from '../img'
+import {Man,Search,Girl,Start,TalentSvg} from '../img'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -181,7 +180,7 @@ const Home = () => {
     <div className={classes.root}>
       <div className={classes.header}>
         <div style={{ padding: 50, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          <FlareSharpIcon style={{fontSize:50,color:'gold'}}/>
+          <TalentSvg/>
           <h2 className={classes.headerTitle}>
             Discover new career opportunities completely anonymously
             </h2>
@@ -190,7 +189,7 @@ const Home = () => {
             <Typing speed={80} loop>
               {['DevOps','Programers','Testers','UI&UX Designer','Everyone who works in IT'].map((text,index) => { 
                 return <Fragment key={index}>
-                <h3>{text}.</h3> 
+                <h3 style={{color:'gold'}}>{text}.</h3> 
                  <Typing.Backspace delay={1200} count={text.length + 2} />
                  </Fragment>
               })}

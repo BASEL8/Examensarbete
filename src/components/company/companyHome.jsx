@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,8 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import DoneIcon from '@material-ui/icons/Done';
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
-import { Complex,Direct,Smart,Time,Experience } from '../../img';
+import Typing from 'react-typing-animation';
+import { Complex,Direct,Smart,Time,Experience ,CompanySvg} from '../../img';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,7 +24,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
   header: {
-    paddingTop: 100,
     minHeight: '35vh',
     display: 'flex',
     alignItems: 'stretch',
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   headerTitle: {
-    fontSize: 30,
+    fontSize: 40,
     fontFamily: 'Montserrat, sans-serif',
     lineHeight: 2,
     verticalAlign: 'baseline',
@@ -263,13 +263,30 @@ const Company = () => {
     <div className={classes.root}>
       <div className={classes.header}>
         <div style={{ padding: 50, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+          <CompanySvg/>
           <h2 className={classes.headerTitle}>
             Recruit tech talent in record time!
       </h2>
+          <div style={{display:'flex'}}>
+            <p>we matches you free of charge with 1000's of quality assured talents </p>
+            <div style={{minWidth:150,display:'flex',justifyContent:'center',alignItems:'center',color:'gold'}}>
+           <Typing speed={50} loop>
+              {["Developers", "Testers", "Designers", "Project Managers","System Architects" ].map((text,index) => { 
+                return <Fragment key={index}>
+                <h3>{text}</h3> 
+                 <Typing.Backspace delay={1200} count={text.length + 1} />
+                 </Fragment>
+              })}
+            <Typing.Reset />
+              </Typing>
+              </div>
+           
+          </div>
+           <p> who are open to new opportunities.</p>
+          <p>You only pay for successful recruitment.</p>
         </div>
       </div>
-            <div className={classes.buttonHolder}>
-
+      <div className={classes.buttonHolder}>
        <Button variant="contained" color="primary" >
             <Link className={classes.link} to={"/company/register"}>Register</Link>
         </Button>

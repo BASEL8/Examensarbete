@@ -62,9 +62,6 @@ const CompanyRegister = () => {
     <AuthIndex>{
       <>
         <h3>Create Account for your company</h3>
-        <Button variant="outlined" color="primary">
-          <Link className={classes.link} to="/user/register">talents ? Register here</Link>
-        </Button>
         <form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"
