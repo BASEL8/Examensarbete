@@ -38,7 +38,6 @@ const NavLinks = ({ handleDrawerOpen, open }) => {
         <Link className={classes.link} to={"/"}>Talents</Link>
         <Link className={classes.link} to={"/company"}>Companies</Link>
         {!auth && <>
-          <Link className={classes.link} to={"/user/register"}>Register</Link>
           <Button variant="outlined" color="inherit" style={{ marginLeft: 20, marginRight: 20 }}>
             <Link className={classes.link} to={"/user/login"}>login</Link>
           </Button>

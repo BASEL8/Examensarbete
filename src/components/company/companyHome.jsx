@@ -6,11 +6,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import Hidden from '@material-ui/core/Hidden';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import DoneIcon from '@material-ui/icons/Done';
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
+import { Complex,Direct,Smart,Time,Experience } from '../../img';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,13 +24,15 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     paddingTop: 100,
-    minHeight: '90vh',
+    minHeight: '35vh',
     display: 'flex',
     alignItems: 'stretch',
     justifyContent: 'center',
     textAlign: 'center',
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    background: theme.palette.primary.main,
+    color: theme.palette.text.light
   },
   headerImage: {
     flexGrow: 1,
@@ -57,6 +59,16 @@ const useStyles = makeStyles(theme => ({
   },
   section: {
   },
+   buttonHolder: {
+    background: theme.palette.primary.dark,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 100,
+    '& button': {
+      background: theme.palette.primary.button
+    }
+  },
   link: {
     textDecoration: 'none',
     color: 'white',
@@ -74,8 +86,20 @@ const useStyles = makeStyles(theme => ({
       flex: 1,
       padding: 20,
       margin: theme.spacing(3),
+    },
+   
+  },
+  paperHolder: {
+  position:'relative',
+ '& svg': {
+   position: 'absolute',
+   top: '-10%',
+   bottom: 0,
+   width: 100,
+      right:0
     }
-  }, paperTitle: {
+  },
+  paperTitle: {
     fontWeight: 800,
     color: theme.palette.primary.main,
     fontSize: 28,
@@ -98,19 +122,22 @@ const useStyles = makeStyles(theme => ({
     },
   },
   HowItWorkImages: {
+    flex: 1,
     marginTop: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
     '& > div': {
+      flex: 1,
+      flexBasis:600,
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'column',
       height: '100%',
     },
-    '& > div img': {
+    '& > div svg': {
       maxWidth: '90%',
       marginTop: 50
     },
@@ -198,6 +225,7 @@ function TabPanel(props) {
 const WhatPeopleSaying = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
   return (
     <div className={classes.main}>
       {fakeData.map(({ name, by, text }, index) => <TabPanel key={index} value={value} index={index}>
@@ -226,26 +254,32 @@ const Company = () => {
             Recruit tech talent in record time!
       </h2>
           <p className={classes.headerText}>
-            Get access to a curated and active pool with tech talent who are all open to new challenges. Sign up and meet tech talent for free.      </p>
-          <Button variant="contained" color="primary" style={{ marginTop: 30 }}>
-            <Link className={classes.link} to={"/company/register"}>Register</Link>
-          </Button>
+            Get access to a curated and active pool with tech talent who are all open to new challenges. Sign up and meet tech talent for free.
+            </p>
         </div>
-        <Hidden xlDown> <div className={classes.headerImage}></div></Hidden>
       </div>
+            <div className={classes.buttonHolder}>
+
+       <Button variant="contained" color="primary" >
+            <Link className={classes.link} to={"/company/register"}>Register</Link>
+        </Button>
+        </div>
       <div>
         <div className={classes.paper}>
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.paperHolder}>
             <h4 className={classes.paperTitle}>+10 000</h4>
             <p>tech talents that are open to new opportunities.</p>
+            <Smart/>
           </Paper>
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.paperHolder}>
             <h4 className={classes.paperTitle}>91%</h4>
             <p>of all requests answered by the talents within 2 weeks.</p>
+             <Time/>
           </Paper>
-          <Paper elevation={3}>
+          <Paper elevation={3} className={classes.paperHolder}>
             <h4 className={classes.paperTitle}>4 år</h4>
             <p>is the average experience of the talents.</p>
+           <Experience/>
           </Paper>
         </div>
       </div>
@@ -255,11 +289,11 @@ const Company = () => {
         <div className={classes.HowItWorkImages}>
           <div>
             <h5>Traditional recruitment</h5>
-  {/*  <img src={require('../../img/company_1.png')} alt="company_1" />*/}
+            <Complex/>
           </div>
           <div>
             <h5>Recruitment through us</h5>
-  {/*  <img src={require('../../img/company_1.png')} alt="company_1" />*/}
+            <Direct/>
           </div>
         </div>
       </div>
