@@ -6,7 +6,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import FlareSharpIcon from '@material-ui/icons/FlareSharp';
 import Hidden from '@material-ui/core/Hidden';
 import Typing from 'react-typing-animation';
-import {Man,Search,Girl,Start,TalentSvg} from '../img'
+import { Man, Search, Girl, Start, TalentSvg } from '../img'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,8 +47,8 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Montserrat, sans-serif'
   },
   mainText: {
-    marginTop:100,
-    marginBottom:100,
+    marginTop: 100,
+    marginBottom: 100,
     padding: 30,
     textAlign: 'center',
     color: '#333333',
@@ -119,12 +119,14 @@ const useStyles = makeStyles(theme => ({
     padding: '50px 0',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    maxWidth:'100vw'
   },
   stepImage: {
     maxHeight: 350,
     '& svg': {
       maxHeight: 350,
+      maxWidth:'100vw'
     }
   },
   link: {
@@ -135,15 +137,15 @@ const useStyles = makeStyles(theme => ({
 let data = [
   {
     title: 'Create an anonymous profile',
-    text: 'Create an anonymous profile and state your wishes regarding jobs, salaries and benefits. All that motivates you to change jobs.', image: <Search/>
+    text: 'Create an anonymous profile and state your wishes regarding jobs, salaries and benefits. All that motivates you to change jobs.', image: <Search />
   },
   {
     title: 'Get offers & apply anonymously',
     text: 'You will be contacted through specific offers based on your wishes and can apply to specific employers. You see which employers can match your expectations.',
-    image: <Girl/>
+    image: <Girl />
   },
-  { title: 'Take a stand', text: 'Go ahead with the most interesting offers and let employers share your full profile so they can make personal contact.', image: <Man/> },
-  { title: 'Start the your dream job', text: 'When hiring, Ryktera gives you an employment gift.', image: <Start/> }
+  { title: 'Take a stand', text: 'Go ahead with the most interesting offers and let employers share your full profile so they can make personal contact.', image: <Man /> },
+  { title: 'Start the your dream job', text: 'When hiring, Ryktera gives you an employment gift.', image: <Start /> }
 ];
 const Step = ({ title, text, image, index }) => {
   const classes = useStyles();
@@ -180,27 +182,27 @@ const Home = () => {
     <div className={classes.root}>
       <div className={classes.header}>
         <div style={{ padding: 50, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          <TalentSvg/>
+          <TalentSvg />
           <h2 className={classes.headerTitle}>
             Discover new career opportunities completely anonymously
             </h2>
           <div style={{ display: 'flex' }}>
-            <h3 style={{marginRight:5}}>For</h3>
+            <h3 style={{ marginRight: 5 }}>For</h3>
             <Typing speed={80} loop>
-              {['DevOps','Programers','Testers','UI&UX Designer','Everyone who works in IT'].map((text,index) => { 
+              {['DevOps', 'Programers', 'Testers', 'UI&UX Designer', 'Everyone who works in IT'].map((text, index) => {
                 return <Fragment key={index}>
-                <h3 style={{color:'gold'}}>{text}.</h3> 
-                 <Typing.Backspace delay={1200} count={text.length + 2} />
-                 </Fragment>
+                  <h3 style={{ color: 'gold' }}>{text}.</h3>
+                  <Typing.Backspace delay={1200} count={text.length + 2} />
+                </Fragment>
               })}
-              <Typing.Reset/>
-          </Typing>
+              <Typing.Reset />
+            </Typing>
           </div>
-     
+
         </div>
         <Hidden xlDown><div className={classes.headerImage}></div></Hidden>
       </div>
-      
+
       <div className={classes.buttonHolder}>
         <Button variant="contained" size="large" >
           <Link className={classes.link} to={"/user/register"}>Register</Link>
@@ -208,10 +210,12 @@ const Home = () => {
         </Button>
       </div>
       <p className={classes.mainText}>
-            We match you and your wishes to hundreds of tech companies so that they can contact through personal offers, completely anonymously.
-          Find out which employers are interested in you and can meet your expectations.
+        We match you and your wishes to hundreds of tech companies so that they can contact through personal offers, completely anonymously.
+      Find out which employers are interested in you and can meet your expectations.
           </p>
-      {data.map(({ title, text, image }, index) => <Step key={index} index={index} title={title} text={text} image={image} />)}
+      <div style={{width:'100%'}}>
+        {data.map(({ title, text, image }, index) => <Step key={index} index={index} title={title} text={text} image={image} />)}
+      </div>
     </div>
   )
 }
