@@ -77,6 +77,7 @@ const useStyles = makeStyles(theme => ({
     minWidth: 300,
     padding: '50px 0',
     display: 'flex',
+    flexDirection:'column',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -121,10 +122,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-   maxWidth:'100vw'
+   //maxWidth:'100vw'
   },
   stepImage: {
     height: '100%',
+    width:'100%',
+    maxWidth:'100vw',
     '& svg': {
       height: '100%',
       maxWidth:'100%',
@@ -154,21 +157,17 @@ const Step = ({ title, text, image, index }) => {
   return (
     <div className={classes.stepMain} style={{ flexDirection: index % 2 === 0 ? 'row' : 'row-reverse' }}>
       <div className={classes.TextHolder}>
-        <div style={{ maxWidth: 450 }}>
+
           <div style={{ alignSelf: 'flex-start' }}>
-            <span className={classes.step}>
-              step
-        </span>
+            <span className={classes.step}>step</span>
             <span className={classes.stepSpan}>{index + 1}</span>
           </div>
           <p className={classes.stepTitle}>
             {title}
           </p>
-          <div>
+          <p style={{width:'100%'}}>
             {text}
-          </div>
-
-        </div>
+          </p>
       </div>
       <div className={classes.imageHolder}>
         <div className={classes.stepImage}>{image}</div>
