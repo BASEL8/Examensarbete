@@ -5,8 +5,6 @@ export const Start = ()=> {
  <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="543"
-      height="361"
       viewBox="0 0 543 361"
     >
       <defs>

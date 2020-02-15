@@ -5,8 +5,6 @@ export const Search = ()=> {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="591"
-      height="680"
       viewBox="0 0 591 680"
     >
       <defs>

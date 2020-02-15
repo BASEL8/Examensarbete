@@ -5,8 +5,6 @@ export const Girl = () =>{
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="735"
-      height="664"
       viewBox="0 0 735 664"
     >
       <defs>

@@ -5,8 +5,6 @@ export const Man = ()=> {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="679"
-      height="739"
       viewBox="0 0 679 739"
     >
       <defs>

@@ -114,19 +114,21 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 20
   },
   imageHolder: {
-    height: 300,
+    height: 400,
+    width:'100%',
     flex: 1,
     padding: '50px 0',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth:'100vw'
+   maxWidth:'100vw'
   },
   stepImage: {
-    maxHeight: 350,
+    height: '100%',
     '& svg': {
-      maxHeight: 350,
-      maxWidth:'100vw'
+      height: '100%',
+      maxWidth:'100%',
+      minWidth:350
     }
   },
   link: {
