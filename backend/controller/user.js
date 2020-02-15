@@ -64,7 +64,8 @@ exports.updateUser = (req, res) => {
         reasonToNewJob,
         workingRemotely,
         priorityBenefits,
-        profession } = req.body
+        profession,
+     } = req.body
       user.about = about.toLowerCase()
       user.wantToWorkAs = wantToWorkAs.toLowerCase()
       user.cities = cities.map(city => city.toLowerCase())
