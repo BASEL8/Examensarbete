@@ -47,6 +47,7 @@ const UserLogin = () => {
   const [state, setState] = useState({ email: location.state && location.state.email ? location.state.email : '', password: '', error: '' })
   const { email, password, error } = state;
   const [open, setOpen] = useState(true)
+  console.log(location.pathname==='/user/login')
   useEffect(() => {
     if (isAuth()) {
       history.push("/")

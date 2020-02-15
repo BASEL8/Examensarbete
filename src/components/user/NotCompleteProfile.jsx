@@ -9,7 +9,6 @@ import ProfessionForm from './form/ProfessionForm'
 import SendUserData from './form/SendUserData'
 import { isAuth } from '../../actions/auth';
 import { Link } from 'react-router-dom'
-
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: '90vh',
@@ -128,22 +127,15 @@ const FirstProfile = () => {
   for (const key in userData) {
     if (userData.hasOwnProperty(key) && !userData[key]) {
 
-      //console.log(key)
+
     }
     if (userData.hasOwnProperty(key) && Array.isArray(userData[key]) && userData[key].length === 0) {
-      // console.log(key)
     }
     if (key === 'profession' && !userData.profession.name) {
-      console.log(key)
     }
     if (key === 'profession' && userData.profession.subProfessions.length === 0) {
-      console.log(key)
     }
   }
-
-  console.log(dataIsComplete)
-
-
 
   return (
     <div className={classes.root}>
@@ -163,13 +155,10 @@ const FirstProfile = () => {
       <div className={classes.right}>
         <div>
         </div>
+        { Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1&&<p>Do not forget to fill all inputs</p>}
         <form>
           {getStepContent(activeStep)}
-        </form>
-        <div>
-
-        </div>
-        {activeStep !== 2 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {activeStep !== 2 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {activeStep !== 3 && <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>Back</Button>}
           {activeStep !== 3 && activeStep !== (steps.length - 2) ?
             <Button
@@ -177,16 +166,24 @@ const FirstProfile = () => {
               color="primary"
               onClick={handleNext}
               className={classes.button}
-              disabled={(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1}
+              disabled={(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1 }
             >Next</Button>
             :
             activeStep === 3 && error &&
             <Button variant="outlined" color="primary" onClick={() => setActiveStep(0)}>Reset</Button>
+
           }
 
         </div>}
-        {(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1 && <p>you need to fill all the data</p>}
+
+        {(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1 && <p style={{ textAlign: 'center' }}>you need to fill all the data</p>}
         {(activeStep === 1) && Object.values(userData).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) !== -1 && <p style={{ textAlign: 'center' }}>{dataIsComplete.filter(d => d !== null).join(', ')} is/are missing</p>}
+       
+        </form>
+        <div>
+
+        </div>
+      
       </div>
     </div>
 

@@ -23,7 +23,6 @@ const CompaniesYouAccepted = ({ acceptedByYou, acceptedYourRequest, forceUpdate,
       if (res.error) {
         return console.log(res.error)
       }
-      console.log(res)
       setForceUpdate(!forceUpdate)
     })
   }

@@ -364,7 +364,7 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
         <InputLabel>
           Profession</InputLabel>
         <Select
-          value={profession.name}
+          defaultValue=''
           onChange={handleChange}
           name='profession'
         >
