@@ -65,7 +65,7 @@ exports.updateUser = (req, res) => {
         workingRemotely,
         priorityBenefits,
         profession,
-     } = req.body
+      } = req.body
       user.about = about.toLowerCase()
       user.wantToWorkAs = wantToWorkAs.toLowerCase()
       user.cities = cities.map(city => city.toLowerCase())
@@ -111,16 +111,18 @@ exports.deleteMyProfile = (req, res) => {
 }
 exports.companyJustForYou = (req, res) => {
   const { cities, profession, _id } = req.profile;
+  console.log(profession)
   Company.find(
-    {
+   {$and: [{
       city: { "$in": cities },
-      'profession.name': profession.name,
-      //  'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
-      contactedByYou: { "$ne": _id },
-      acceptedYourRequest: { "$ne": _id },
-      wantToContactYou: { "$ne": _id },
-      acceptedByYou: { "$ne": _id }
+      'professions': { $elemMatch: { name: profession.name } },
+       contactedByYou: { "$ne": _id },
+       acceptedYourRequest: { "$ne": _id },
+       wantToContactYou: { "$ne": _id },
+       acceptedByYou: { "$ne": _id }
     },
+    {'subProfessions':{$elemMatch :{name:{ $in: profession.subProfessions.map(profession => profession.name) }}}}
+  ]},
     {
       'hashed_password': 0,
       email: 0,
@@ -135,7 +137,6 @@ exports.companyJustForYou = (req, res) => {
       if (error) {
         return res.json({ error: errorHandler(error) })
       }
-      company.contactedByYou = undefined
       return res.json(company)
     })
 }

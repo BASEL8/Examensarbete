@@ -38,14 +38,16 @@ exports.updateCompany = (req, res) => {
         city,
         createdBy,
         workingRemotely,
-        profession
+        professions,
+        subProfessions
       } = req.body
       company.about = about
       company.website = website
       company.city = city
       company.createdBy = createdBy
       company.workingRemotely = workingRemotely
-      company.profession = profession
+      company.professions = professions
+      company.subProfessions = subProfessions
       company.profileComplete = Object.values(req.body).map(value => typeof value === 'object' ? Array.isArray(value) ? !!value.length : !!value.subProfessions.length : !!value).indexOf(false) === -1
       company.save((err, response) => {
         if (err) {
@@ -91,18 +93,22 @@ exports.removeAnnounce = (req, res) => {
   })
 }
 exports.justForYourCompany = (req, res) => {
-  const { city, profession, _id } = req.profile;
+  const { city, professions, subProfessions, _id } = req.profile;
   User.find(
-    {
-      published: true,
-      cities: city,
-      'profession.name': profession.name,
-      //   'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
-      contactRequests: { "$ne": _id },
-      acceptedByYou: { "$ne": _id },
-      contactedByYou: { "$ne": _id },
-      acceptedYourRequest: { "$ne": _id }
-    },
+    {$and:[
+      {
+        published: true,
+        cities: city,
+        'profession.subProfessions': {$elemMatch :{name:{ $in: subProfessions.map(profession => profession.name) }}},
+        contactRequests: { "$ne": _id },
+        acceptedByYou: { "$ne": _id },
+        contactedByYou: { "$ne": _id },
+        acceptedYourRequest: { "$ne": _id }
+      },
+      {
+      'profession.name': { $in: professions.map(profession => profession.name) },
+      }
+    ]},
     {
       'hashed_password': 0,
       name: 0,

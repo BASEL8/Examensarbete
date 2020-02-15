@@ -1,7 +1,35 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const { ObjectId } = mongoose.Schema
-const { testSchema } = require('./profession')
+//const { testSchema } = require('./profession')
+const SubProfession = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    index: true,
+    lowercase: true
+  },
+  years: {
+    type: Number,
+  },
+  relatedId: {
+    type: String,
+  }
+});
+const Profession = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    index: true,
+    lowercase: true
+  },
+  years: {
+    type: Number,
+  },
+  relatedId: {
+    type: String,
+  }
+})
 
 const companySchema = new mongoose.Schema({
   companyName: {
@@ -72,7 +100,8 @@ const companySchema = new mongoose.Schema({
   workingRemotely: {
     type: String
   },
-  profession: { type: { testSchema }, require: true },
+  professions: [{ type:  Profession , require: true }],
+  subProfessions: [{ type:  SubProfession , require: true }],
   contactedByYou: [{ type: ObjectId, ref: 'User', require: true }],
   wantToContactYou: [{ type: ObjectId, ref: 'User', require: true }],
   eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],

@@ -49,13 +49,13 @@ const CompanyJustForYou = ({ setForceUpdate, forceUpdate }) => {
   return (
     !error && companies.length !== 0 && <List className={classes.root}>
       {
-        Array.isArray(companies) && companies.map(({ _id, profession, city, success, companyName }, index) =>
+        Array.isArray(companies) && companies.map(({ _id, professions, subProfessions,city, success, companyName }, index) =>
           <Fragment key={_id}>
             <ListItem alignItems="flex-start">
               <div className={classes.text}>
                 <h4>{companyName}</h4>
-                <h4>{profession.name}</h4>
-                <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                <h4>{professions.map(({ name }) => name).join(', ')}</h4>
+                <p>{subProfessions.map(({ name }) => name).join(', ')}</p>
                 <p> {city}</p>
               </div>
               <ListItemAvatar style={{ textAlign: 'right' }}>

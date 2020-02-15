@@ -67,7 +67,8 @@ const CompanyTabProfile = ({ user, setError, setForceUpdate, forceUpdate }) => {
     confirmed,
     website,
     createdBy,
-    profession,
+    professions,
+    subProfessions,
     announces,
     eventsTracker
   } = user;
@@ -108,15 +109,22 @@ const CompanyTabProfile = ({ user, setError, setForceUpdate, forceUpdate }) => {
               <div>{about}</div>
             </div>
 
-            <div>
-              <h4>{profession && profession.name}</h4>
-              <div style={{ marginTop: 3 }}>
-                {profession && profession.subProfessions.map((sub, index) => <Chip key={index}
+            <div style={{ marginTop: 15,marginBottom:15 }}>
+              {/* <h4>{profession && profession.name}</h4>*/}
+              <div>
+                {professions && professions.map(({name}, index) => <Chip key={index}
                   color="primary"
                   variant="outlined"
                   style={{ marginRight: 10, marginTop: 5 }}
-                  label={sub.name} size="small" spacing={1} />)}
-              </div>
+                  label={name} size="small" spacing={1} />)}
+              </div> 
+              <div style={{ marginTop: 15 }}>
+                {subProfessions && subProfessions.map(({name}, index) => <Chip key={index}
+                  color="secondary"
+                  variant="outlined"
+                  style={{ marginRight: 10, marginTop: 5 }}
+                  label={name} size="small" spacing={1} />)}
+              </div> 
             </div>
             <div>
               <Button

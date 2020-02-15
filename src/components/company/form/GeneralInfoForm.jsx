@@ -74,35 +74,39 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
     createdBy,
     workingRemotely,
     city,
-    profession
+    professions,
+    subProfessions
   } = userData;
   const handleChange = (event) => {
-    if (event.target.name === 'profession') {
-      return setUserData({
-        ...userData,
-        profession: {
-          years: 0, subProfessions: [],
-          name: event.target.value
-        }
-      })
-    }
-    if (event.target.name === 'subProfession') {
-      if (profession.subProfessions.map((ob, index) => ob.name).indexOf(event.target.value) === -1) {
+    if (event.target.name === 'professions') {
+      if (professions.map((ob, index) => ob.name).indexOf(event.target.value) === -1) {
         return setUserData({
           ...userData,
-          profession: {
-            ...profession, subProfessions: [...profession.subProfessions, { name: event.target.value }]
-          }
-        })
-      } else {
-        return setUserData({
-          ...userData,
-          profession: {
-            ...profession,
-            subProfessions: profession.subProfessions.filter((ob) => ob.name !== event.target.value)
-          }
+          professions: [...userData.professions,{ name: event.target.value}]
         })
       }
+      else{
+        return setUserData({
+          ...userData,
+          professions: userData.professions.filter(({name})=>name!== event.target.value)
+        })
+      }
+    
+    }
+    if (event.target.name === 'subProfessions') {
+      if (professions.map((ob, index) => ob.name).indexOf(event.target.value) === -1) {
+        return setUserData({
+          ...userData,
+          subProfessions: [...userData.subProfessions,{ name: event.target.value}]
+        })
+      }
+      else{
+        return setUserData({
+          ...userData,
+          subProfessions: userData.professions.filter(({name})=>name!== event.target.value)
+        })
+      }
+    
     }
     if (event.target.name === 'workingRemotely') {
       return setUserData({ ...userData, workingRemotely: event.target.value })
@@ -111,11 +115,9 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
       return setUserData({ ...userData, kindOfEmployment: event.target.value })
     }
     return setUserData({ ...userData, [event.target.name]: event.target.value.toLowerCase() })
-
-
   }
 
-  const professions = [
+  const professionsList = [
     {
       name: 'technology & development',
       years: 0,
@@ -132,7 +134,7 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
       subProfessions: []
     }
   ]
-  const subProfessions = [
+  const subProfessionsList = [
 
     {
       name: 'system  Architect',
@@ -320,6 +322,7 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
       profession: 'processer & analys'
     },
   ];
+  console.log(userData);
   return (
     <>
       <TextField
@@ -360,37 +363,25 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
           <FormControlLabel value={'only remotely'} control={<Radio color="primary" />} label={'Only remotely'} />
         </RadioGroup>
       </FormControl>
-      <FormControl className={classes.formControl}>
-        <InputLabel>
-          Profession</InputLabel>
-        <Select
-          defaultValue=''
-          onChange={handleChange}
-          name='profession'
-        >
-          {professions.map(({ name }, index) => <MenuItem key={index} value={name}>{name}</MenuItem>)}
-        </Select>
-      </FormControl>
-      {profession.name &&
-        <Autocomplete
+       <Autocomplete
           multiple
           autoSelect={true}
-          options={subProfessions.filter((index) => index.profession === profession.name)}
+          options={professionsList}
           getOptionLabel={({ name }) => name}
-          value={profession.subProfessions}
-          name="subProfession"
+          value={professions}
+          name="professions"
           ChipProps={{ clickable: false, deleteIcon: <span></span> }}
           renderOption={({ name }) => (
             <>
               <Checkbox
-                name="subProfession"
+                name="professions"
                 color="primary"
                 icon={icon}
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 onChange={handleChange}
                 value={name}
-                checked={profession.subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1}
+              checked={professions.map((ob, index) => ob.name).indexOf(name) !== -1}
               />
               {name}
             </>
@@ -405,6 +396,40 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
             />
           )}
         />
+       {professions.length > 0 &&
+        <Autocomplete
+          multiple
+          autoSelect={true}
+          options={subProfessionsList.filter(({profession})=>{console.log();return profession,professions.findIndex(t=>t.name===profession)!==-1})}
+          getOptionLabel={({ name }) => name}
+          value={subProfessions}
+          name="subProfessions"
+          ChipProps={{ clickable: false, deleteIcon: <span></span> }}
+          renderOption={({ name }) => (
+            <>
+              <Checkbox
+                name="subProfessions"
+                color="primary"
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                onChange={handleChange}
+                value={name}
+                checked={subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1}
+              />
+              {name}
+            </>
+          )}
+          style={{ width: 500 }}
+          renderInput={params => (
+            <TextField
+              {...params}
+              variant="outlined"
+              label="Sub professions"
+              fullWidth
+            />
+          )}
+        /> 
       }
     </>
   )

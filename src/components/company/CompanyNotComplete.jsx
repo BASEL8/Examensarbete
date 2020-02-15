@@ -82,11 +82,8 @@ const CompanyNotComplete = () => {
     createdBy: '',
     city: '',
     workingRemotely: '',
-    profession: {
-      name: 'Technology & development',
-      years: 0,
-      subProfessions: []
-    },
+    professions:[],
+    subProfessions:[]
   })
   const [error, setError] = useState('')
   const steps = getSteps(error);
