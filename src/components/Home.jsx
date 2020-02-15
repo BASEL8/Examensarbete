@@ -75,10 +75,10 @@ const useStyles = makeStyles(theme => ({
   TextHolder: {
     flex: 1,
     minWidth: 300,
-    padding: '50px 0',
+    padding: '50px 30px',
     display: 'flex',
     flexDirection:'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center'
   },
   step: {
@@ -128,6 +128,9 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     width:'100%',
     maxWidth:'100vw',
+    display:'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     '& svg': {
       height: '100%',
       maxWidth:'100%',
