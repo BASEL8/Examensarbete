@@ -339,7 +339,6 @@ exports.companyResetPassword = (req, res) => {
   res.status(200)
 }
 
-console.log(process.env.JWT_SECRET)
 exports.requiresignin = expressJwt({
   secret: process.env.JWT_SECRET
 })

@@ -20,6 +20,7 @@ exports.user = (req, res) => {
     .populate('contactRequests', '_id companyName profession city')
     .populate('acceptedByYou', '_id companyName profession city')
     .populate('contactedByYou', '_id companyName profession city')
+    .populate('acceptedYourRequest', '_id companyName profession city')
     .exec((err, user) => {
       if (err) {
         return res.status(300).json({ error: 'error' })
@@ -63,7 +64,8 @@ exports.updateUser = (req, res) => {
         reasonToNewJob,
         workingRemotely,
         priorityBenefits,
-        profession } = req.body
+        profession,
+     } = req.body
       user.about = about.toLowerCase()
       user.wantToWorkAs = wantToWorkAs.toLowerCase()
       user.cities = cities.map(city => city.toLowerCase())
@@ -116,7 +118,8 @@ exports.companyJustForYou = (req, res) => {
       //  'profession.subProfessions': { $elemMatch: { name: { $in: profession.subProfessions.map(s => s.name) } } },
       contactedByYou: { "$ne": _id },
       acceptedYourRequest: { "$ne": _id },
-      wantToContactYou: { "$ne": _id }
+      wantToContactYou: { "$ne": _id },
+      acceptedByYou: { "$ne": _id }
     },
     {
       'hashed_password': 0,
@@ -156,6 +159,40 @@ exports.rejectRequest = (req, res) => {
         }
         user.eventsTracker = [...user.eventsTracker, { eventName: `you rejected request from ${company.companyName}` }]
         user.contactRequests = user.contactRequests.filter(contact => contact.toString() !== contactRequestId)
+        user.save((err, result) => {
+          if (err) {
+            return res.json({ error: errorHandler(err) })
+          }
+          return res.json({ success: 'success' })
+        })
+      })
+    })
+  })
+}
+exports.cancelRequest = (req, res) => {
+  const { contactRequestId } = req.body
+  const { _id } = req.profile;
+  User.findById(_id).exec((error, user) => {
+    if (error) {
+      return res.json({ error: errorHandler(error) })
+    }
+    Company.findById(contactRequestId).exec((erro, company) => {
+      if (erro) {
+        return res.json({ error: errorHandler(erro) })
+      }
+      company.wantToContactYou = company.wantToContactYou.filter(contacted => contacted.toString() !== _id.toString())
+      company.acceptedByYou = company.acceptedByYou.filter(contacted => contacted.toString() !== _id.toString())
+      company.acceptedYourRequest = company.acceptedYourRequest.filter(contacted => contacted.toString() !== _id.toString())
+      company.eventsTracker = [...company.eventsTracker, { eventName: `user canceled his contact request` }]
+
+      company.save((er, companyResult) => {
+        if (er) {
+          return res.json({ error: errorHandler(er) })
+        }
+        user.eventsTracker = [...user.eventsTracker, { eventName: `you canceled your request to ${company.companyName}` }]
+        user.contactedByYou = user.contactedByYou.filter(contact => contact.toString() !== contactRequestId)
+        user.acceptedYourRequest = user.acceptedYourRequest.filter(contact => contact.toString() !== contactRequestId)
+        user.acceptedByYou = user.acceptedByYou.filter(contact => contact.toString() !== contactRequestId)
         user.save((err, result) => {
           if (err) {
             return res.json({ error: errorHandler(err) })

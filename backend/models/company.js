@@ -77,6 +77,7 @@ const companySchema = new mongoose.Schema({
   wantToContactYou: [{ type: ObjectId, ref: 'User', require: true }],
   eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
   acceptedYourRequest: [{ type: ObjectId, ref: 'User', require: true }],
+  acceptedByYou: [{ type: ObjectId, ref: 'User', required: true }]
 }, { timestamps: true })
 
 
