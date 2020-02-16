@@ -125,3 +125,25 @@ export const userPublish = (token) => {
     },
   }).then(res => res.json()).catch(error => error)
 }
+export const blockCompany = (token,companyId)=>{
+  return fetch(`${API}/user/block`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ companyId })
+  }).then(res => res.json()).catch(error => error)
+}
+export const unblockCompany = (token,companyId)=>{
+  return fetch(`${API}/user/unblock`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ companyId })
+  }).then(res => res.json()).catch(error => error)
+}

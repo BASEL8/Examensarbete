@@ -23,6 +23,7 @@ import { useHistory } from 'react-router-dom'
 import AcceptedYouRequest from './AcceptedYouRequest';
 import Hidden from '@material-ui/core/Hidden';
 import Badge from '@material-ui/core/Badge';
+import BlockedUsers from './BlockedUsers';
 
 
 
@@ -172,7 +173,7 @@ const Main = () => {
           <Tab label={<Badge badgeContent={user.contactedByYou && user.contactedByYou.length + user.wantToContactYou.length} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
           <Tab label={<Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length + user.acceptedByYou.length} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
           <Tab label={<SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-          <Tab label={<Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
+          <Tab label={<Badge badgeContent={user.blockedUsers && user.blockedUsers.length} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
         </Tabs>
       </Hidden>
       <div className={classes.root}>
@@ -189,7 +190,7 @@ const Main = () => {
             <Tab label={value !== 1 ? <Badge badgeContent={user.contactedByYou && user.contactedByYou.length + user.wantToContactYou.length} color="secondary"><MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.contactedByYou && user.contactedByYou.length + user.wantToContactYou.length} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
             <Tab label={value !== 2 ? <Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length + user.acceptedByYou.length} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.acceptedYourRequest && user.acceptedYourRequest.length + user.acceptedByYou.length} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
             <Tab label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-            <Tab label={value !== 4 ? <Badge badgeContent={4} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
+            <Tab label={value !== 4 ? <Badge badgeContent={user.blockedUsers && user.blockedUsers.length} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.blockedUsers && user.blockedUsers.length} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
           </Tabs>
         </Hidden>
         <TabPanel value={value} index={0}>
@@ -220,8 +221,11 @@ const Main = () => {
           search
       </TabPanel>
         <TabPanel value={value} index={4}>
-          blocked
-      </TabPanel>
+          <BlockedUsers
+            blockedUsers={user.blockedUsers}
+            setForceUpdate={setForceUpdate}
+            forceUpdate={forceUpdate} />
+        </TabPanel>
       </div>
     </>
   )

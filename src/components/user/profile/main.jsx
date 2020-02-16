@@ -23,7 +23,7 @@ import ContactRequests from './ContactRequests';
 import CompaniesYouAccepted from './CompaniesYouAccepted'
 import Hidden from '@material-ui/core/Hidden';
 import Badge from '@material-ui/core/Badge';
-
+import BlockedCompanies from './BlockedCompanies'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -132,7 +132,7 @@ const useStyles = makeStyles(theme => ({
 
 const Main = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(4);
   const [user, setUser] = useState({})
   const [error, setError] = useState('')
   const history = useHistory()
@@ -169,7 +169,7 @@ const Main = () => {
           <Tab label={<Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
           <Tab label={<Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length + user.acceptedYourRequest.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
           <Tab label={<SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-          <Tab label={<Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
+          <Tab label={<Badge badgeContent={user.blockList&&user.blockList.length} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
         </Tabs>
       </Hidden>
       <div className={classes.root}>
@@ -187,7 +187,7 @@ const Main = () => {
             <Tab disabled={!user.published} label={value !== 1 ? <Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.contactedByYou && user.contactedByYou.length + user.contactRequests.length) || 0} color="secondary"><MessageIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(1)} />
             <Tab disabled={!user.published} label={value !== 2 ? <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length + user.acceptedYourRequest.length) || 0} color="secondary"> <DoneOutlineIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={(user.acceptedByYou && user.acceptedByYou.length + user.acceptedYourRequest.length) || 0} color="secondary"><DoneOutlinedIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(2)} />
             <Tab disabled={!user.published} label={value !== 3 ? <SearchOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /> : <SearchIcon fontSize='small' color={"primary"} />} {...a11yProps(3)} />
-            <Tab disabled={!user.published} label={value !== 4 ? <Badge badgeContent={4} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={4} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
+            <Tab disabled={!user.published} label={value !== 4 ? <Badge badgeContent={user.blockList&&user.blockList.length} color="secondary"><BlockOutlinedIcon fontSize='small' style={{ color: 'white', opacity: 1 }} /></Badge> : <Badge badgeContent={user.blockList&&user.blockList.length} color="secondary"><BlockIcon fontSize='small' color={"primary"} /></Badge>} {...a11yProps(4)} />
           </Tabs>
         </Hidden>
         <TabPanel value={value} index={0}>
@@ -203,7 +203,7 @@ const Main = () => {
           search
       </TabPanel>
         <TabPanel value={value} index={4}>
-          blocked
+         <BlockedCompanies blockList={user.blockList} setForceUpdate = {setForceUpdate} forceUpdate ={forceUpdate}/>
       </TabPanel>
       </div>
     </>

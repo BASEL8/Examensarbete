@@ -28,12 +28,12 @@ const CompaniesYouAccepted = ({ acceptedByYou, acceptedYourRequest, forceUpdate,
   }
   return (<div>
     <h4>accepted contact from</h4>
-    {acceptedByYou && acceptedByYou.map(({ companyName, _id, profession, city }, index) =>
+    {acceptedByYou && acceptedByYou.map(({ companyName, _id, professions, subProfessions,city }, index) =>
       <Paper key={_id} className={classes.paper}>
         <div className={classes.text}>
           <h4>{companyName}</h4>
-          <p>{profession.name}</p>
-          <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+          <p>{professions.map(({ name }) => name).join(', ')}</p>
+          <p>{ subProfessions.map(({ name }) => name).join(', ')}</p>
           <p> {city}</p>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button variant="outlined" color="secondary" onClick={() => cancel(_id)}>cancel</Button>
@@ -44,12 +44,12 @@ const CompaniesYouAccepted = ({ acceptedByYou, acceptedYourRequest, forceUpdate,
     }
     <Divider style={{ margin: '20px 0' }} />
     <h4>Accepted your request</h4>
-    {acceptedYourRequest && acceptedYourRequest.map(({ companyName, _id, profession, city }, index) =>
+    {acceptedYourRequest && acceptedYourRequest.map(({ companyName, _id, professions,subProfessions, city }, index) =>
       <Paper key={_id} className={classes.paper}>
         <div className={classes.text}>
           <h4>{companyName}</h4>
-          <p>{profession.name}</p>
-          <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+          <p>{professions.name}</p>
+          <p>{subProfessions.map(({ name }) => name).join(', ')}</p>
           <p> {city}</p>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button variant="outlined" color="secondary" onClick={() => cancel(_id)}>cancel</Button>

@@ -170,4 +170,26 @@ export const declineContactRequestFromUser = (token, userId) => {
     return res.json()
   }).catch(error => error)
 }
+export const blockUser = (token,userId)=>{
+  return fetch(`${API}/company/block`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ userId })
+  }).then(res => res.json()).catch(error => error)
+}
+export const unblockUser = (token,userId)=>{
+  return fetch(`${API}/company/unblock`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ userId })
+  }).then(res => res.json()).catch(error => error)
+}
 export const getUserPublicProfile = (token, _id) => { }

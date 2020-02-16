@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { getCookie } from '../../../actions/auth'
 import { contactMe } from '../../../actions/userAuth'
-import { companyJustForYou } from '../../../actions/userAuth'
+import { companyJustForYou, blockCompany } from '../../../actions/userAuth'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,7 +10,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import SendIcon from '@material-ui/icons/Send';
 import { Button } from '@material-ui/core';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
-
+import BlockIcon from '@material-ui/icons/Block';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -46,10 +46,19 @@ const CompanyJustForYou = ({ setForceUpdate, forceUpdate }) => {
       setForceUpdate(!forceUpdate)
     })
   }
+  const handleBlock = (_id) => {
+    blockCompany(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setError('')
+      setForceUpdate(!forceUpdate)
+    })
+  }
   return (
     !error && companies.length !== 0 && <List className={classes.root}>
       {
-        Array.isArray(companies) && companies.map(({ _id, professions, subProfessions,city, success, companyName }, index) =>
+        Array.isArray(companies) && companies.map(({ _id, professions, subProfessions, city, success, companyName }, index) =>
           <Fragment key={_id}>
             <ListItem alignItems="flex-start">
               <div className={classes.text}>
@@ -65,6 +74,9 @@ const CompanyJustForYou = ({ setForceUpdate, forceUpdate }) => {
                   <Button onClick={() => handleContactRequest(_id)}>
                     <SendIcon fontSize="small" color="primary" />
                   </Button>}
+                <Button onClick={() => handleBlock(_id)}>
+                  <BlockIcon fontSize="small" color="primary" />
+                </Button>
               </ListItemAvatar>
             </ListItem>
             {index !== companies.length - 1 && <Divider variant="fullWidth" component="li" />}

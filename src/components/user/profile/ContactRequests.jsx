@@ -7,8 +7,10 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
+import BlockIcon from '@material-ui/icons/Block';
+
 import { Button } from '@material-ui/core';
-import { rejectRequest, acceptRequest, cancelRequest } from '../../../actions/userAuth'
+import { rejectRequest, acceptRequest, cancelRequest,blockCompany } from '../../../actions/userAuth'
 import { getCookie } from '../../../actions/auth';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,6 +75,16 @@ const ContactRequests = ({ contactRequests, contactedByYou, forceUpdate, setForc
       setForceUpdate(!forceUpdate)
     })
   }
+  const handleBlock = (_id) => {
+    blockCompany(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setError('')
+      setForceUpdate(!forceUpdate)
+    })
+  }
+  contactRequests.length !== 0 && console.log(contactRequests)
   return (
     <>
       {<p>{error}</p>}
@@ -80,21 +92,24 @@ const ContactRequests = ({ contactRequests, contactedByYou, forceUpdate, setForc
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             <h4>Want to contact you!</h4>
-            {contactRequests && contactRequests.length !== 0 && <List className={classes.root}>{contactRequests.map(({ _id, companyName, profession, city, success }, index) =>
+            {contactRequests && contactRequests.length !== 0 && <List className={classes.root}>{contactRequests.map(({ _id, companyName, professions, subProfessions, city, success }, index) =>
               <Fragment key={_id}>
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>
                     <h4>{companyName}</h4>
-                    <p>{profession.name}</p>
-                    <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                    <p>{professions.map(({ name }) => name).join(', ')}</p>
+                    <p>{subProfessions.map(({ name }) => name).join(', ')}</p>
                     <p> {city}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <Button size="small" color="secondary" onClick={() => reject(_id)}>
+                    <Button size="small" color="primary" onClick={() => reject(_id)}>
                       <HighlightOffIcon fontSize="small" />
                     </Button>
                     <Button size="small" color="primary" onClick={() => accept(_id)}>
                       <CheckCircleOutlinedIcon fontSize="small" />
+                    </Button>
+                    <Button size="small" color="primary" onClick={() => handleBlock(_id)}>
+                      <BlockIcon fontSize="small" />
                     </Button>
                   </div>
                 </ListItem>
@@ -108,18 +123,21 @@ const ContactRequests = ({ contactRequests, contactedByYou, forceUpdate, setForc
         <Grid item xs={12} sm={6}>
           <Paper className={classes.eventsTracker}>
             <h4>companies contacted by you!</h4>
-            {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou.map(({ _id, companyName, profession, city, success }, index) =>
+            {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou.map(({ _id, companyName, professions,subProfessions, city, success }, index) =>
               <Fragment key={_id}>
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>
                     <h4>{companyName}</h4>
-                    <p>{profession.name}</p>
-                    <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                    <p>{professions.name}</p>
+                    <p>{subProfessions.map(({ name }) => name).join(', ')}</p>
                     <p> {city}</p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <Button size="small" color="secondary" onClick={() => cancel(_id)}>
+                    <Button size="small" color="primary" onClick={() => cancel(_id)}>
                       <HighlightOffIcon fontSize="small" />
+                    </Button>
+                    <Button size="small" color="primary" onClick={() => handleBlock(_id)}>
+                      <BlockIcon fontSize="small" />
                     </Button>
                   </div>
                 </ListItem>

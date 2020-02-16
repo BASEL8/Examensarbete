@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Button, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { declinedUser } from '../../../actions/companyAuth'
+import { declinedUser ,blockUser} from '../../../actions/companyAuth'
 import { getCookie } from '../../../actions/auth';
 import { useState } from 'react';
 const useStyles = makeStyles(theme => ({
@@ -28,7 +28,14 @@ const AcceptedYouRequest = ({ acceptedYouRequest, acceptedByYou, setForceUpdate,
       setForceUpdate(!forceUpdate)
     })
   }
-
+  const handleBlockUser = (_id) => { 
+    return blockUser(getCookie('token'), _id).then(res => {
+      if (res.error) {
+        return setError(res.error)
+      }
+      setForceUpdate(!forceUpdate)
+    })
+  }
   return (<div>
     {error && <p style={{ color: 'red', textAlign: 'center' }}>error</p>}
     <h4>Accepted your request</h4>
@@ -42,6 +49,7 @@ const AcceptedYouRequest = ({ acceptedYouRequest, acceptedByYou, setForceUpdate,
           <p>{languages.join(', ')}</p>
           <p>{email}</p>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button variant="outlined" color="secondary" onClick={() => handleBlockUser(_id)}>Hide</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDeclinedUser(_id)}>cancel</Button>
             <Button variant="outlined" color="primary" style={{ marginLeft: 10 }}>approved</Button>
           </div>
@@ -62,6 +70,7 @@ const AcceptedYouRequest = ({ acceptedYouRequest, acceptedByYou, setForceUpdate,
           <p>{languages.join(', ')}</p>
           <p>{email}</p>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button variant="outlined" color="secondary" onClick={() => handleBlockUser(_id)}>Hide</Button>
             <Button variant="outlined" color="secondary" onClick={() => handleDeclinedUser(_id)}>cancel</Button>
             <Button variant="outlined" color="primary" style={{ marginLeft: 10 }}>approved</Button>
           </div>
