@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
-const { users, user, publish, updateUser, deleteMyProfile, AdminRemoveUser, listUsers, companyJustForYou, rejectRequest, acceptRequest, contactMe, cancelRequest } = require('../controller/user')
-const { requiresignin, authMiddleware, adminMiddleware } = require('../controller/auth')
+const { users, user, publish, updateUser, deleteMyProfile, listUsers, companyJustForYou, rejectRequest, acceptRequest, contactMe, cancelRequest,blockCompany,unblockCompany } = require('../controller/user')
+const { requiresignin, authMiddleware } = require('../controller/auth')
 const { updateUserValidation } = require('../validation/user')
 const { runValidation } = require('../validation')
 
@@ -15,6 +15,7 @@ router.post('/users', requiresignin, listUsers)
 router.post('/user/reject', requiresignin, authMiddleware, rejectRequest)
 router.post('/user/cancelRequest', requiresignin, authMiddleware, cancelRequest)
 router.post('/user/accept', requiresignin, authMiddleware, acceptRequest)
+router.post('/user/block', requiresignin, authMiddleware, blockCompany)
+router.post('/user/unblock', requiresignin, authMiddleware, unblockCompany)
 router.delete('/delete-my-account', requiresignin, authMiddleware, deleteMyProfile)
-router.delete('/remove-user/:userId', requiresignin, authMiddleware, adminMiddleware, AdminRemoveUser)
 module.exports = router;
