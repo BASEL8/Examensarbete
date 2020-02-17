@@ -27,7 +27,6 @@ exports.company = (req, res) => {
 }
 exports.updateCompany = (req, res) => {
   const { _id } = req.profile;
-  console.log(req.profile)
   Company.findOne({ _id }, { "hashed_password": 0 })
     .exec((err, company) => {
       if (err) {
@@ -331,7 +330,6 @@ exports.blockUser = (req, res) => {
   const { userId } = req.body;
   const { _id } = req.profile;
   User.findById({ _id: userId }).exec((error, user) => {
-   console.log(user)
     if (error) {
       return res.json({ error:errorHandler(error) })
     }

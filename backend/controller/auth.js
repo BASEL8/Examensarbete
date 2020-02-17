@@ -119,7 +119,7 @@ exports.forgetPassword = (req, res) => {
         subject: `Password reset link`,
         html: `
         <h4>please use this link to reset your password<h4> 
-        <a href="${process.env.CLIENT_URL}/auth/password/reset/${token}">reset-link</a>
+        <a href="${process.env.CLIENT_URL}/user/reset-password/${token}">reset-link</a>
         `
       }
       return user.updateOne({ resetPassword: token }, (err, success) => {
@@ -279,7 +279,7 @@ exports.companyForgetPassword = (req, res) => {
         subject: `Password reset link`,
         html: `
         <h4>please use this link to reset your password<h4> 
-        <a href="${process.env.CLIENT_URL}/auth/password/reset/${token}">reset-link</a>
+        <a href="${process.env.CLIENT_URL}/company/reset-password/${token}">reset-link</a>
         `
       }
       return company.updateOne({ resetPassword: token }, (err, success) => {
@@ -342,8 +342,6 @@ exports.companyResetPassword = (req, res) => {
 exports.requiresignin = expressJwt({
   secret: process.env.JWT_SECRET
 })
-
-
 exports.authMiddleware = (req, res, next) => {
   const authUserId = req.user._id;
   User.findById({ _id: authUserId }).exec((err, user) => {
