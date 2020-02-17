@@ -6,7 +6,6 @@ const SendUserData = ({ userData, setError, setActiveStep }) => {
   useEffect(() => {
     let token = getCookie('token')
     updateUserProfile(token, userData).then(res => {
-      console.log(res)
       if (res.error) {
         setActiveStep(3)
         return setError(res.error)

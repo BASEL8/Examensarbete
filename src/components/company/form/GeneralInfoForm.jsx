@@ -3,9 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -322,7 +319,6 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
       profession: 'processer & analys'
     },
   ];
-  console.log(userData);
   return (
     <>
       <TextField
@@ -400,7 +396,7 @@ const GeneralInfoForm = ({ userData, setUserData }) => {
         <Autocomplete
           multiple
           autoSelect={true}
-          options={subProfessionsList.filter(({profession})=>{console.log();return profession,professions.findIndex(t=>t.name===profession)!==-1})}
+          options={subProfessionsList.filter(({profession})=> professions.findIndex(t=>t.name===profession)!==-1)}
           getOptionLabel={({ name }) => name}
           value={subProfessions}
           name="subProfessions"

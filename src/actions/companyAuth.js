@@ -192,4 +192,30 @@ export const unblockUser = (token,userId)=>{
     body: JSON.stringify({ userId })
   }).then(res => res.json()).catch(error => error)
 }
+export const forgetPassword = (email)=>{
+  return fetch(`${API}/company/forget-password`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
+export const resetPassword = (resetPasswordLink, newPassword )=>{
+  return fetch(`${API}/company/reset-password`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ resetPasswordLink, newPassword })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
 export const getUserPublicProfile = (token, _id) => { }

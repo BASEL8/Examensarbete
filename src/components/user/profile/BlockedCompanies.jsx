@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { getCookie } from '../../../actions/auth'
-import {  unblockCompany } from '../../../actions/userAuth'
+import { unblockCompany } from '../../../actions/userAuth'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
 }));
-const BlockedCompanies = ({blockList,setForceUpdate,forceUpdate })=>{
+const BlockedCompanies = ({ blockList, setForceUpdate, forceUpdate }) => {
   const classes = useStyles();
   const [error, setError] = useState('')
   const handleUnblock = (_id) => {
@@ -33,28 +33,31 @@ const BlockedCompanies = ({blockList,setForceUpdate,forceUpdate })=>{
     })
   }
   return (
-  <List className={classes.root}>
-    {
-      Array.isArray(blockList) && blockList.map(({ _id, professions, subProfessions, city, success, companyName }, index) =>
-        <Fragment key={_id}>
-          <ListItem alignItems="flex-start">
-            <div className={classes.text}>
-              <h4>{companyName}</h4>
-              <h4>{professions.map(({ name }) => name).join(', ')}</h4>
-              <p>{subProfessions.map(({ name }) => name).join(', ')}</p>
-              <p> {city}</p>
-            </div>
-            <ListItemAvatar style={{ textAlign: 'right' }}>
-              <Button onClick={()=>handleUnblock(_id)}>
-                <LockOpenIcon fontSize="small" color="primary" />
-              </Button>
-            </ListItemAvatar>
-          </ListItem>
-          {index !== blockList.length - 1 && <Divider variant="fullWidth" component="li" />}
-        </Fragment>
-      )
-    }
-  </List>
+    <>
+      <p>{error && error}</p>
+      <List className={classes.root}>
+        {
+          Array.isArray(blockList) && blockList.map(({ _id, professions, subProfessions, city, success, companyName }, index) =>
+            <Fragment key={_id}>
+              <ListItem alignItems="flex-start">
+                <div className={classes.text}>
+                  <h4>{companyName}</h4>
+                  <h4>{professions.map(({ name }) => name).join(', ')}</h4>
+                  <p>{subProfessions.map(({ name }) => name).join(', ')}</p>
+                  <p> {city}</p>
+                </div>
+                <ListItemAvatar style={{ textAlign: 'right' }}>
+                  <Button onClick={() => handleUnblock(_id)}>
+                    <LockOpenIcon fontSize="small" color="primary" />
+                  </Button>
+                </ListItemAvatar>
+              </ListItem>
+              {index !== blockList.length - 1 && <Divider variant="fullWidth" component="li" />}
+            </Fragment>
+          )
+        }
+      </List>
+    </>
   )
 }
 

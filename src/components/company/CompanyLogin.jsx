@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory,Link } from 'react-router-dom';
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
 import { isAuth, authenticate } from '../../actions/auth'
 import { login } from '../../actions/companyAuth'
-import { Link } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   left: {
     height: '100%',
@@ -100,6 +99,7 @@ const UserLogin = () => {
             variant="outlined"
             type="password"
           />
+          <Link to='/company/forget-password'>Forget your password</Link>
           <Button variant="contained" color="primary" size="large" type="submit">Login</Button>
         </form>
         {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose} style={{ position: 'fixed', left: 100 }}>

@@ -10,7 +10,7 @@ import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import BlockIcon from '@material-ui/icons/Block';
 
 import { Button } from '@material-ui/core';
-import { rejectRequest, acceptRequest, cancelRequest,blockCompany } from '../../../actions/userAuth'
+import { rejectRequest, acceptRequest, cancelRequest, blockCompany } from '../../../actions/userAuth'
 import { getCookie } from '../../../actions/auth';
 const useStyles = makeStyles(theme => ({
   root: {
@@ -84,7 +84,6 @@ const ContactRequests = ({ contactRequests, contactedByYou, forceUpdate, setForc
       setForceUpdate(!forceUpdate)
     })
   }
-  contactRequests.length !== 0 && console.log(contactRequests)
   return (
     <>
       {<p>{error}</p>}
@@ -123,7 +122,7 @@ const ContactRequests = ({ contactRequests, contactedByYou, forceUpdate, setForc
         <Grid item xs={12} sm={6}>
           <Paper className={classes.eventsTracker}>
             <h4>companies contacted by you!</h4>
-            {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou.map(({ _id, companyName, professions,subProfessions, city, success }, index) =>
+            {contactedByYou && contactedByYou.length !== 0 && <List className={classes.root}>{contactedByYou.map(({ _id, companyName, professions, subProfessions, city, success }, index) =>
               <Fragment key={_id}>
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>

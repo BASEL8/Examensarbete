@@ -147,3 +147,29 @@ export const unblockCompany = (token,companyId)=>{
     body: JSON.stringify({ companyId })
   }).then(res => res.json()).catch(error => error)
 }
+export const forgetPassword = (email)=>{
+  return fetch(`${API}/forget-password`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}
+export const resetPassword = (resetPasswordLink, newPassword )=>{
+  return fetch(`${API}/reset-password`, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ resetPasswordLink, newPassword })
+  }).then(res => {
+    handleResponse(res)
+    return res.json()
+  }).catch(error => error)
+}

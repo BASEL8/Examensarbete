@@ -76,6 +76,7 @@ const CompanyNotComplete = () => {
   delete user.__v
   delete user.eventsTracker
   delete user.acceptedYourRequest
+  delete user.resetPassword
   const [userData, setUserData] = useState({
     about: '',
     website: '',

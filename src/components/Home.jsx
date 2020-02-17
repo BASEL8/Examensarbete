@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import FlareSharpIcon from '@material-ui/icons/FlareSharp';
 import Hidden from '@material-ui/core/Hidden';
 import Typing from 'react-typing-animation';
 import { Man, Search, Girl, Start, TalentSvg } from '../img'

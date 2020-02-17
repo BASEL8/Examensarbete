@@ -76,6 +76,8 @@ const FirstProfile = () => {
   delete user.eventsTracker
   delete user.contactedByYou
   delete user.acceptedYourRequest
+  delete user.resetPassword
+  delete user.blockList
   const [userData, setUserData] = useState(isAuth().profileComplete ? { ...user } : {
     about: '',
     wantToWorkAs: '',

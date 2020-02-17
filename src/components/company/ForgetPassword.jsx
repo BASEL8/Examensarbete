@@ -7,7 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import AuthIndex from '../AuthIndex'
 import { useHistory } from 'react-router-dom'
 import { isAuth } from '../../actions/auth'
-import { preSignup } from '../../actions/companyAuth'
+import { forgetPassword } from '../../actions/companyAuth'
 const useStyles = makeStyles(theme => ({
   form: {
     width: '90%',
@@ -29,13 +29,12 @@ const useStyles = makeStyles(theme => ({
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const CompanyRegister = () => {
+const ForgetPassword = () => {
   const classes = useStyles();
   const history = useHistory()
-  const [state, setState] = useState({ companyName: '', email: '', password: '', organisationNumber: '', error: '', message: '' })
-  const { companyName, email, password, organisationNumber, error, message } = state;
+  const [state, setState] = useState({  email: '', error: '',message:'' })
+  const {  email, error,message } = state;
   const [openError, setOpenError] = useState(true)
-  const [openSuccess, setOpenSuccess] = useState(true)
   useEffect(() => {
     if (isAuth()) {
       history.push("/")
@@ -47,22 +46,20 @@ const CompanyRegister = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    preSignup({ email, companyName, organisationNumber, password }).then(res => {
+    forgetPassword(email).then(res => {
       if (res.err) {
         setOpenError(true)
-        return setState({ ...setState, error: res.er, companyName: '', email: '', password: '', message: '' })
+        return setState({ ...setState, error: res.er, email: '' })
       }
-      setOpenSuccess(true)
-      setState({ ...state, error: '', companyName: '', email: '', password: '', organisationNumber: '', message: res.success })
+      setState({ ...state, error: '', email: '',message:res.message })
     }
     )
   }
-
   return (
     <AuthIndex>{
       <>
-        <h3>Create Account for your company</h3>
-        <form onSubmit={handleSubmit} className={classes.form}>
+        <h3>Reset Password</h3>
+        {!message?<form onSubmit={handleSubmit} className={classes.form}>
           <TextField
             label="Email"
             name="email"
@@ -70,41 +67,17 @@ const CompanyRegister = () => {
             onChange={handleChange}
             variant="outlined"
             type="email"
-          />
-          <TextField
-            label="company name"
-            name="companyName"
-            value={companyName}
-            onChange={handleChange}
-            variant="outlined"
-            type="text"
-          />
-          <TextField
-            label="Organisation number"
-            name="organisationNumber"
-            value={organisationNumber}
-            onChange={handleChange}
-            variant="outlined"
-            type="text"
-          />
-          <TextField
-            label="Password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            variant="outlined"
-            type="password"
+            required
           />
           <Button variant="contained" color="primary" size="large" type="submit">Submit</Button>
-        </form>
+        </form>:
+        <p>{message}</p>
+        }
         {error && <Snackbar open={openError} autoHideDuration={10000} onClose={() => setOpenError(false)} >
           <Alert onClose={() => setOpenError(false)} severity="error">{error}</Alert>
-        </Snackbar>}
-        {message && <Snackbar open={openSuccess} autoHideDuration={10000} onClose={() => setOpenSuccess(false)} >
-          <Alert onClose={() => setOpenSuccess(false)} severity="success">{message}</Alert>
         </Snackbar>}
       </>
     }</AuthIndex>
   )
 }
-export default CompanyRegister;
+export default ForgetPassword;

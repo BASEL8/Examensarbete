@@ -10,7 +10,6 @@ const SendUserData = ({ setError, setActiveStep, userData }) => {
         setActiveStep(2)
         return setError(res.error)
       }
-      console.log(res)
       setActiveStep(2)
       setError('')
     })

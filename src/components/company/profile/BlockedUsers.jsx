@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { getCookie } from '../../../actions/auth'
 import {  unblockUser } from '../../../actions/companyAuth'
 import { makeStyles } from '@material-ui/core/styles';
@@ -32,8 +32,9 @@ const BlockedUsers = ({blockedUsers,setForceUpdate,forceUpdate })=>{
       setForceUpdate(!forceUpdate)
     })
   }
-  console.log(blockedUsers)
   return (
+    <>
+    <p>{error&&error}</p>
   <List className={classes.root}>
     {
       blockedUsers && blockedUsers.map(({ _id, profession, cities, name }, index) =>
@@ -56,6 +57,7 @@ const BlockedUsers = ({blockedUsers,setForceUpdate,forceUpdate })=>{
       )
     }
   </List>
+  </>
   )
 }
 

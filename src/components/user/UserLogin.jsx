@@ -47,7 +47,7 @@ const UserLogin = () => {
   const [state, setState] = useState({ email: location.state && location.state.email ? location.state.email : '', password: '', error: '' })
   const { email, password, error } = state;
   const [open, setOpen] = useState(true)
-  console.log(location.pathname==='/user/login')
+  //  console.log(location.pathname==='/user/login')
   useEffect(() => {
     if (isAuth()) {
       history.push("/")
@@ -101,6 +101,7 @@ const UserLogin = () => {
             variant="outlined"
             type="password"
           />
+          <Link to='/user/forget-password'>Forget Password</Link>
           <Button variant="contained" color="primary" size="large" type="submit">Login</Button>
         </form>
         {error && <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>

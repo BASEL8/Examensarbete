@@ -74,6 +74,8 @@ const CompanyJustForYou = ({ setForceUpdate, forceUpdate }) => {
                   <Button onClick={() => handleContactRequest(_id)}>
                     <SendIcon fontSize="small" color="primary" />
                   </Button>}
+              </ListItemAvatar>
+              <ListItemAvatar style={{ textAlign: 'right' }}>
                 <Button onClick={() => handleBlock(_id)}>
                   <BlockIcon fontSize="small" color="primary" />
                 </Button>
