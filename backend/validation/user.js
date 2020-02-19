@@ -1,8 +1,6 @@
 const { check } = require('express-validator');
 var ObjectId = require('mongoose').Types.ObjectId;
-console.log(ObjectId.isValid('551139e1fac808a5f572'))
 exports.usersValidation = []
-
 exports.publishValidation = []
 
 exports.updateUserValidation = [

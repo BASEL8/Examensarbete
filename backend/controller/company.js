@@ -11,6 +11,7 @@ exports.company = (req, res) => {
     .populate('acceptedYourRequest', '_id profession cities languages email name')
     .populate('wantToContactYou', '_id profession cities languages email name')
     .populate('acceptedByYou', '_id profession cities languages email name')
+    .populate('blockedUsers', '_id profession cities languages name')
     .exec((error, company) => {
       if (error) {
         return res.json({ error: errorHandler(error) })
@@ -26,7 +27,6 @@ exports.company = (req, res) => {
 }
 exports.updateCompany = (req, res) => {
   const { _id } = req.profile;
-  console.log(req.profile)
   Company.findOne({ _id }, { "hashed_password": 0 })
     .exec((err, company) => {
       if (err) {
@@ -93,22 +93,26 @@ exports.removeAnnounce = (req, res) => {
   })
 }
 exports.justForYourCompany = (req, res) => {
-  const { city, professions, subProfessions, _id } = req.profile;
+  const { city, professions, subProfessions, _id,blockedUsers } = req.profile;
   User.find(
-    {$and:[
-      {
-        published: true,
-        cities: city,
-        'profession.subProfessions': {$elemMatch :{name:{ $in: subProfessions.map(profession => profession.name) }}},
-        contactRequests: { "$ne": _id },
-        acceptedByYou: { "$ne": _id },
-        contactedByYou: { "$ne": _id },
-        acceptedYourRequest: { "$ne": _id }
-      },
-      {
-      'profession.name': { $in: professions.map(profession => profession.name) },
-      }
-    ]},
+    {
+      $and: [
+        {
+          published: true,
+          cities: city,
+          'profession.subProfessions': { $elemMatch: { name: { $in: subProfessions.map(profession => profession.name) } } },
+          contactRequests: { "$ne": _id },
+          acceptedByYou: { "$ne": _id },
+          contactedByYou: { "$ne": _id },
+          acceptedYourRequest: { "$ne": _id },
+          blockList: { "$ne": _id },
+          _id:{$nin:blockedUsers}
+        },
+        {
+          'profession.name': { $in: professions.map(profession => profession.name) },
+        }
+      ]
+    },
     {
       'hashed_password': 0,
       name: 0,
@@ -228,7 +232,13 @@ exports.declineContactRequestFromUser = (req, res) => {
 exports.acceptContactRequestFromUser = (req, res) => {
   const { _id, companyName } = req.profile;
   const { userId } = req.body;
-  User.findById({ _id: userId }).exec((err, user) => {
+  User.findById({
+   
+       _id: userId 
+      //{ blockList: { "$ne": _id } },
+      //{ contactedByYou: _id }
+    
+  }).exec((err, user) => {
     if (err) {
       return res.json({ error: errorHandler(err) })
     }
@@ -314,5 +324,76 @@ exports.cancelContactUser = (req, res) => {
         })
       })
     })
+  })
+}
+exports.blockUser = (req, res) => {
+  const { userId } = req.body;
+  const { _id } = req.profile;
+  User.findById({ _id: userId }).exec((error, user) => {
+    if (error) {
+      return res.json({ error:errorHandler(error) })
+    }
+    if (!user) {
+      return res.json({ error: 'no user with this id ' })
+    }
+    user.contactRequests = user.contactRequests.filter(us=>us.toString()!==_id.toString())
+    user.acceptedYourRequest = user.acceptedYourRequest.filter(us=>us.toString()!==_id.toString())
+    user.contactedByYou = user.contactedByYou.filter(us=>us.toString()!==_id.toString())
+    user.acceptedByYou = user.acceptedByYou.filter(us=>us.toString()!==_id.toString())
+    user.save((companySaveError,userSaveResult)=>{
+      if(companySaveError){
+        return res.json({error:'please try again'})
+      }
+      Company.findById({ _id }).exec((companyError, company) => {
+        if (companyError) {
+          return res.json({ error:errorHandler(companyError) })
+        }
+        if (!company) {
+          return res.json({ error: 'no company with this id ' })
+        }
+        company.blockedUsers = [...company.blockedUsers, userId]
+        company.eventsTracker = [...company.eventsTracker, { eventName: `you blocked ${user.name}` }]
+        company.acceptedYourRequest = company.acceptedYourRequest.filter(ac => ac.toString() !== userId.toString())
+        company.contactedByYou = company.contactedByYou.filter(ac => ac.toString() !== userId.toString())
+        company.wantToContactYou = company.wantToContactYou.filter(ac => ac.toString() !== userId.toString())
+        company.acceptedByYou = company.acceptedByYou.filter(ac => ac.toString() !== userId.toString())
+        company.save((companySaveError, userSaveResult) => {
+          if (companySaveError) { 
+            return res.json({error:'please try again later'})
+          }
+          return res.json({success:'success'})
+        })
+      })
+    })
+   
+  })
+}
+exports.unblockUser = (req, res) => {
+  const { userId } = req.body;
+  const { _id } = req.profile;
+  User.findById({ _id:userId }).exec((error, user) => {
+    if (error) {
+      return res.json({ error:errorHandler(error) })
+    }
+    if (!user) {
+      return res.json({ error: 'no company with this id ' })
+    }
+      Company.findById({ _id }).exec((companyError, company) => {
+        if (companyError) {
+          return res.json({ error })
+        }
+        if (!company) {
+          return res.json({ error: 'no company with this id ' })
+        }
+        company.blockedUsers = company.blockedUsers.filter(ac=>ac.toString()!==userId.toString())
+        company.eventsTracker = [...company.eventsTracker, { eventName: `you unblocked ${user.name}` }]
+        company.save((companySaveError, companySaveResult) => {
+          if (companySaveError) { 
+            return res.json({error:'please try again later'})
+          }
+          return res.json({success:'success'})
+        })
+      })
+   
   })
 }

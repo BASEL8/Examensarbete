@@ -30,7 +30,6 @@ const Profession = new mongoose.Schema({
     type: String,
   }
 })
-
 const companySchema = new mongoose.Schema({
   companyName: {
     type: String,
@@ -106,10 +105,9 @@ const companySchema = new mongoose.Schema({
   wantToContactYou: [{ type: ObjectId, ref: 'User', require: true }],
   eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
   acceptedYourRequest: [{ type: ObjectId, ref: 'User', require: true }],
-  acceptedByYou: [{ type: ObjectId, ref: 'User', required: true }]
+  acceptedByYou: [{ type: ObjectId, ref: 'User', required: true }],
+  blockedUsers: [{ type: ObjectId, ref: 'User', required: true }]
 }, { timestamps: true })
-
-
 companySchema.virtual('password')
   .set(function (password) {
     //create a temporary variable called hashed_password
@@ -123,7 +121,6 @@ companySchema.virtual('password')
     this.hashed_password = this.encryptPassword(password);
   })
   .get(function () { return this._password })
-
 companySchema.methods = {
   authenticate: function (plainText) {
     return this.encryptPassword(plainText) === this.hashed_password

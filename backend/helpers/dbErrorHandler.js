@@ -12,7 +12,6 @@ const uniqueMessage = error => {
   } catch (ex) {
     output = 'unique filed already exist';
   }
-  console.log(output)
   return output;
 }
 
@@ -35,7 +34,6 @@ exports.errorHandler = error => {
   } else {
     for (let errorName in error.errors) {
       if (error.errors) {
-        console.log(error.errors[errorName].message)
         message = error.errors[errorName].message
       }
     }

@@ -98,7 +98,8 @@ const userSchema = new mongoose.Schema({
   eventsTracker: [{ eventName: { type: String }, date: { type: Date, default: Date.now } }],
   contactRequests: [{ type: ObjectId, ref: 'Company', require: true }],
   contactedByYou: [{ type: ObjectId, ref: 'Company', require: true }],
-  acceptedYourRequest: [{ type: ObjectId, ref: 'Company', require: true }]
+  acceptedYourRequest: [{ type: ObjectId, ref: 'Company', require: true }],
+  blockList:[{ type: ObjectId, ref: 'Company', require: true }]
 }, { timestamps: true })
 
 

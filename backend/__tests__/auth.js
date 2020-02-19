@@ -27,7 +27,6 @@ describe('User Model Test', () => {
     const response = await request(url)
       .post(`/pre-signup`)
       .send(testUser)
-    console.log(response.body)
     expect(response.status).toEqual(200);
     expect(response.body.success).toBe(`activation link has been sent to ${testUser.email}`)
     if (response.status === 200) {
