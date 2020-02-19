@@ -75,7 +75,6 @@ const UserLogin = () => {
         }else{
           setState({...state,error:'server error, try again later'})
         }
-       
       }
     })
   }
