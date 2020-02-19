@@ -66,11 +66,16 @@ const UserLogin = () => {
         return setState({ ...state, email: '', password: '', error: res.error })
       } else {
         setState({ ...state, error: '', loading: false })
-        if (res.user.profileComplete) {
-          authenticate(res, () => history.push(`/company/profile/${res.user._id}`))
-        } else {
-          authenticate(res, () => history.push(`/company/update/${res.user._id}`))
+        if(res.status ===200){
+          if (res.user.profileComplete) {
+            authenticate(res, () => history.push(`/company/profile/${res.user._id}`))
+          } else {
+            authenticate(res, () => history.push(`/company/update/${res.user._id}`))
+          }
+        }else{
+          setState({...state,error:'server error, try again later'})
         }
+       
       }
     })
   }
