@@ -144,14 +144,14 @@ const useStyles = makeStyles(theme => ({
 let data = [
   {
     title: 'Create an anonymous profile',
-    text: 'Create an anonymous profile and state your wishes regarding jobs, salaries and benefits. All that motivates you to change jobs.', image: <Search />
+    text: 'Create an anonymous profile and state your wishes regarding jobs, salaries, and benefits. All that motivates you to change careers.', image: <Search />
   },
   {
     title: 'Get offers & apply anonymously',
-    text: 'You will be contacted through specific offers based on your wishes and can apply to specific employers. You see which employers can match your expectations.',
-    image: <Girl />
+    text: 'You will be contacted through specific offers based on your wishes and can apply to particular companies. You see which companies can match your expectations.',
+      image: <Girl />
   },
-  { title: 'Take a stand', text: 'Go ahead with the most interesting offers and let employers share your full profile so they can make personal contact.', image: <Man /> },
+  { title: 'Go ahead with the most exciting offers and let companies share your full profile so they can make personal contact.', image: <Man /> },
   { title: 'Start the your dream job', text: 'When hiring, Ryktera gives you an employment gift.', image: <Start /> }
 ];
 const Step = ({ title, text, image, index }) => {
@@ -213,7 +213,7 @@ const Home = () => {
         </Button>
       </div>
       <p className={classes.mainText}>
-        We match you and your wishes to hundreds of tech companies so that they can contact through personal offers, completely anonymously.
+      We match you and your wishes to hundreds of tech companies so that they can contact through personal offers, entirely anonymously.
       Find out which employers are interested in you and can meet your expectations.
           </p>
       <div style={{width:'100%'}}>
