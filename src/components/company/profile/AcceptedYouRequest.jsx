@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Button, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { declinedUser ,blockUser} from '../../../actions/companyAuth'
+import { declinedUser, blockUser } from '../../../actions/companyAuth'
 import { getCookie } from '../../../actions/auth';
 import { useState } from 'react';
 const useStyles = makeStyles(theme => ({
@@ -28,7 +28,7 @@ const AcceptedYouRequest = ({ acceptedYouRequest, acceptedByYou, setForceUpdate,
       setForceUpdate(!forceUpdate)
     })
   }
-  const handleBlockUser = (_id) => { 
+  const handleBlockUser = (_id) => {
     return blockUser(getCookie('token'), _id).then(res => {
       if (res.error) {
         return setError(res.error)
@@ -44,13 +44,13 @@ const AcceptedYouRequest = ({ acceptedYouRequest, acceptedByYou, setForceUpdate,
         <div className={classes.text}>
           <h4>{name}</h4>
           <p>{profession.name}</p>
-          <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+          <p>{profession && profession.subProfessions.map(({ name, years }) => `${name} - ${years || 1}y`).join(', ')}</p>
           <p> {cities.join(', ')}</p>
           <p>{languages.join(', ')}</p>
           <p>{email}</p>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button variant="outlined" color="secondary" onClick={() => handleBlockUser(_id)}>Hide</Button>
-            <Button variant="outlined" color="secondary" onClick={() => handleDeclinedUser(_id)}>cancel</Button>
+            <Button variant="outlined" color="secondary" onClick={() => handleBlockUser(_id)}>Hide</Button>
+            <Button variant="outlined" color="secondary" onClick={() => handleDeclinedUser(_id)}  style={{ marginLeft: 10 }}>cancel</Button>
             <Button variant="outlined" color="primary" style={{ marginLeft: 10 }}>approved</Button>
           </div>
         </div>

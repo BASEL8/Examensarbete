@@ -43,7 +43,7 @@ const BlockedUsers = ({blockedUsers,setForceUpdate,forceUpdate })=>{
             <div className={classes.text}>
               <h4>{name}</h4>
               <h4>{profession.name}</h4>
-              <p>{profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+              <p>{profession.subProfessions.map(({ name,years }) => `${name} - ${years||1}y`).join(', ')}</p>
               <p> {cities.join(', ')}</p>
             </div>
             <ListItemAvatar style={{ textAlign: 'right' }}>

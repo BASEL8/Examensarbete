@@ -92,7 +92,7 @@ const FirstProfile = () => {
     priorityBenefits: [],
     profession: {
       name: '',
-      years: 0,
+      years: 1,
       subProfessions: [{ name: '' }]
     },
   })

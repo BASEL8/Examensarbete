@@ -10,6 +10,7 @@ import { FormGroup } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -53,7 +54,7 @@ const ProfessionForm = ({ setUserData, userData }) => {
       setUserData({
         ...userData,
         profession: {
-          years: 0, subProfessions: [],
+          years: 1, subProfessions: [],
           name: event.target.value
         }
       })
@@ -90,6 +91,27 @@ const ProfessionForm = ({ setUserData, userData }) => {
         setUserData({ ...userData, priorityBenefits: priorityBenefits.filter(b => b !== event.target.value) })
       }
     }
+  }
+  const handleYearsChange = (event, mainName) => {
+    console.log(event.target.value)
+    if (mainName === 'subProfession') {
+      setUserData({
+        ...userData,
+        profession: {
+          ...profession, subProfessions: userData.profession.subProfessions.map(({ name, years }) => name === event.target.name ? { name, years: event.target.value } : { name, years })
+
+        }
+      })
+    } else {
+      setUserData({
+        ...userData,
+        profession: {
+          ...userData.profession,
+          years: event.target.value
+        }
+      })
+    }
+
   }
   const professions = [
     {
@@ -352,30 +374,46 @@ const ProfessionForm = ({ setUserData, userData }) => {
     , "development Opportunities"
     , "just want to work in -house"
   ]
+  console.log(userData.profession)
   return (
     <>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend" className={classes.radioTable}>Profession</FormLabel>
         <RadioGroup aria-label="profession" name="profession" value={profession.name} onChange={handleChange} className={classes.radioGroup}>
-          {professions.map(({ name }, index) => <FormControlLabel key={index} value={name} control={<Radio color="primary" />} label={name} />)}
-
+          {professions.map(({ name }, index) => <FormControlLabel key={index} value={name} control={<Radio color="primary" />}
+            label={
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <p style={{ marginRight: 10 }}>
+                  {name}
+                </p>
+                {name === profession.name ?
+                  <TextField style={{ flexBasis: 35, marginBottom: 22 }} name={name} type="number" inputProps={{ min: "1", max: "90" }} label="years" defaultValue={1} onChange={(e) => handleYearsChange(e, "")} />
+                  : ''}
+              </div>
+            }
+          />)
+          }
         </RadioGroup>
       </FormControl>
       <FormGroup className={classes.checkbox}>
-        {profession.name && subProfessions.filter((index) => index.profession === profession.name).map(({ name }, index) =>
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="subProfession"
-                checked={profession.subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1}
-                onChange={handleChange}
-                value={name}
-                color="primary"
-              />
+        {profession.name && subProfessions.filter((index) => index.profession === profession.name).map(({ name, years }, index) =>
+          <div style={{ display: 'flex' }} key={index}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="subProfession"
+                  checked={profession.subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1}
+                  onChange={handleChange}
+                  value={name}
+                  color="primary"
+                />
+              }
+              label={name}
+            />
+            {profession.subProfessions.map((ob, index) => ob.name).indexOf(name) !== -1 &&
+              <TextField style={{ flexBasis: 35, marginBottom: 22 }} name={name} type="number" inputProps={{ min: "1", max: "90" }} label="years" defaultValue={1} onChange={(e) => handleYearsChange(e, "subProfession")} />
             }
-            key={index}
-            label={name}
-          />
+          </div>
         )}
       </FormGroup>
       <FormControl className={classes.formControl} style={{ width: '100%' }}>

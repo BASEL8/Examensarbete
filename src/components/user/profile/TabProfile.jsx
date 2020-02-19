@@ -94,13 +94,13 @@ const TabProfile = ({ user, forceUpdate, setForceUpdate }) => {
             <h4>Welcome</h4>
             <h2>{name}</h2>
             <div>
-              <h4>{profession && profession.name}</h4>
+              <h4>{profession && `${profession.name}, years : ${profession.years}`}</h4>
               <div style={{ marginTop: 3 }}>
                 {profession && profession.subProfessions.map((sub, index) => <Chip key={index}
                   color="primary"
                   variant="outlined"
                   style={{ marginRight: 10, marginTop: 5 }}
-                  label={sub.name} size="small" spacing={1} />)}
+                  label={`${sub.name}, years : ${sub.years}`} size="small" spacing={1} />)}
               </div>
             </div>
           </Paper>

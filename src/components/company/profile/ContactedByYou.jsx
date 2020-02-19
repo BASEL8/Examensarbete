@@ -86,7 +86,7 @@ const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForc
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>
                     <h4>{profession.name}</h4>
-                    <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                    <p>{profession && profession.subProfessions.map(({ name,years }) => `${name} - ${years||1}y`).join(', ')}</p>
                     <p> {cities.join(', ')}</p>
                     <p>{languages.join(', ')}</p>
                   </div>
@@ -109,7 +109,7 @@ const ContactedByYou = ({ contactedByYou, wantToContactYou, forceUpdate, setForc
                 <ListItem alignItems="flex-start">
                   <div className={classes.text}>
                     <h4>{profession.name}</h4>
-                    <p>{profession && profession.subProfessions.map(({ name }) => name).join(', ')}</p>
+                    <p>{profession && profession.subProfessions.map(({ name,years }) => `${name} - ${years||1}y`).join(', ')}</p>
                     <p> {cities.join(', ')}</p>
                     <p>{languages.join(', ')}</p>
                   </div>
