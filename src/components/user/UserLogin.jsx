@@ -68,7 +68,7 @@ const UserLogin = () => {
         return setState({ ...state, email: '', password: '', error: res.error })
       } else {
         setState({ ...state, error: '', loading: false })
-        if(res.status===200){
+        if(res.user){
           if ( res.user.profileComplete) {
             authenticate(res, () => history.push(`/user/profile/${res.user._id}`))
           } else {
